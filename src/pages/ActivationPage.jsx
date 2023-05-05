@@ -7,26 +7,27 @@ import { useParams } from "react-router-dom";
 
 export const ActivationPage = () => {
     const { activation_token } = useParams();
+    
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        console.log(activation_token)
-        // if (activation_token) {
-        //     const sendRequest = async () => {
-        //         await axios
-        //             .post(`${server}/user/activation`, {
-        //                 activation_token,
-        //             })
-        //             .then((res) => {
-        //                 console.log(res);
-        //             })
-        //             .catch((err) => {
-        //                 setError(true);
-        //             });
-        //     };
-        //     sendRequest();
-        // }
-    }, []);
+        if (activation_token) {
+
+            const sendRequest = async () => {
+                await axios
+                    .post(`http://localhost:8000/auth/activation`, {
+                        activation_token,
+                    })
+                    .then((res) => {
+                        console.log(res);
+                    })
+                    .catch((err) => {
+                        setError(true);
+                    });
+            };
+            sendRequest();
+        }
+    }, [activation_token]);
 
     return (
         <div
