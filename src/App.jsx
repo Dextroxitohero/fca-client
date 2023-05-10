@@ -1,31 +1,42 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { loadUser } from "./redux/actions/user";
-import second from './redux/actions/user'
-import { LoginPage } from './pages/login/LoginPage';
-import { HomePage } from './pages/HomePage';
-import { ActivationPage } from './pages/ActivationPage';
-import { ToastContainer } from 'react-toastify';
-import Store from "./redux/store";
+import { useDispatch } from 'react-redux';
 
-import "react-toastify/dist/ReactToastify.css";
+import { ProtectedRoute } from './routes/ProtectedRoute';
+import { HomePage } from './pages/HomePage';
+import { LoginPage } from './pages/login/LoginPage';
+import { ActivationPage } from './pages/ActivationPage';
 import { SignupPage } from './pages/signup/SignupPage';
 
+import { loadUser } from "./redux/actions/user";
+import { ToastContainer } from 'react-toastify';
+
+import "react-toastify/dist/ReactToastify.css";
+
 export const App = () => {
+	
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		Store.dispatch(loadUser());
+		dispatch(loadUser());
 	}, []);
+
 	return (
 		<>
 			<BrowserRouter>
 				<Routes>
-					<Route path="/" element={<HomePage />} />
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/signup" element={<SignupPage />} />
 					<Route
 						path="/activation/:activation_token"
 						element={<ActivationPage />}
+					/>
+					<Route 
+						path="/" element={
+							<ProtectedRoute>
+								<HomePage />
+							</ProtectedRoute>
+						} 
 					/>
 				</Routes>
 				<ToastContainer

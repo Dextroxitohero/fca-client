@@ -6,7 +6,7 @@ export const loadUser = () => async (dispatch) => {
     dispatch({
       type: "LoadUserRequest",
     });
-    const { data } = await axios.get(`http://localhost:8000/user/getuser`, {
+    const  data  = await axios.get(`http://localhost:8000/users`, {
       withCredentials: true,
     });
     dispatch({
@@ -14,10 +14,10 @@ export const loadUser = () => async (dispatch) => {
       payload: data.user,
     });
   } catch (error) {
-    dispatch({
-      type: "LoadUserFail",
-      payload: error.response.data.message,
-    });
+    // dispatch({
+    //   type: "LoadUserFail",
+    //   payload: error.response.data.message,
+    // });
   }
 };
 

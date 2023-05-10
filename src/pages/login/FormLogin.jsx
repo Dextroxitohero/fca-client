@@ -21,10 +21,9 @@ export const FormLogin = () => {
           email,
           password,
         },
-        // { withCredentials: true }
+        { withCredentials: true }
       )
       .then((res) => {
-        console.log(res)
         toast.success("Login Success!");
         navigate("/");
         window.location.reload(true); 
