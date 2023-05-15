@@ -1,20 +1,17 @@
 import React, { Fragment } from 'react';
 import { Transition } from '@headlessui/react';
-import {
-    ArrowPathIcon,
-    ChartPieIcon,
-    CursorArrowRaysIcon,
-    FingerPrintIcon,
-    SquaresPlusIcon,
-} from '@heroicons/react/24/outline';
 
-const solutions = [
-    { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
-    { name: 'Engagement', description: 'Speak directly to your customers', href: '#', icon: CursorArrowRaysIcon },
-    { name: 'Security', description: "Your customers' data will be safe and secure", href: '#', icon: FingerPrintIcon },
-    { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
-    { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
-]
+
+import { solutions } from '../../static/data';
+import { MenuItem } from './MenuItem';
+
+// const solutions = [
+//     { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
+//     { name: 'Engagement', description: 'Speak directly to your customers', href: '#', icon: CursorArrowRaysIcon },
+//     { name: 'Security', description: "Your customers' data will be safe and secure", href: '#', icon: FingerPrintIcon },
+//     { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
+//     { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
+// ]
 
 export const UserMenu = () => {
     return (
@@ -53,57 +50,13 @@ export const UserMenu = () => {
                     ">
                         <div className="p-4">
                             {solutions.map((item) => (
-                                <div
-                                    key={item.name}
-                                    className="
-                                        group relative 
-                                        flex gap-x-6 
-                                        rounded-lg p-4 
-                                        hover:bg-gray-50
-                                    ">
-                                    <div
-                                        className="
-                                            mt-1 
-                                            flex 
-                                            h-11 
-                                            w-11 
-                                            flex-none 
-                                            items-center 
-                                            justify-center 
-                                            rounded-lg 
-                                            bg-gray-50 
-                                            group-hover:bg-white
-                                        ">
-                                        <item.icon
-                                            aria-hidden="true"
-                                            className="
-                                            h-6 
-                                            w-6 
-                                            text-gray-600 
-                                            group-hover:text-indigo-600
-                                        "/>
-                                    </div>
-                                    <div>
-                                        <a
-                                            href={item.href}
-                                            className="
-                                                font-semibold 
-                                                text-gray-900
-                                            ">
-                                            {item.name}
-                                            <span
-                                                className="
-                                                absolute 
-                                                inset-0
-                                            "/>
-                                        </a>
-                                        <p
-                                            className="
-                                                mt-1 
-                                                text-gray-600
-                                            ">{item.description}</p>
-                                    </div>
-                                </div>
+                                <MenuItem 
+                                    key={item.name} 
+                                    name={item.name} 
+                                    description={item.description}
+                                    href={item.href}
+                                    icon={item.icon}
+                                />
                             ))}
                         </div>
                     </div>

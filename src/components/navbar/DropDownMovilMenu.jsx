@@ -1,37 +1,17 @@
 import React from 'react';
 import { Disclosure } from '@headlessui/react';
-import {
-    BellIcon,
-} from '@heroicons/react/24/outline';
 
-const user = {
-    name: 'Tom Cook',
-    email: 'tom@example.com',
-    imageUrl:
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
+import { ImagenUser } from './ImagenUser';
 
-const userNavigation = [
-    { name: 'Your Profile', href: '#' },
-    { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '#' },
-]
+import { user, navigation, userNavigation } from '../../static/data';
+
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-const navigation = [
-    { name: 'Dashboard', href: '#', current: true },
-    { name: 'Team', href: '#', current: false },
-    { name: 'Projects', href: '#', current: false },
-    { name: 'Calendar', href: '#', current: false },
-    { name: 'Reports', href: '#', current: false },
-]
-
 
 export const DropDownMovilMenu = () => {
-
     return (
 
         <Disclosure.Panel className="md:hidden">
@@ -56,11 +36,8 @@ export const DropDownMovilMenu = () => {
             </div>
             <div className=" border-t border-gray-700 pb-3 pt-4">
                 <div className="flex items-center px-5">
-
-                    <div className="flex-shrink-0">
-                        <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
-                    </div>
-
+                    {/* IMAGE USER */}
+                    <ImagenUser/>                                   
                     <div className="ml-3">
                         <div className="text-base font-medium leading-none text-white">
                             {user.name}
