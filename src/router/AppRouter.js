@@ -16,6 +16,11 @@ import { NotFoundPage } from '../pages/notFound/NotFoundPage';
 
 import { ToasterProvider } from '../providers/ToasterProvider';
 import { PreRegistrationPage } from '../pages/preRegistration/PreRegistrationPage';
+import { ListPreRegistrationPage } from '../pages/listPreRegistro/ListPreRegistrationPage';
+import { TeamsPage } from '../pages/teams/TeamsPage';
+import { UsersPage } from '../pages/users/UsersPage';
+import { PaymentsPage } from '../pages/payments/PaymentsPage';
+import { SettingPage } from '../pages/setting/SettingPage';
 
 
 
@@ -54,6 +59,46 @@ export const AppRouter = () => {
                             </PrivateRoute>
                         }
                     />
+                    <Route
+                        path="/lista-pre-registro"
+                        element={
+                            <PrivateRoute>
+                                <ListPreRegistrationPage />
+                            </PrivateRoute>
+                        }
+                    />                    
+                    <Route
+                        path="/grupos"
+                        element={
+                            <PrivateRoute>
+                                <TeamsPage />
+                            </PrivateRoute>
+                        }
+                    />                    
+                    <Route
+                        path="/usuarios"
+                        element={
+                            <PrivateRoute>
+                                <UsersPage />
+                            </PrivateRoute>
+                        }
+                    />                    
+                    <Route
+                        path="/ajustes"
+                        element={
+                            <PrivateRoute>
+                                <SettingPage />
+                            </PrivateRoute>
+                        }
+                    />                    
+                    <Route
+                        path="/pagos"
+                        element={
+                            <PrivateRoute>
+                                <PaymentsPage />
+                            </PrivateRoute>
+                        }
+                    />                    
                     <Route
                         path="*"
                         element={
