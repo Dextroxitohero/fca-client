@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { RxAvatar } from "react-icons/rx";
 import axios from "axios";
 // import { server } from "../../server";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 export const FormSignup = () => {
     const [email, setEmail] = useState("");
@@ -33,14 +33,14 @@ export const FormSignup = () => {
         axios
             .post(`http://localhost:8000/auth/create-user`, newForm, config)
             .then((res) => {
-                toast.success(res.data.message);
+                // toast.success(res.data.message);
                 setName("");
                 setEmail("");
                 setPassword("");
                 setAvatar();
             })
             .catch((error) => {
-                toast.error(error.response.data.message);
+                // toast.error(error.response.data.message);
             });
     };
 

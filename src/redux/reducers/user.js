@@ -1,81 +1,55 @@
-import { createReducer } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  isAuthenticated: false,
-};
+const userSlice = createSlice({
+	name: 'user',
+	initialState: {
+		// user: null,
+		// token: null,
+		// isAuthenticated: false,
+		// loading: false,
+		// error: null,
+	},
+	reducers: {
+		loginStart: (state) => {
+			state.loading = true;
+			state.error = null;
+		},
+		loginSuccess: (state, action) => {
+			state.loading = false;
+			state.isAuthenticated = true;
+		},
+		loginFailure: (state, action) => {
+			state.loading = false;
+		},
 
-export const userReducer = createReducer(initialState, {
-  LoadUserRequest: (state) => {
-    state.loading = true;
-  },
-  LoadUserSuccess: (state, action) => {
-    state.isAuthenticated = true;
-    state.loading = false;
-    state.user = action.payload;
-  },
-  LoadUserFail: (state, action) => {
-    state.loading = false;
-    state.error = action.payload;
-    state.isAuthenticated = false;
-  },
+		// reducer load user
 
-  // update user information
-  updateUserInfoRequest: (state) => {
-    state.loading = true;
-  },
-  updateUserInfoSuccess: (state, action) => {
-    state.loading = false;
-    state.user = action.payload;
-  },
-  updateUserInfoFailed: (state, action) => {
-    state.loading = false;
-    state.error = action.payload;
-  },
-
-  // update user address
-  updateUserAddressRequest: (state) => {
-    state.addressloading = true;
-  },
-  updateUserAddressSuccess: (state, action) => {
-    state.addressloading = false;
-    state.successMessage = action.payload.successMessage;
-    state.user = action.payload.user;
-  },
-  updateUserAddressFailed: (state, action) => {
-    state.addressloading = false;
-    state.error = action.payload;
-  },
-
-  // delete user address
-  deleteUserAddressRequest: (state) => {
-    state.addressloading = true;
-  },
-  deleteUserAddressSuccess: (state, action) => {
-    state.addressloading = false;
-    state.successMessage = action.payload.successMessage;
-    state.user = action.payload.user;
-  },
-  deleteUserAddressFailed: (state, action) => {
-    state.addressloading = false;
-    state.error = action.payload;
-  },
-
-  // get all users --- admin
-  getAllUsersRequest: (state) => {
-    state.usersLoading = true;
-  },
-  getAllUsersSuccess: (state,action) => {
-    state.usersLoading = false;
-    state.users = action.payload;
-  },
-  getAllUsersFailed: (state,action) => {
-    state.usersLoading = false;
-    state.error = action.payload;
-  },
-  clearErrors: (state) => {
-    state.error = null;
-  },
-  clearMessages: (state) => {
-    state.successMessage = null;
-  },
+		LoadUserRequest: (state) => {
+			state.loading = true;
+		},
+		LoadUserSuccess: (state, action) => {
+			state.isAuthenticated = true;
+			state.loading = false;
+			state.user = action.payload.user;
+		},
+		LoadUserFail: (state, action) => {
+			state.loading = false;
+			state.error = action.payload;
+			state.isAuthenticated = false;
+		},
+		logout: (state) => {
+			state.isAuthenticated = false;
+		},
+	},
 });
+
+export const {
+	loginStart,
+	loginSuccess,
+	loginFailure,
+	LoadUserRequest,
+	LoadUserSuccess,
+	LoadUserFail,
+	logout
+} = userSlice.actions;
+export default userSlice.reducer;
