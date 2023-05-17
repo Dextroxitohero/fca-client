@@ -24,7 +24,7 @@ export const Navbar = () => {
 
     return (
         <>
-            <Disclosure as="nav" className="bg-gray-800">
+            <Disclosure as="nav" className="bg-gray-800 fixed w-full z-10 shadow-sm">
                 {({ open }) => (
                     <>
                         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -38,7 +38,7 @@ export const Navbar = () => {
                                 </div>
                                 <div className="hidden md:block">
                                     <div className="ml-4 flex items-center md:ml-6">
-                                        <ButtonNotification/>
+                                        {/* <ButtonNotification/> */}
                                         {/* PROFILE DROPDOWN */}
                                         <Menu as="div" className="relative ml-3">
                                             {/* BUTTON USER MENU */}

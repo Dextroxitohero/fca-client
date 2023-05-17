@@ -16,17 +16,19 @@ import { NotFoundPage } from '../pages/notFound/NotFoundPage';
 
 import { ToasterProvider } from '../providers/ToasterProvider';
 import { PreRegistrationPage } from '../pages/preRegistration/PreRegistrationPage';
-import { ListPreRegistrationPage } from '../pages/listPreRegistro/ListPreRegistrationPage';
+import { CandidatesPage } from '../pages/candidates/CandidatesPage';
 import { TeamsPage } from '../pages/teams/TeamsPage';
 import { UsersPage } from '../pages/users/UsersPage';
 import { PaymentsPage } from '../pages/payments/PaymentsPage';
 import { SettingPage } from '../pages/setting/SettingPage';
-
+import { NotificationsPage } from '../pages/notifications/NotificationsPage';
+import { ProfilePage } from '../pages/profile/ProfilePage';
+import { CursesPage } from '../pages/curses/CursesPage';
 
 
 export const AppRouter = () => {
     const dispatch = useDispatch();
-    
+
     useEffect(() => {
         dispatch(loadUser());
     }, [dispatch]);
@@ -37,7 +39,7 @@ export const AppRouter = () => {
                 <Routes>
                     <Route
                         path="/signup"
-                        element={ <SignupPage />}
+                        element={<SignupPage />}
                     />
                     <Route
                         path="/activation/:activation_token"
@@ -60,21 +62,21 @@ export const AppRouter = () => {
                         }
                     />
                     <Route
-                        path="/lista-pre-registro"
+                        path="/candidatos"
                         element={
                             <PrivateRoute>
-                                <ListPreRegistrationPage />
+                                <CandidatesPage />
                             </PrivateRoute>
                         }
-                    />                    
+                    />
                     <Route
-                        path="/grupos"
+                        path="/cursos"
                         element={
                             <PrivateRoute>
-                                <TeamsPage />
+                                <CursesPage />
                             </PrivateRoute>
                         }
-                    />                    
+                    />
                     <Route
                         path="/usuarios"
                         element={
@@ -82,15 +84,7 @@ export const AppRouter = () => {
                                 <UsersPage />
                             </PrivateRoute>
                         }
-                    />                    
-                    <Route
-                        path="/ajustes"
-                        element={
-                            <PrivateRoute>
-                                <SettingPage />
-                            </PrivateRoute>
-                        }
-                    />                    
+                    />
                     <Route
                         path="/pagos"
                         element={
@@ -98,7 +92,32 @@ export const AppRouter = () => {
                                 <PaymentsPage />
                             </PrivateRoute>
                         }
-                    />                    
+                    />
+                    <Route
+                        path="/ajustes"
+                        element={
+                            <PrivateRoute>
+                                <SettingPage />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/perfil"
+                        element={
+                            <PrivateRoute>
+                                <ProfilePage />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/notificaciones"
+                        element={
+                            <PrivateRoute>
+                                <NotificationsPage />
+                            </PrivateRoute>
+                        }
+                    />
+
                     <Route
                         path="*"
                         element={
@@ -107,7 +126,7 @@ export const AppRouter = () => {
                     />
                 </Routes>
             </BrowserRouter>
-            <ToasterProvider/>
+            <ToasterProvider />
         </>
 
     );

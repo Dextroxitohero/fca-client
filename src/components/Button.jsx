@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconType } from "react-icons";
+
 
 
 export const Button = ({ 
@@ -8,7 +8,6 @@ export const Button = ({
   disabled, 
   outline,
   small,
-  icon: Icon,
 }) => {
   return ( 
     <button
@@ -31,16 +30,6 @@ export const Button = ({
         ${small ? 'border-[1px]' : 'border-2'}
       `}
     >
-      {Icon && (
-        <Icon
-          size={24}
-          className="
-            absolute
-            left-4
-            top-3
-          "
-        />
-      )}
       {label}
     </button>
    );

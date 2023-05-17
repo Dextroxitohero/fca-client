@@ -10,6 +10,7 @@ import axios from "axios";
 export const FormSignup = () => {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [password, setPassword] = useState("");
     const [visible, setVisible] = useState(false);
     const [avatar, setAvatar] = useState(null);
@@ -27,6 +28,7 @@ export const FormSignup = () => {
 
         newForm.append("file", avatar);
         newForm.append("name", name);
+        newForm.append("lastName", lastName);
         newForm.append("email", email);
         newForm.append("password", password);
 
@@ -35,6 +37,7 @@ export const FormSignup = () => {
             .then((res) => {
                 // toast.success(res.data.message);
                 setName("");
+                setLastName("");
                 setEmail("");
                 setPassword("");
                 setAvatar();
@@ -46,20 +49,20 @@ export const FormSignup = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-            <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                    Register as a new user
-                </h2>
-            </div>
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                    <div className="sm:mx-auto sm:w-full mb-10 sm:max-w-md">
+                        <h2 className="mt-6 text-center text-3xl font-semibold text-gray-900">
+                            Crear una cuenta
+                        </h2>
+                    </div>
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         <div>
                             <label
                                 htmlFor="email"
                                 className="block text-sm font-medium text-gray-700"
                             >
-                                Full Name
+                                Nombre
                             </label>
                             <div className="mt-1">
                                 <input
@@ -76,10 +79,30 @@ export const FormSignup = () => {
 
                         <div>
                             <label
+                                htmlFor="lastName"
+                                className="block text-sm font-medium text-gray-700"
+                            >
+                                Apellido
+                            </label>
+                            <div className="mt-1">
+                                <input
+                                    type="text"
+                                    name="lastName"
+                                    autoComplete="lastName"
+                                    required
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label
                                 htmlFor="email"
                                 className="block text-sm font-medium text-gray-700"
                             >
-                                Email address
+                                Correo Electronico
                             </label>
                             <div className="mt-1">
                                 <input
@@ -127,7 +150,7 @@ export const FormSignup = () => {
                             </div>
                         </div>
 
-                        <div>
+                        {/* <div>
                             <label
                                 htmlFor="avatar"
                                 className="block text-sm font-medium text-gray-700"
@@ -159,20 +182,20 @@ export const FormSignup = () => {
                                     />
                                 </label>
                             </div>
-                        </div>
+                        </div> */}
 
                         <div>
                             <button
                                 type="submit"
-                                className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                                className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-700 hover:bg-indigo-600"
                             >
-                                Submit
+                                Enviar
                             </button>
                         </div>
                         <div className={`${styles.noramlFlex} w-full`}>
-                            <h4>Already have an account?</h4>
+                            <h4>Ya tienes una cuenta?</h4>
                             <Link to="/login" className="text-blue-600 pl-2">
-                                Sign In
+                                Iniciar sesion
                             </Link>
                         </div>
                     </form>

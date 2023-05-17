@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react';
 import { Transition } from '@headlessui/react';
-
-
-import { solutions } from '../../static/data';
+import {
+    ArrowRightOnRectangleIcon
+} from '@heroicons/react/24/outline';
+import { userMenu } from '../../static/data';
 import { MenuItem } from './MenuItem';
 
 // const solutions = [
@@ -49,15 +50,57 @@ export const UserMenu = () => {
                         ring-gray-900/5
                     ">
                         <div className="p-4">
-                            {solutions.map((item) => (
-                                <MenuItem 
-                                    key={item.name} 
-                                    name={item.name} 
+                            {userMenu.map((item) => (
+                                <MenuItem
+                                    key={item.name}
+                                    name={item.name}
                                     description={item.description}
                                     href={item.href}
                                     icon={item.icon}
                                 />
                             ))}
+                            <hr />
+
+                            <div
+                                className="
+                                group relative 
+                                flex gap-x-6 
+                                rounded-lg p-4 
+                                hover:bg-gray-50
+                                mt-5
+                                "
+                            >
+                                <div
+                                    className="
+                                    mt-1 
+                                    flex 
+                                    h-11 
+                                    w-11 
+                                    flex-none 
+                                    items-center 
+                                    justify-center 
+                                    rounded-lg 
+                                    bg-gray-50 
+                                    group-hover:bg-white
+                                        "
+                                >
+                                    <ArrowRightOnRectangleIcon
+                                        aria-hidden="true"
+                                        className="
+                                        h-6 
+                                        w-6 
+                                        text-gray-600 
+                                        group-hover:text-indigo-600
+                                    "
+                                    />
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="font-semibold text">
+                                        Cerrar Sesión
+                                    </span>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>

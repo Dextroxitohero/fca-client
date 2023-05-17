@@ -1,128 +1,70 @@
-import React, { useState } from 'react';
-// import axios from "axios";
-import { AiFillGithub } from "react-icons/ai";
-import { FcGoogle } from "react-icons/fc";
-// import { useCallback, useState } from "react";
-// import { toast } from "react-hot-toast";
-import {
-  FieldValues,
-  SubmitHandler,
-  useForm
-} from "react-hook-form";
-
-
-
-// import Modal from "./Modal";
-import { Input } from '../../components/inputs/Input';
-import { Heading } from '../../components/Heading';
 import { Button } from '../../components/Button';
+import { Heading } from '../../components/Heading';
+
+
+
 
 export const FormPreRegistration = () => {
 
-  const [isLoading, setIsLoading] = useState(false);
+	let bodyContent = (
+		<div className="flex flex-col gap-8">
+			{/* HEADING */}
+			<div className="
+                flex 
+                items-center 
+                p-6
+                rounded-t
+                justify-center
+                relative
+                "
+			>
+				<Heading
+					title="Where do you wanna go?"
+					subtitle="Find the perfect location!"
+					center={true}
+				/>
+			</div>
+			{/* BODY*/}
+			<div className="relative p-6 flex-auto">
+				<Heading
+					title="Where do you wanna go?"
+					subtitle="Find the perfect location!"
+				/>
+			</div>
+			{/* FOOTER */}
+			<div className="flex flex-col gap-2 p-6">
+				<div
+					className="
+						flex 
+						flex-row 
+						items-center 
+						gap-4 
+						w-full
+					"
+				>
+					<Button
 
-  const {
-    register,
-    handleSubmit,
-    formState: {
-      errors,
-    },
-  } = useForm ({
-    defaultValues: {
-      name: '',
-      email: '',
-      password: ''
-    },
-  });
+						disabled={false}
+						label={"Atras"}
+						outline
+						onClick={() => { }}
+					/>
+					<Button
 
-  // const onSubmit = (data) => {
-  //   setIsLoading(true);
+						disabled={false}
+						label={"Siguiente"}
+						onClick={() => { }}
+					/>
+				</div>
+			</div>
+		</div>
+	)
 
-  //   axios.post('/api/register', data)
-  //     .then(() => {
-  //       toast.success('Registered!');
-  //       registerModal.onClose();
-  //       loginModal.onOpen();
-  //     })
-  //     .catch((error) => {
-  //       toast.error(error);
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false);
-  //     })
-  // }
-
-  // const onToggle = useCallback(() => {
-  //   registerModal.onClose();
-  //   loginModal.onOpen();
-  // }, [registerModal, loginModal])
-
-
-  return (
-    <>
-      <div className="flex flex-col gap-4">
-        <Heading
-          title="Welcome to Intranet"
-          subtitle="Create an account!"
-        />
-        <Input
-          id="email"
-          label="Email"
-          disabled={isLoading}
-          register={register}
-          errors={errors}
-          required
-        />
-        <Input
-          id="name"
-          label="Name"
-          disabled={isLoading}
-          register={register}
-          errors={errors}
-          required
-        />
-        <Input
-          id="password"
-          label="Password"
-          type="password"
-          disabled={isLoading}
-          register={register}
-          errors={errors}
-          required
-        />
-      </div>
-      <div className="flex flex-col gap-4 mt-3">
-        <hr />
-        <Button
-          outline
-          label="Continue with Google"
-          icon={FcGoogle}
-          onClick={() => {}}
-        />
-
-        <div
-          className="
-          text-neutral-500 
-          text-center 
-          mt-4 
-          font-light
-        "
-        >
-          <p>Already have an account?
-            <span
-              onClick={()=>{}}
-              className="
-              text-neutral-800
-              cursor-pointer 
-              hover:underline
-            "
-            > Log in</span>
-          </p>
-        </div>
-      </div>
-
-
-    </>
-
-  );
+	return (
+		<div className="flex items-center justify-center h-screen bg-slate-50">
+			<div className="w-full sm:w-w-2xl max-w-2xl h-3/4 shadow-md bg-white rounded-xl">
+				{bodyContent}
+			</div>
+		</div>
+	)
 }

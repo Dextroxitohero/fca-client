@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 // import {
 //     ArrowPathIcon,
 //     ChartPieIcon,
@@ -10,12 +10,15 @@ import * as HeroIcons from '@heroicons/react/24/outline';
 
 
 
+
+
+
 export const MenuItem = ({ name, description, href, icon }) => {
     const IconComponent = HeroIcons[icon];
 
     return (
-        <Link
-            to="/"
+        <NavLink
+            to={`/${href}`}
             className="
                 group relative 
                 flex gap-x-6 
@@ -60,6 +63,6 @@ export const MenuItem = ({ name, description, href, icon }) => {
                 </span>
                 <p className="mt-1 text-gray-600">{description}</p>
             </div>
-        </Link>
+        </NavLink>
     )
 }
