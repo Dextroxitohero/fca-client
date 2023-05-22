@@ -4,6 +4,7 @@ export const user = {
     imageUrl:
         'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
+
 export const navigation = [
     { name: 'Inicio', href: '/' },
     { name: 'Candidatos', href: '/candidatos' },
@@ -17,7 +18,6 @@ export const userNavigation = [
     { name: 'Configuracion', href: '#' },
     { name: 'Cerrar sesion', href: '#' },
 ]
-
 
 export const userMenu = [
     { name: 'Perfil', description: 'Edita y actuliza tu perfil de usuario.', href: 'perfil', icon: "UserIcon" },
