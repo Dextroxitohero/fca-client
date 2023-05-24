@@ -8,8 +8,6 @@ export const PaymentsPage = () => {
 			<div className="w-full sm:w-w-2xl max-w-3xl h-1/2  mt-[2rem]">
 				<form>
 					<div className="space-y-12">
-
-
 						<div className="mx-auto max-w-2xl lg:mx-0">
 							<h2 className="text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">Registro de pagos</h2>
 							<p className="mt-1 text-sm leading-6 text-gray-600">

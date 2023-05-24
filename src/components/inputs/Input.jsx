@@ -1,78 +1,61 @@
 import React from 'react';
-// import {
-//     FieldErrors,
-//     FieldValues,
-//     UseFormRegister
-// } from "react-hook-form";
 
-
-// export const Input({
-//     id,
-//     label,
-//     type = "text",
-//     disabled,
-//     register,
-//     required,
-//     errors
-// }) => {
 
 export const Input = ({
     id,
     label,
-    type = "text",
+    type="text",
+    placeholder,
     disabled,
-    register,
     required,
+    register,
     errors
-}) =>{
+}) => {
     return (
-        <>
-            <div className="w-full relative">
-
+        <div>
+            <label
+                className="
+                    block 
+                    text-sm 
+                    font-medium 
+                    leading-6 
+                    text-gray-900"
+            >
+                {label}
+            </label>
+            <div className="mt-2">
                 <input
                     id={id}
-                    disabled={disabled}
-                    {...register(id, { required })}
-                    placeholder=" "
                     type={type}
-                    className={`
-                peer
-                w-full
-                p-4
-                pt-6 
-                font-light 
-                bg-white 
-                border-2
-                rounded-md
-                outline-none
-                transition
-                disabled:opacity-70
-                disabled:cursor-not-allowed
-                ${errors[id] ? 'border-rose-500' : 'border-neutral-300'}
-                ${errors[id] ? 'focus:border-rose-500' : 'focus:border-black'}
-                `}
+                    placeholder={placeholder}
+                    disabled={disabled}
+                    {...register(id, {
+                        required: required && {
+                            message: 'Este campo es obligatorio',
+                        },
+                    })}
+                    className="
+                        block 
+                        w-full 
+                        rounded-md 
+                        border-0 
+                        py-1.5 
+                        px-2
+                        text-gray-900 
+                        shadow-sm 
+                        ring-1 
+                        ring-inset 
+                        ring-gray-300 
+                        placeholder:text-gray-400 
+                        focus:ring-2 
+                        focus:ring-inset 
+                        focus:ring-indigo-600 
+                        sm:text-sm 
+                        sm:leading-6
+                    "
                 />
-                <label
-                    className={`
-                absolute 
-                text-md
-                duration-150 
-                transform 
-                -translate-y-3 
-                top-5 
-                z-10 
-                origin-[0] 
-                left-5
-                peer-placeholder-shown:scale-00 
-                peer-placeholder-shown:translate-y-0 
-                peer-focus:scale-75
-                peer-focus:-translate-y-4
-                ${errors[id] ? 'text-rose-500' : 'text-zinc-400'}
-                `}
-                >
-                    {label}
-                </label>
+                {errors[id] && <span>{errors[id].message}</span>}
             </div>
-        </>
-    );
+        </div>
+    )
 }
