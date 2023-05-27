@@ -6,8 +6,10 @@ export const Input = ({
     placeholder,
     disabled,
     formik,
+    value,
     error
 }) => {
+
     return (
         <div>
             <label
@@ -28,7 +30,7 @@ export const Input = ({
                     type={type}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.name}
+                    value={value}
                     placeholder={placeholder}
                     disabled={disabled}
                     className={`
@@ -50,10 +52,10 @@ export const Input = ({
                         sm:text-sm 
                         sm:leading-6
                         ${error ? 'ring-rose-500' : 'ring-gray-300'}
-                        ${error ? 'focus:ring-rose-500'  : 'focus:border-neutral-black'}
+                        ${error ? 'focus:ring-rose-500' : 'focus:border-neutral-black'}
                     `}
                 />
-                {error && <div className="text-red-500">{error}</div>}
+                {error && <small className="text-red-500">{error}</small>}
             </div>
         </div>
     )

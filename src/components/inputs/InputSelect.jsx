@@ -1,3 +1,5 @@
+import React from 'react'
+
 export const InputSelect = ({
     id,
     name,
@@ -5,6 +7,7 @@ export const InputSelect = ({
     placeholder,
     disabled,
     formik,
+    value,
     data,
     optionDefault,
     error
@@ -23,7 +26,7 @@ export const InputSelect = ({
                     name={name}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.name}
+                    value={value}
                     placeholder={placeholder}
                     disabled={disabled}
                     className={`

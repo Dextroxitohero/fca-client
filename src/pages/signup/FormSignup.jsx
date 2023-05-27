@@ -1,204 +1,143 @@
-import { React, useState } from "react";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import styles from "../../styles/styles";
+import { useFormik } from 'formik';
 import { Link } from "react-router-dom";
-import { RxAvatar } from "react-icons/rx";
-import axios from "axios";
-// import { server } from "../../server";
-// import { toast } from "react-toastify";
+import { Input } from '../../components/inputs/Input';
+import { validate } from './validation';
+import { Button } from '../../components/buttons/Button';
+
+
+
 
 export const FormSignup = () => {
-    const [email, setEmail] = useState("");
-    const [name, setName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [password, setPassword] = useState("");
-    const [visible, setVisible] = useState(false);
-    const [avatar, setAvatar] = useState(null);
 
-    const handleFileInputChange = (e) => {
-        const file = e.target.files[0];
-        setAvatar(file);
-    };
+    const formik = useFormik({
+        initialValues: {
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            confirmPassword: ''
+        },
+        validate,
+        onSubmit: values => {
+            alert(JSON.stringify(values, null, 2));
+        },
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const config = { headers: { "Content-Type": "multipart/form-data" } };
-
-        const newForm = new FormData();
-
-        newForm.append("file", avatar);
-        newForm.append("name", name);
-        newForm.append("lastName", lastName);
-        newForm.append("email", email);
-        newForm.append("password", password);
-
-        axios
-            .post(`http://localhost:8000/auth/create-user`, newForm, config)
-            .then((res) => {
-                // toast.success(res.data.message);
-                setName("");
-                setLastName("");
-                setEmail("");
-                setPassword("");
-                setAvatar();
-            })
-            .catch((error) => {
-                // toast.error(error.response.data.message);
-            });
-    };
+    });
+    const handleReset = () => {
+        formik.resetForm();
+    }
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                    <div className="sm:mx-auto sm:w-full mb-10 sm:max-w-md">
-                        <h2 className="mt-6 text-center text-3xl font-semibold text-gray-900">
-                            Crear una cuenta
-                        </h2>
+        <div
+            className="
+            min-h-screen 
+            bg-gray-50 
+            flex flex-col 
+            justify-center 
+            py-12 
+            sm:px-6
+            "
+        >
+            <div className="
+                sm:mx-auto 
+                sm:w-full 
+                sm:max-w-xl
+                bg-white 
+                sm:py-8
+                sm:px-20 
+                sm:rounded-md
+                shadow-md
+                "
+            >
+                {/* Header form */}
+                <div className="mb-16">
+                    <h2 className="mt-6 text-center text-3xl font-semibold text-gray-900">
+                        Crear una cuenta
+                    </h2>
+                </div>
+                {/* Body form */}
+                <div
+                    className="
+                    grid 
+                    grid-cols-1 
+                    gap-y-4 
+                    sm:grid-cols-6 
+                    mb-16
+                    "
+                >
+                    <div className="sm:col-span-6">
+                        <Input
+                            id="firstName"
+                            name="firstName"
+                            type="text"
+                            label="Nombre"
+                            placeholder="Ingresa tu nombre"
+                            formik={formik}
+                            value={formik.values.firstName}
+                            error={formik.touched.firstName && formik.errors.firstName}
+                        />
                     </div>
-                    <form className="space-y-6" onSubmit={handleSubmit}>
-                        <div>
-                            <label
-                                htmlFor="email"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Nombre
-                            </label>
-                            <div className="mt-1">
-                                <input
-                                    type="text"
-                                    name="text"
-                                    autoComplete="name"
-                                    required
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="lastName"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Apellido
-                            </label>
-                            <div className="mt-1">
-                                <input
-                                    type="text"
-                                    name="lastName"
-                                    autoComplete="lastName"
-                                    required
-                                    value={lastName}
-                                    onChange={(e) => setLastName(e.target.value)}
-                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="email"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Correo Electronico
-                            </label>
-                            <div className="mt-1">
-                                <input
-                                    type="email"
-                                    name="email"
-                                    autoComplete="email"
-                                    required
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="password"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Password
-                            </label>
-                            <div className="mt-1 relative">
-                                <input
-                                    type={visible ? "text" : "password"}
-                                    name="password"
-                                    autoComplete="current-password"
-                                    required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                />
-                                {visible ? (
-                                    <AiOutlineEye
-                                        className="absolute right-2 top-2 cursor-pointer"
-                                        size={25}
-                                        onClick={() => setVisible(false)}
-                                    />
-                                ) : (
-                                    <AiOutlineEyeInvisible
-                                        className="absolute right-2 top-2 cursor-pointer"
-                                        size={25}
-                                        onClick={() => setVisible(true)}
-                                    />
-                                )}
-                            </div>
-                        </div>
-
-                        {/* <div>
-                            <label
-                                htmlFor="avatar"
-                                className="block text-sm font-medium text-gray-700"
-                            ></label>
-                            <div className="mt-2 flex items-center">
-                                <span className="inline-block h-8 w-8 rounded-full overflow-hidden">
-                                    {avatar ? (
-                                        <img
-                                            src={URL.createObjectURL(avatar)}
-                                            alt="avatar"
-                                            className="h-full w-full object-cover rounded-full"
-                                        />
-                                    ) : (
-                                        <RxAvatar className="h-8 w-8" />
-                                    )}
-                                </span>
-                                <label
-                                    htmlFor="file-input"
-                                    className="ml-5 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-                                >
-                                    <span>Upload a file</span>
-                                    <input
-                                        type="file"
-                                        name="avatar"
-                                        id="file-input"
-                                        accept=".jpg,.jpeg,.png"
-                                        onChange={handleFileInputChange}
-                                        className="sr-only"
-                                    />
-                                </label>
-                            </div>
-                        </div> */}
-
-                        <div>
-                            <button
-                                type="submit"
-                                className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-700 hover:bg-indigo-600"
-                            >
-                                Enviar
-                            </button>
-                        </div>
-                        <div className={`${styles.noramlFlex} w-full`}>
-                            <h4>Ya tienes una cuenta?</h4>
-                            <Link to="/login" className="text-blue-600 pl-2">
-                                Iniciar sesion
-                            </Link>
-                        </div>
-                    </form>
+                    <div className="sm:col-span-6">
+                        <Input
+                            id="lastName"
+                            name="lastName"
+                            type="text"
+                            label="Apellido Paterno"
+                            placeholder="Ingresa tu nombre"
+                            formik={formik}
+                            value={formik.values.lastName}
+                            error={formik.touched.lastName && formik.errors.lastName}
+                        />
+                    </div>
+                    <div className="sm:col-span-6">
+                        <Input
+                            id="email"
+                            name="email"
+                            type="email"
+                            label="Correo electronico"
+                            placeholder="Ingresa tu correo electronico"
+                            formik={formik}
+                            value={formik.values.email}
+                            error={formik.touched.email && formik.errors.email}
+                        />
+                    </div>
+                    <div className="sm:col-span-6">
+                        <Input
+                            id="password"
+                            name="password"
+                            type="password"
+                            label="Contraseña"
+                            placeholder="Ingresa tu contraseña"
+                            formik={formik}
+                            value={formik.values.password}
+                            error={formik.touched.password && formik.errors.password}
+                        />
+                    </div>
+                    <div className="sm:col-span-6">
+                        <Input
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            type="password"
+                            label="Confirmar contraseña"
+                            placeholder="Confirma tu contraseña"
+                            formik={formik}
+                            value={formik.values.confirmPassword}
+                            error={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                        />
+                    </div>
+                </div>
+                {/* Footer form */}
+                <div>
+                    <Button
+                        label='Registrar'
+                        onClick={() => formik.handleSubmit()}
+                    />
+                    <div className={`w-full`}>
+                        <span>Ya tienes cuenta?</span>
+                        <Link to="/login" className="text-indigo-700 pl-2">
+                            Iniciar sesion
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
