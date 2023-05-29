@@ -20,8 +20,7 @@ export const Button = ({
         rounded-md
         hover:opacity-80
         transition
-        min-w-full
-        mb-8
+        flex-1
         ${outline ? 'bg-white' : 'bg-cyan'}
         ${outline ? 'border-black' : 'bg-indigo-600'}
         ${outline ? 'text-black' : 'text-white'}
