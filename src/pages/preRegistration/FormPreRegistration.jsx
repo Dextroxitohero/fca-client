@@ -171,7 +171,7 @@ export const FormPreRegistration = () => {
 								<InputSelect
 									id="location"
 									name="location"
-									label="Genero"
+									label="Estado"
 									placeholder="Selecione el estado donde vives"
 									formik={formik}
 									data={locationState}

@@ -128,10 +128,14 @@ export const FormSignup = () => {
                 </div>
                 {/* Footer form */}
                 <div>
-                    <Button
-                        label='Registrar'
-                        onClick={() => formik.handleSubmit()}
-                    />
+                    <div
+                        className="mt-6 flex items-center justify-around gap-x-6 mb-16"
+                    >
+                        <Button
+                            label='Registrar'
+                            onClick={() => formik.handleSubmit()}
+                        />
+                    </div>
                     <div className={`w-full`}>
                         <span>Ya tienes cuenta?</span>
                         <Link to="/login" className="text-indigo-700 pl-2">

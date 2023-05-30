@@ -1,13 +1,11 @@
 import { useFormik } from 'formik';
 import { Link } from "react-router-dom";
-
 import { Input } from '../../components/inputs/Input';
 import { Button } from '../../components/buttons/Button';
-
 import { validate } from './validation';
-
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../redux/actions/user";
+
 
 export const FormLogin = () => {
 
@@ -20,15 +18,15 @@ export const FormLogin = () => {
 		},
 		validate,
 		onSubmit: values => {
-			const {email, password} = values;
+			const { email, password } = values;
 			dispatch(loginUser({ email, password }))
 		},
 
 	});
+
 	const handleReset = () => {
 		formik.resetForm();
 	}
-
 
 	return (
 		<div
@@ -98,10 +96,15 @@ export const FormLogin = () => {
 
 				{/* Footer form */}
 				<div>
-					<Button
-						label='Iniciar Sesion'
-						onClick={() => formik.handleSubmit()}
-					/>
+					<div
+						className="mt-6 flex items-center justify-around gap-x-6 mb-16"
+
+					>
+						<Button
+							label='Iniciar Sesion'
+							onClick={() => formik.handleSubmit()}
+						/>
+					</div>
 					<div className={`w-full`}>
 						<span>No tienes cuenta?</span>
 						<Link to="/signup" className="text-indigo-700 pl-2">
@@ -109,9 +112,7 @@ export const FormLogin = () => {
 						</Link>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	);
 };
-
