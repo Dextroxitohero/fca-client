@@ -24,8 +24,8 @@ export const validate = values => {
         errors.phone = 'El numero de telefono debe contener al menos 10 digitos';
     }
     
-    if (!values.age) {
-        errors.age = 'La edad es requerida';
+    if (!values.dateBirth) {
+        errors.dateBirth = 'La edad es requerida';
     }
 
     if (!values.location) {
@@ -38,3 +38,4 @@ export const validate = values => {
 
     return errors;
 };
+

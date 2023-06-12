@@ -18,7 +18,7 @@ export const FormPreRegistration = () => {
 			lastName: '',
 			email: '',
 			phone: '',
-			age: '',
+			dateBirth: '',
 			location: '',
 			education: ''
 		},
@@ -45,10 +45,10 @@ export const FormPreRegistration = () => {
 		}
 	};
 	const handleFinish = () => {
-		if(Object.entries(formik.errors).length === 0){
+		if (Object.entries(formik.errors).length === 0) {
 			formik.handleSubmit()
-		}else{
-			toast.error("Completa todos los campos");			
+		} else {
+			toast.error("Completa todos los campos");
 		}
 	};
 
@@ -155,18 +155,6 @@ export const FormPreRegistration = () => {
 							mb-24
 							"
 						>
-							<div className="sm:col-span-6">
-								<Input
-									id="age"
-									name="age"
-									type="number"
-									label="Edad"
-									placeholder="Ingresa tu edad"
-									formik={formik}
-									value={formik.values.age}
-									error={formik.touched.age && formik.errors.age}
-								/>
-							</div>
 							<div className="sm:col-span-6">
 								<InputSelect
 									id="location"
