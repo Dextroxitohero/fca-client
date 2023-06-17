@@ -8,7 +8,7 @@ import {
 	LoadUserFail,
 	logout
 } from '../reducers/user';
-import Cookies from 'js-cookie';
+
 import axios from "axios";
 import { toast } from 'react-hot-toast';
 
