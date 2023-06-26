@@ -57,7 +57,6 @@ export const loadUser = () => async (dispatch) => {
 
 export const logoutUser = () => async (dispatch) => {
 	try {
-
 		// Realiza la llamada al servidor para hacer el logout
 		const response = await axios.get(`http://localhost:8000/auth/logout`,
 			{
@@ -70,7 +69,6 @@ export const logoutUser = () => async (dispatch) => {
 		// En caso de error en la llamada al servidor, muestra el mensaje de error
 		toast.error('Ocurrio un error.')
 	}
-
 };
 
 // load seller

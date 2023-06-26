@@ -25,7 +25,7 @@ export const validate = values => {
     }
     
     if (!values.dateBirth) {
-        errors.dateBirth = 'La edad es requerida';
+        errors.dateBirth = 'Fecha de nacimiento es requerida';
     }
 
     if (!values.location) {

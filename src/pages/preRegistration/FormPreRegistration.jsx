@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import { Input } from '../../components/inputs/Input';
-import { Button } from '../../components/buttons/Button';
 import { validate } from './validation';
-import { InputSelect } from '../../components/inputs/InputSelect';
 import { levelEducation, locationState } from '../../static/data';
 import { toast } from 'react-hot-toast';
+import { format } from 'date-fns';
+
+
+import { Input } from '../../components/inputs/Input';
+import { Button } from '../../components/buttons/Button';
+import { InputSelect } from '../../components/inputs/InputSelect';
+import { InputSingleDatePicker } from '../../components/inputs/InputSingleDatePicker'
 
 
 export const FormPreRegistration = () => {
@@ -24,6 +28,11 @@ export const FormPreRegistration = () => {
 		},
 		validate,
 		onSubmit: values => {
+			console.log(new Date(values.dateBirth))
+			const date = new Date(values.dateBirth);
+			const formattedDate = format(date, 'yyyy-MM-dd');
+			// const formattedDate = format(date, 'eeee, d MMMM yyyy', { locale: es });
+			console.log(formattedDate)
 			alert(JSON.stringify(values, null, 2));
 		},
 
@@ -181,7 +190,16 @@ export const FormPreRegistration = () => {
 									error={formik.touched.education && formik.errors.education}
 								/>
 							</div>
-
+							<div className="sm:col-span-6">
+								<InputSingleDatePicker
+									id='dateBirth'
+									name='dateBirth'
+									label='Fecha de nacimiento'
+									formik={formik}
+									value={formik.values.dateBirth}
+									error={formik.touched.dateBirth && formik.errors.dateBirth}
+								/>
+							</div>
 						</div>
 						{/* Footer form */}
 						<div

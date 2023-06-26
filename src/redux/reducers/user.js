@@ -21,9 +21,7 @@ const userSlice = createSlice({
 		loginFailure: (state, action) => {
 			state.loading = false;
 		},
-
 		// reducer load user
-
 		LoadUserRequest: (state) => {
 			state.loading = true;
 		},
