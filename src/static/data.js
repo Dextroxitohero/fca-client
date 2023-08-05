@@ -77,3 +77,17 @@ export const levelEducation = [
     { value: "Diplomado" },
     { value: "Curso o capacitación" }
 ]
+
+export const  language = [
+    { value: "Ingles" },
+    { value: "Frances" },
+    { value: "Japones" },
+    { value: "Italiano" },
+]
+
+export const  accounts = [
+    { value: "9801 9878 0978 0919" },
+    { value: "9878 9889 0019 0918" },
+    { value: "9232 2200 1100 0010" },
+    { value: "9078 9890 0912 1230" },
+]

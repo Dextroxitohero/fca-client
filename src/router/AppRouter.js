@@ -24,6 +24,9 @@ import { SettingPage } from '../pages/setting/SettingPage';
 import { NotificationsPage } from '../pages/notifications/NotificationsPage';
 import { ProfilePage } from '../pages/profile/ProfilePage';
 import { CursesPage } from '../pages/curses/CursesPage';
+import { FormValidacionDatos } from '../pages/preRegistration/FormValidacionDatos';
+import { FormValidacionPago } from '../pages/preRegistration/FormValidacionPago';
+import { FormValidacionProceso } from '../pages/preRegistration/FormValidacionProceso';
 
 
 export const AppRouter = () => {
@@ -52,6 +55,18 @@ export const AppRouter = () => {
                     <Route
                         path="/pre-registro"
                         element={<PreRegistrationPage />}
+                    />
+                    <Route
+                        path="/validacion-datos"
+                        element={<FormValidacionDatos />}
+                    />
+                    <Route
+                        path="/validacion-pago"
+                        element={<FormValidacionPago />}
+                    />
+                    <Route
+                        path="/validacion-proceso"
+                        element={<FormValidacionProceso />}
                     />
                     <Route
                         path="/"

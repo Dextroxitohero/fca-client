@@ -34,7 +34,8 @@ export const InputSelect = ({
                         w-full 
                         rounded-md 
                         border-0 
-                        py-1.5 
+                        py-1.5
+                        px-3
                         text-gray-900 
                         shadow-sm 
                         ring-1 

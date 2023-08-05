@@ -5,6 +5,8 @@ import {
 } from '@heroicons/react/24/outline';
 import { userMenu } from '../../static/data';
 import { MenuItem } from './MenuItem';
+import { useDispatch } from "react-redux";
+import { logoutUser } from '../../redux/actions/user';
 
 // const solutions = [
 //     { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
@@ -14,7 +16,15 @@ import { MenuItem } from './MenuItem';
 //     { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
 // ]
 
+
 export const UserMenu = () => {
+
+	const dispatch = useDispatch();
+    
+    const handleLogOut = ()=>{
+        dispatch(logoutUser())
+    }
+    
     return (
         <div>
             <Transition
@@ -62,6 +72,7 @@ export const UserMenu = () => {
                             <hr />
 
                             <div
+                                onClick={handleLogOut}
                                 className="
                                 group relative 
                                 flex gap-x-6 
@@ -69,6 +80,7 @@ export const UserMenu = () => {
                                 hover:bg-gray-50
                                 mt-5
                                 "
+
                             >
                                 <div
                                     className="
@@ -82,7 +94,7 @@ export const UserMenu = () => {
                                     rounded-lg 
                                     bg-gray-50 
                                     group-hover:bg-white
-                                        "
+                                    "
                                 >
                                     <ArrowRightOnRectangleIcon
                                         aria-hidden="true"

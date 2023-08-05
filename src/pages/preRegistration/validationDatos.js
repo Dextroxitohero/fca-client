@@ -12,12 +12,6 @@ export const validate = values => {
         errors.lastName = 'El apellido paterno debe contener al menos 4 letras';
     }
 
-    if (!values.email) {
-        errors.email = 'El correo electronico es requerido';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'El correo no es valido';
-    }
-
     if (!values.phone) {
         errors.phone = 'La contraseña es requerida';
     } else if (values.phone.length < 10) {
@@ -34,7 +28,11 @@ export const validate = values => {
 
     if (!values.education) {
         errors.education = 'La nivel de educacion es requerido';
-    } 
+    }
+
+    if (!values.education) {
+        errors.language = 'El idioma de interes es requerido';
+    }
 
     return errors;
 };

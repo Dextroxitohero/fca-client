@@ -52,7 +52,7 @@ export const FormLogin = () => {
 			>
 				{/* Header form */}
 				<div className="mb-16">
-					<h2 className="mt-6 text-center text-3xl font-semibold text-gray-900">
+					<h2 className="mt-6 text-center text-3xl font-semibold text-red">
 						Iniciar sesion
 					</h2>
 				</div>
