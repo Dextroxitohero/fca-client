@@ -7,7 +7,8 @@ const userPreRegistration = createSlice({
 		success: null,
 		email:'',
 		emailExist: false,
-		userPreRegister: null
+		userPreRegister: null,
+		allPreRegisters: []
 	},
 	reducers: {
 		emailVerificationStart: (state, action) => {
@@ -27,6 +28,7 @@ const userPreRegistration = createSlice({
 			state.email = '';
 			state.userPreRegister = null;
 			state.success = null;
+			state.loading = false;
 		},
 		preRegistrationStart: (state) => {
 			state.loading = true;
@@ -44,9 +46,21 @@ const userPreRegistration = createSlice({
 		},
 		validatePaymentSuccess: (state, action) => {
 			state.loading = false;
-			state.userPreRegister = action.payload.data?.userPreRegister;
+			state.success = action.payload.data.success
 		},
 		validatePaymentFailure: (state, action) => {
+			state.loading = false;
+		},
+		
+
+		getAllPreRegisterStart: (state, action) => {
+			state.loading = true;
+		},
+		getAllPreRegisterSuccess: (state, action) => {
+			state.loading = false;
+			state.allPreRegisters = action.payload.data.data;
+		},
+		getAllPreRegisterFailure: (state, action) => {
 			state.loading = false;
 		},
 	},
@@ -63,5 +77,8 @@ export const {
 	validatePaymentSuccess,
 	validatePaymentFailure,
 	resetEmailVarification,
+	getAllPreRegisterStart,
+	getAllPreRegisterSuccess,
+	getAllPreRegisterFailure
 } = userPreRegistration.actions;
 export default userPreRegistration.reducer;

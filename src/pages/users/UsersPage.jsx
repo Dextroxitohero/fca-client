@@ -1,90 +1,164 @@
-const people = [
-	{
-		name: 'Tom Cook',
-		email: 'tom.cook@example.com',
-		role: 'Maestro',
-		imageUrl:
-			'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-		lastSeen: null,
-	},
-	{
-		name: 'Tom Cook',
-		email: 'tom.cook@example.com',
-		role: 'Maestro',
-		imageUrl:
-			'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-		lastSeen: null,
-	},
-	{
-		name: 'Tom Cook',
-		email: 'tom.cook@example.com',
-		role: 'Maestro',
-		imageUrl:
-			'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-		lastSeen: null,
-	},
-	{
-		name: 'Tom Cook',
-		email: 'tom.cook@example.com',
-		role: 'Maestro',
-		imageUrl:
-			'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-		lastSeen: null,
-	},
-	{
-		name: 'Tom Cook',
-		email: 'tom.cook@example.com',
-		role: 'Maestro',
-		imageUrl:
-			'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-		lastSeen: null,
-	},
+import React, { useEffect, useState } from 'react';
+import { DataGrid, GridToolbarContainer, GridToolbarExport, esES } from '@mui/x-data-grid';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllPreRegister } from '../../redux/actions/preRegistration';
 
-]
+
+// function CustomToolbar() {
+// 	return (
+// 		<GridToolbarContainer>
+// 			<GridToolbarExport />
+// 		</GridToolbarContainer>
+// 	);
+// }
+
 
 export const UsersPage = () => {
-	return (
-		<div className="flex items-center justify-center">
-			<div className="w-full sm:w-w-2xl max-w-3xl h-1/2  mt-[2rem]">
 
-				<div className="mx-auto max-w-2xl lg:mx-0">
-					<h2 className="text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">Usuarios</h2>
-					<p className="mt-1 text-sm leading-6 text-gray-600">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima quisquam ipsa aut et. Non, facere debitis eos velit ipsum neque!
-					</p>
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getAllPreRegister())
+	}, [])
+
+	const {
+		allPreRegisters
+	} = useSelector((state) => state.preRegistration)
+
+	const [selectedRowId, setSelectedRowId] = useState(null);
+	const [searchText, setSearchText] = useState('');
+
+	const rows = allPreRegisters;
+
+	const getStatusColor = (status) => {
+		switch (status) {
+			case 'prospecto':
+				return 'orange';
+			case 'completado':
+				return 'green';
+			case 'validando':
+				return 'red';
+			default:
+				return 'black';
+		}
+	};
+
+	const columns = [
+		{ field: 'firstName', headerName: 'Nombre', flex: 1 },
+		{ field: 'lastName', headerName: 'Apellido', flex: 1 },
+		{ field: 'email', headerName: 'Correo Electronico', flex: 1 },
+		{ field: 'location', headerName: 'Locacion', flex: 1 },
+		{ field: 'education', headerName: 'Nivel educativo', flex: 1 },
+		{ field: 'language', headerName: 'Idioma', flex: 1 },
+		{ field: 'createdAt', headerName: 'Fecha de registro', flex: 1 },
+		{
+			field: 'status',
+			headerName: 'Estatus',
+			flex: 1,
+			renderCell: (params) => (
+				<span style={{ color: getStatusColor(params.value) }}>{params.value}</span>
+			),
+		},
+		{
+			field: 'action',
+			headerName: '',
+			width: 120,
+			sortable: false,
+			disableColumnMenu: true,
+			renderCell: (params) => (
+				<div style={{ textAlign: 'center' }}>
+					<button
+						onClick={() => handleButtonClick(params)}
+						className="px-2 py-1 bg-indigo-600 text-white rounded"
+					>
+						Revisar estatus
+					</button>
 				</div>
+			),
+		},
+	];
 
+	const handleRowClick = (params) => {
+		setSelectedRowId(params.id);
+		console.log(params)
+	};
 
-				<ul role="list" className="divide-y divide-gray-100">
-					{people.map((person, i) => (
-						<li key={i} className="flex justify-between gap-x-6 py-5">
-							<div className="flex gap-x-4">
-								<img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={person.imageUrl} alt="" />
-								<div className="min-w-0 flex-auto">
-									<p className="text-sm font-semibold leading-6 text-gray-900">{person.name}</p>
-									<p className="mt-1 truncate text-xs leading-5 text-gray-500">{person.email}</p>
-								</div>
-							</div>
-							<div className="hidden sm:flex sm:flex-col sm:items-end">
-								<p className="text-sm leading-6 text-gray-900">{person.role}</p>
-								{person.lastSeen ? (
-									<p className="mt-1 text-xs leading-5 text-gray-500">
-										Last seen <time dateTime={person.lastSeenDateTime}>{person.lastSeen}</time>
-									</p>
-								) : (
-									<div className="mt-1 flex items-center gap-x-1.5">
-										<div className="flex-none rounded-full bg-emerald-500/20 p-1">
-											<div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-										</div>
-										<p className="text-xs leading-5 text-gray-500">Online</p>
-									</div>
-								)}
-							</div>
-						</li>
-					))}
-					
-				</ul>
+	const handleButtonClick = (params) => {
+		console.log('Button Clicked');
+		console.log('Row Data:', params.row);
+	};
+
+	const handleSearchChange = (event) => {
+		const searchText = event.target.value;
+		setSearchText(searchText);
+	};
+
+	const filteredRows = rows.filter(
+		(row) =>
+			row.name?.toLowerCase().includes(searchText.toLowerCase()) ||
+			row.lastname?.toLowerCase().includes(searchText.toLowerCase()) ||
+			row.email?.toLowerCase().includes(searchText.toLowerCase()) ||
+			row.phone?.toLowerCase().includes(searchText.toLowerCase()) ||
+			row.education?.toLowerCase().includes(searchText.toLowerCase()) ||
+			row.language?.toLowerCase().includes(searchText.toLowerCase()) ||
+			row.createdAt?.toLowerCase().includes(searchText.toLowerCase()) ||
+			row.email?.toLowerCase().includes(searchText.toLowerCase())
+	);
+
+	return (
+		<div className="">
+			<div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-16 pt-4">
+				{allPreRegisters && (
+
+					<>
+						<div>
+							<input
+								type="text"
+								placeholder="Buscar"
+								value={searchText}
+								onChange={handleSearchChange}
+								className={`
+									block 
+									w-1/5 
+									rounded-md 
+									border-0 
+									py-2 
+									px-4
+									text-gray-900 
+									shadow-sm 
+									ring-1 
+									ring-inset 
+									ring-gray-300 
+									placeholder:text-gray-400 
+									focus:ring-2 
+									focus:ring-inset 
+									focus:ring-indigo-600 
+									sm:text-sm 
+									sm:leading-6
+									mb-6
+								`}
+							/>
+							<DataGrid
+								rows={filteredRows}
+								columns={columns}
+								onRowClick={handleRowClick}
+								localeText={esES.components.MuiDataGrid.defaultProps.localeText}
+								initialState={{
+									pagination: {
+										paginationModel: { pageSize: 5, page: 0, },
+									},
+								}}
+								pageSizeOptions={[5, 10, 25]}
+							// Para exportar el data
+							// slots={{
+							// 	toolbar: CustomToolbar,
+							// }}
+							/>
+						</div>
+						<p>Selected Row ID: {selectedRowId}</p>
+					</>
+				)}
 			</div>
-		</div>
-	)
-}
+		</div >
+	);
+};

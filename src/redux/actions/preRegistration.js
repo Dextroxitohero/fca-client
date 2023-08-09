@@ -10,6 +10,9 @@ import {
 	validatePaymentStart,
 	validatePaymentSuccess,
 	validatePaymentFailure,
+	getAllPreRegisterStart,
+	getAllPreRegisterSuccess,
+	getAllPreRegisterFailure,
 } from '../reducers/preRegistration';
 
 import axios from "axios";
@@ -78,7 +81,7 @@ export const validatePaymentVoucher = ({
 	email,
 	id
 }) => async (dispatch) => {
-	// dispatch(validatePaymentStart());
+	dispatch(validatePaymentStart());
 	try {
 
 		const formData = new FormData();
@@ -92,17 +95,36 @@ export const validatePaymentVoucher = ({
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-				  },
+				},
 			}
 		);
-
-		console.log(response)
-
+		toast.success(response.data.message);
+		dispatch(validatePaymentSuccess(response))
 
 	} catch (error) {
 		console.log(error)
-		// dispatch(validatePaymentFailure());
-		// toast.error(error.response.data.message)
+		dispatch(validatePaymentFailure());
+		toast.error(error.response.data.message)
+	}
+};
+
+// get all preregister
+export const getAllPreRegister = () => async (dispatch) => {
+	dispatch(getAllPreRegisterStart());
+	try {
+		// Realizamos la llamada al servidor para validar el comprobante de pago
+		const response = await axios.get('http://localhost:8000/preRegister/allPreRegister', {
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+		
+		console.log(response)
+		dispatch(getAllPreRegisterSuccess(response))
+
+	} catch (error) {
+		dispatch(getAllPreRegisterFailure());
+		toast.error(error.response.data.message)
 	}
 };
 
