@@ -27,6 +27,7 @@ import { CursesPage } from '../pages/curses/CursesPage';
 import { FormValidacionDatos } from '../pages/preRegistration/FormValidacionDatos';
 import { FormValidacionPago } from '../pages/preRegistration/FormValidacionPago';
 import { FormValidacionProceso } from '../pages/preRegistration/FormValidacionProceso';
+import { ValidateCandidate } from '../pages/candidates/ValidateCandidate';
 
 
 export const AppRouter = () => {
@@ -81,6 +82,14 @@ export const AppRouter = () => {
                         element={
                             <PrivateRoute>
                                 <CandidatesPage />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/candidatos/:id"
+                        element={
+                            <PrivateRoute>
+                                <ValidateCandidate />
                             </PrivateRoute>
                         }
                     />
