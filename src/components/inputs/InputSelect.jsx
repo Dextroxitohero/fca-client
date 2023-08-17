@@ -59,7 +59,7 @@ export const InputSelect = ({
                                 value={item.value}
                                 placeholder={placeholder}
                             >
-                                {item.value}
+                                {item.description}
                             </option>
                         ))
 

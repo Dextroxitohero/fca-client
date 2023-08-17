@@ -3,39 +3,39 @@ import { createSlice } from '@reduxjs/toolkit';
 const userSlice = createSlice({
 	name: 'user',
 	initialState: {
-		// user: null,
-		// token: null,
+		user: null,
 		isAuthenticated: false,
-		// loading: false,
-		// error: null,
+		loading: false,
 	},
 	reducers: {
 		loginStart: (state) => {
 			state.loading = true;
-			state.error = null;
 		},
-		loginSuccess: (state, action) => {
+		loginSuccess: (state, { payload: {user} }) => {
 			state.loading = false;
 			state.isAuthenticated = true;
+			state.user = user;
 		},
 		loginFailure: (state, action) => {
 			state.loading = false;
 		},
 		// reducer load user
-		LoadUserRequest: (state) => {
+		LoadUserStart: (state) => {
 			state.loading = true;
 		},
-		LoadUserSuccess: (state, action) => {
-			state.isAuthenticated = true;
+		LoadUserSuccess: (state, { payload: { success, user  } } ) => {
+			state.isAuthenticated = success;
 			state.loading = false;
-			state.user = action.payload.user;
+			state.user = user;
 		},
 		LoadUserFail: (state, action) => {
 			state.loading = false;
-			state.error = action.payload;
 			state.isAuthenticated = false;
+			state.user = null;
 		},
-		logout: (state) => {
+		logout: (state, action) => {
+			state.user = null;
+			state.loading = false;
 			state.isAuthenticated = false;
 		},
 	},
@@ -45,7 +45,7 @@ export const {
 	loginStart,
 	loginSuccess,
 	loginFailure,
-	LoadUserRequest,
+	LoadUserStart,
 	LoadUserSuccess,
 	LoadUserFail,
 	logout

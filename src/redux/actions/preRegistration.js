@@ -77,6 +77,7 @@ export const registerPreRegitration = ({
 // payment voucher
 export const validatePaymentVoucher = ({
 	account,
+	assessor,
 	file,
 	email,
 	id
@@ -86,6 +87,7 @@ export const validatePaymentVoucher = ({
 
 		const formData = new FormData();
 		formData.append('account', account);
+		formData.append('assessor', assessor);
 		formData.append('email', email);
 		formData.append('id', id);
 		formData.append('file', file);
@@ -119,7 +121,6 @@ export const getAllPreRegister = () => async (dispatch) => {
 			}
 		});
 		
-		console.log(response)
 		dispatch(getAllPreRegisterSuccess(response))
 
 	} catch (error) {

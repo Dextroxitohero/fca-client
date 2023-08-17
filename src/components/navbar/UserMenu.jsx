@@ -106,8 +106,8 @@ export const UserMenu = () => {
                                     "
                                     />
                                 </div>
-                                <div class="flex items-center">
-                                    <span class="font-semibold text">
+                                <div className="flex items-center">
+                                    <span className="font-semibold text">
                                         Cerrar Sesión
                                     </span>
                                 </div>

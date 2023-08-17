@@ -17,7 +17,6 @@ export const CandidatesPage = () => {
 		allPreRegisters
 	} = useSelector((state) => state.preRegistration)
 
-	const [selectedRowId, setSelectedRowId] = useState(null);
 	const [searchText, setSearchText] = useState('');
 
 	const rows = allPreRegisters;
@@ -42,7 +41,8 @@ export const CandidatesPage = () => {
 		{ field: 'location', headerName: 'Locacion', flex: 1 },
 		{ field: 'education', headerName: 'Nivel educativo', flex: 1 },
 		{ field: 'language', headerName: 'Idioma', flex: 1 },
-		{ field: 'createdAt', headerName: 'Fecha de registro', flex: 1 },
+		{ field: 'assessor', headerName: 'Asesor', flex: 1 },
+		{ field: 'createdAtFormatted', headerName: 'Fecha de registro', flex: 1 },
 		{
 			field: 'status',
 			headerName: 'Estatus',
@@ -65,26 +65,14 @@ export const CandidatesPage = () => {
 					>
 						Validar
 					</Link>
-					{/* <button
-						onClick={() => handleButtonClick(params)}
-						className="px-2 py-1 bg-indigo-600 text-white rounded"
-					>
-						Validar
-					</button> */}
 				</div>
 			),
 		},
 	];
 
 	// const handleRowClick = (params) => {
-	// 	setSelectedRowId(params.id);
-	// 	console.log(params)
+	// 	console.log(params.row)
 	// };
-
-	const handleButtonClick = (params) => {
-		console.log('Button Clicked');
-		console.log('Row Data:', params.row);
-	};
 
 	const handleSearchChange = (event) => {
 		const searchText = event.target.value;
@@ -94,13 +82,14 @@ export const CandidatesPage = () => {
 	const filteredRows = rows.filter(
 		(row) =>
 			row.firstName?.toLowerCase().includes(searchText.toLowerCase()) ||
-			row.lastname?.toLowerCase().includes(searchText.toLowerCase()) ||
+			row.lastName?.toLowerCase().includes(searchText.toLowerCase()) ||
 			row.email?.toLowerCase().includes(searchText.toLowerCase()) ||
 			row.phone?.toLowerCase().includes(searchText.toLowerCase()) ||
 			row.education?.toLowerCase().includes(searchText.toLowerCase()) ||
 			row.language?.toLowerCase().includes(searchText.toLowerCase()) ||
-			row.createdAt?.toLowerCase().includes(searchText.toLowerCase()) ||
-			row.email?.toLowerCase().includes(searchText.toLowerCase())
+			row.createdAtFormatted?.toLowerCase().includes(searchText.toLowerCase()) ||
+			row.assessor?.toLowerCase().includes(searchText.toLowerCase()) ||
+			row.status?.toLowerCase().includes(searchText.toLowerCase())
 	);
 
 	return (
@@ -142,10 +131,10 @@ export const CandidatesPage = () => {
 							localeText={esES.components.MuiDataGrid.defaultProps.localeText}
 							initialState={{
 								pagination: {
-									paginationModel: { pageSize: 5, page: 0, },
+									paginationModel: { pageSize: 10, page: 0, },
 								},
 							}}
-							pageSizeOptions={[5, 10, 25]}
+							pageSizeOptions={[10, 15, 25]}
 						/>
 					</div>
 				</>

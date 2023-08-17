@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { validate } from './validationEmail';
 import { useDispatch, useSelector } from "react-redux";
@@ -10,9 +10,15 @@ import { Button } from '../../components/buttons/Button';
 import { emailVerification } from '../../redux/actions/preRegistration';
 
 export const FormPreRegistration = () => {
-
+    
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+
+	const { isAuthenticated } = useSelector((state) => state.user);
+
+	if (isAuthenticated) {
+		navigate(`/`);
+	}
 
 	const {
 		loading,

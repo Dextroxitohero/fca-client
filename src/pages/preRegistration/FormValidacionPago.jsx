@@ -9,8 +9,9 @@ import { validate } from './validationPago';
 import { validatePaymentVoucher } from '../../redux/actions/preRegistration';
 
 
-import { accounts } from '../../static/data';
+import { accounts, assessor } from '../../static/data';
 import { resetEmailVarification } from '../../redux/reducers/preRegistration';
+import { optionsAssessors } from '../../redux/actions/options';
 
 
 export const FormValidacionPago = () => {
@@ -29,6 +30,10 @@ export const FormValidacionPago = () => {
 		userPreRegister
 	} = useSelector((state) => state.preRegistration)
 
+	const {
+		assessors
+	} = useSelector((state) => state.options)
+
 	useEffect(() => {
 		if(success){
 			setStep(2)
@@ -42,9 +47,14 @@ export const FormValidacionPago = () => {
 		}
 	}, [email])
 
+	useEffect(() => {
+		dispatch(optionsAssessors())
+	}, [])
+
 	const formik = useFormik({
 		initialValues: {
 			account: '',
+			assessor: '',
 			file: null,
 			email: email,
 			id: userPreRegister?._id
@@ -187,6 +197,19 @@ export const FormValidacionPago = () => {
 								)}
 							</div>
 
+							<div className="sm:col-span-12">
+								<InputSelect
+									id="assessor"
+									name="assessor"
+									label="Seleciona a tu assesor"
+									placeholder="Seleciona a tu assesor"
+									formik={formik}
+									data={assessors}
+									optionDefault="Selecione un assessor"
+									value={formik.values.assessor}
+									error={formik.touched.assessor && formik.errors.assessor}
+								/>
+							</div>
 							<div className="sm:col-span-12">
 								<InputSelect
 									id="account"

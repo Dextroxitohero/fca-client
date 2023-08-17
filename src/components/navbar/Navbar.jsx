@@ -1,26 +1,14 @@
 import React from 'react';
-import { useDispatch } from "react-redux";
 import { Disclosure, Menu } from '@headlessui/react';
-
-import { logoutUser } from '../../redux/actions/user';
-
 import { DropDownMovilMenu } from './DropDownMovilMenu';
 import { ButtonMenuMovil } from './ButtonMenuMovil';
 import { Logo } from './Logo';
 import { MenuNavbar } from './MenuNavbar';
 import { UserMenu } from './UserMenu';
 import { ButtonUserMenu } from './ButtonUserMenu';
-import { ButtonNotification } from './ButtonNotification';
 
 
 export const Navbar = () => {
-
-    const dispatch = useDispatch();
-
-    const handleLogout = (e) => {
-        e.preventDefault();
-        dispatch(logoutUser())
-    }
 
     return (
         <>

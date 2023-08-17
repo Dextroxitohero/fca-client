@@ -30,64 +30,65 @@ export const userMenu = [
 
 
 export const locationState = [
-    { value: "Aguascalientes" },
-    { value: "Baja California" },
-    { value: "Baja California Sur" },
-    { value: "Campeche" },
-    { value: "Coahuila" },
-    { value: "Colima" },
-    { value: "Chiapas" },
-    { value: "Chihuahua" },
-    { value: "Ciudad de México" },
-    { value: "Durango" },
-    { value: "Guanajuato" },
-    { value: "Guerrero" },
-    { value: "Hidalgo" },
-    { value: "Jalisco" },
-    { value: "Estado de México" },
-    { value: "Michoacán" },
-    { value: "Morelos" },
-    { value: "Nayarit" },
-    { value: "Nuevo León" },
-    { value: "Oaxaca" },
-    { value: "Puebla" },
-    { value: "Querétaro" },
-    { value: "Quintana Roo" },
-    { value: "San Luis Potosí" },
-    { value: "Sinaloa" },
-    { value: "Sonora" },
-    { value: "Tabasco" },
-    { value: "Tamaulipas" },
-    { value: "Tlaxcala" },
-    { value: "Veracruz" },
-    { value: "Yucatán" },
-    { value: "Zacatecas" }
-]
+    { value: "Aguascalientes", description: "Aguascalientes" },
+    { value: "Baja California", description: "Baja California" },
+    { value: "Baja California Sur", description: "Baja California Sur" },
+    { value: "Campeche", description: "Campeche" },
+    { value: "Coahuila", description: "Coahuila" },
+    { value: "Colima", description: "Colima" },
+    { value: "Chiapas", description: "Chiapas" },
+    { value: "Chihuahua", description: "Chihuahua" },
+    { value: "Ciudad de México", description: "Ciudad de México" },
+    { value: "Durango", description: "Durango" },
+    { value: "Guanajuato", description: "Guanajuato" },
+    { value: "Guerrero", description: "Guerrero" },
+    { value: "Hidalgo", description: "Hidalgo" },
+    { value: "Jalisco", description: "Jalisco" },
+    { value: "Estado de México", description: "Estado de México" },
+    { value: "Michoacán", description: "Michoacán" },
+    { value: "Morelos", description: "Morelos" },
+    { value: "Nayarit", description: "Nayarit" },
+    { value: "Nuevo León", description: "Nuevo León" },
+    { value: "Oaxaca", description: "Oaxaca" },
+    { value: "Puebla", description: "Puebla" },
+    { value: "Querétaro", description: "Querétaro" },
+    { value: "Quintana Roo", description: "Quintana Roo" },
+    { value: "San Luis Potosí", description: "San Luis Potosí" },
+    { value: "Sinaloa", description: "Sinaloa" },
+    { value: "Sonora", description: "Sonora" },
+    { value: "Tabasco", description: "Tabasco" },
+    { value: "Tamaulipas", description: "Tamaulipas" },
+    { value: "Tlaxcala", description: "Tlaxcala" },
+    { value: "Veracruz", description: "Veracruz" },
+    { value: "Yucatán", description: "Yucatán" },
+    { value: "Zacatecas", description: "Zacatecas" }
+];
+
 
 export const levelEducation = [
-    { value: "Preescolar" },
-    { value: "Primaria" },
-    { value: "Secundaria" },
-    { value: "Bachillerato o preparatoria" },
-    { value: "Educación técnica o profesional" },
-    { value: "Licenciatura" },
-    { value: "Maestría" },
-    { value: "Doctorado" },
-    { value: "Especialización" },
-    { value: "Diplomado" },
-    { value: "Curso o capacitación" }
-]
+    { value: "Preescolar", description: "Preescolar" },
+    { value: "Primaria", description: "Primaria" },
+    { value: "Secundaria", description: "Secundaria" },
+    { value: "Bachillerato o preparatoria", description: "Bachillerato o preparatoria" },
+    { value: "Educación técnica o profesional", description: "Educación técnica o profesional" },
+    { value: "Licenciatura", description: "Licenciatura" },
+    { value: "Maestría", description: "Maestría" },
+    { value: "Doctorado", description: "Doctorado" },
+    { value: "Especialización", description: "Especialización" },
+    { value: "Diplomado", description: "Diplomado" },
+    { value: "Curso o capacitación", description: "Curso o capacitación" }
+];
 
-export const  language = [
-    { value: "Ingles" },
-    { value: "Frances" },
-    { value: "Japones" },
-    { value: "Italiano" },
-]
+export const language = [
+    { value: "Ingles", description: "Ingles" },
+    { value: "Frances", description: "Frances" },
+    { value: "Japones", description: "Japones" },
+    { value: "Italiano", description: "Italiano" },
+];
 
-export const  accounts = [
-    { value: "9801 9878 0978 0919" },
-    { value: "9878 9889 0019 0918" },
-    { value: "9232 2200 1100 0010" },
-    { value: "9078 9890 0912 1230" },
-]
+export const accounts = [
+    { value: "9801 9878 0978 0919", description: "9801 9878 0978 0919" },
+    { value: "9878 9889 0019 0918", description: "9878 9889 0019 0918" },
+    { value: "9232 2200 1100 0010", description: "9232 2200 1100 0010" },
+    { value: "9078 9890 0912 1230", description: "9078 9890 0912 1230" },
+];
