@@ -8,9 +8,11 @@ const userPreRegistration = createSlice({
 		email:'',
 		emailExist: false,
 		userPreRegister: null,
-		allPreRegisters: []
+		allPreRegisters: [],
+		preRegisterSelected: []
 	},
 	reducers: {
+		// Email verification
 		emailVerificationStart: (state, action) => {
 			state.loading = true;
 			state.email = action.payload;
@@ -23,6 +25,7 @@ const userPreRegistration = createSlice({
 		emailVerificationFailure: (state, action) => {
 			state.loading = false;
 		},
+		// Reset email
 		resetEmailVarification: (state, action ) => {
 			state.emailExist = false;
 			state.email = '';
@@ -30,6 +33,7 @@ const userPreRegistration = createSlice({
 			state.success = null;
 			state.loading = false;
 		},
+		// Pre registration data
 		preRegistrationStart: (state) => {
 			state.loading = true;
 		},
@@ -41,6 +45,7 @@ const userPreRegistration = createSlice({
 			state.loading = false;
 			state.success = action.payload.data.success;
 		},
+		// Validate payment 
 		validatePaymentStart: (state, action) => {
 			state.loading = true;
 		},
@@ -51,16 +56,26 @@ const userPreRegistration = createSlice({
 		validatePaymentFailure: (state, action) => {
 			state.loading = false;
 		},
-		
-
+		// Get all pre register
 		getAllPreRegisterStart: (state, action) => {
 			state.loading = true;
 		},
-		getAllPreRegisterSuccess: (state, action) => {
+		getAllPreRegisterSuccess: (state, { payload: { data } }) => {
 			state.loading = false;
-			state.allPreRegisters = action.payload.data.data;
+			state.allPreRegisters = data;
 		},
 		getAllPreRegisterFailure: (state, action) => {
+			state.loading = false;
+		},
+		// User pre register selected
+		getSelectedPreRegisterStart: (state, action) => {
+			state.loading = true;
+		},
+		getSelectedPreRegisterSuccess: (state, { payload: { data } }) => {
+			state.loading = false;
+			state.preRegisterSelected = data;
+		},
+		getSelectedPreRegisterFailure: (state, action) => {
 			state.loading = false;
 		},
 	},
@@ -79,6 +94,9 @@ export const {
 	resetEmailVarification,
 	getAllPreRegisterStart,
 	getAllPreRegisterSuccess,
-	getAllPreRegisterFailure
+	getAllPreRegisterFailure,
+	getSelectedPreRegisterStart,
+	getSelectedPreRegisterSuccess,
+	getSelectedPreRegisterFailure
 } = userPreRegistration.actions;
 export default userPreRegistration.reducer;

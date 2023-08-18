@@ -6,7 +6,6 @@ import { FormLogin } from './FormLogin'
 export const LoginPage = () => {
 
 	const { loading, isAuthenticated } = useSelector((state) => state.user);
-	console.log('Login')
 	if (loading === false) {
 		if (isAuthenticated) {
 			return <Navigate to="/" replace />;

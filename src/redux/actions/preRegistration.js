@@ -13,6 +13,9 @@ import {
 	getAllPreRegisterStart,
 	getAllPreRegisterSuccess,
 	getAllPreRegisterFailure,
+	getSelectedPreRegisterStart,
+	getSelectedPreRegisterSuccess,
+	getSelectedPreRegisterFailure,
 } from '../reducers/preRegistration';
 
 import axios from "axios";
@@ -110,22 +113,39 @@ export const validatePaymentVoucher = ({
 	}
 };
 
-// get all preregister
+// Get all pre register
 export const getAllPreRegister = () => async (dispatch) => {
 	dispatch(getAllPreRegisterStart());
 	try {
-		// Realizamos la llamada al servidor para validar el comprobante de pago
+
 		const response = await axios.get('http://localhost:8000/preRegister/allPreRegister', {
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		});
 		
-		dispatch(getAllPreRegisterSuccess(response))
+		dispatch(getAllPreRegisterSuccess(response.data))
 
 	} catch (error) {
 		dispatch(getAllPreRegisterFailure());
-		toast.error(error.response.data.message)
+	}
+};
+
+// Get selected pre register
+export const getSelectedPreRegister = (preRegisterId) => async (dispatch) => {
+	dispatch(getSelectedPreRegisterStart());
+	try {
+
+		const response = await axios.get(`http://localhost:8000/preRegister/getPreRegisterById/${preRegisterId}`, {
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+		dispatch(getSelectedPreRegisterSuccess(response.data))
+
+	} catch (error) {
+		console.log(error.response.data.message)
+		dispatch(getSelectedPreRegisterFailure());
 	}
 };
 

@@ -7,7 +7,7 @@ export const PrivateLayout = ({ children }) => {
 	return (
 		<div>
 			<Navbar />
-			<div className='pb-20 pt-[4rem]'>
+			<div className='pt-[4rem]'>
 				{children}
 			</div>
 		</div>
