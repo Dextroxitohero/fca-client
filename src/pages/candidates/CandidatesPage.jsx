@@ -48,7 +48,12 @@ export const CandidatesPage = () => {
 			headerName: 'Estatus',
 			flex: 1,
 			renderCell: (params) => (
-				<span style={{ color: getStatusColor(params.value) }}>{params.value}</span>
+				<span className={`
+				inline-flex items-center rounded-md bg-${getStatusColor(params.value)}-600 px-2 py-1 text-xs font-medium text-${getStatusColor(params.value)}-700 ring-1 ring-inset ring-${getStatusColor(params.value)}-600/10"
+			`}>
+				{params.value}
+			</span>
+				// <span style={{ color: getStatusColor(params.value) }}>{params.value}</span>
 			),
 		},
 		{
