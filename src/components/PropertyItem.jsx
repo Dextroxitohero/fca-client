@@ -20,7 +20,8 @@ export const PropertyItem = ({title, description}) => {
                 text-sm 
                 leading-6 
                 text-gray-700 
-                sm:col-span-2 sm:mt-0
+                sm:col-span-2 
+                sm:mt-0
             `}>{description}</dd>
         </div>
     )

@@ -19,10 +19,10 @@ export const Heading = ({
         	`}>{title}</h2>
 			<p className={`
 				mt-1
-				md:mt-2
-				text-sm 
+				md:mt-4
+				text-md
 				leading-6 
-				text-gray-600
+				text-gray-500
 			`}>
 				{subtitle}
 			</p>
