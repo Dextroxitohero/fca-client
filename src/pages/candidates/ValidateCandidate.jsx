@@ -146,7 +146,9 @@ export const ValidateCandidate = () => {
                             
                         `}
                     >
-
+                        <div>
+                            <img src={`http://localhost:8000/uploads/images/${fileName}`} alt="" className="mx-auto w-3/4 flex-shrink-0 rounded-md" />
+                        </div>
                     </div>
                     <div
                         className={`
@@ -159,6 +161,7 @@ export const ValidateCandidate = () => {
                             
                         `}
                     >
+
 
                         <div
                             className={`
