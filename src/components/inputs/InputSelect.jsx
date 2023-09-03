@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { capitalizarPalabras } from '../../common/upperCaseWord';
 
 export const InputSelect = ({
     id,
@@ -10,7 +11,7 @@ export const InputSelect = ({
     value,
     data,
     optionDefault,
-    error
+    error,
 }) => {
 
     return (
@@ -30,11 +31,13 @@ export const InputSelect = ({
                     placeholder={placeholder}
                     disabled={disabled}
                     className={`
+                        appearance-none                    
+                        bg-white
                         block 
                         w-full 
-                        rounded-md 
+                        rounded
                         border-0 
-                        py-1.5
+                        py-2
                         px-3
                         text-gray-900 
                         shadow-sm 
@@ -44,12 +47,11 @@ export const InputSelect = ({
                         focus:ring-2 
                         focus:ring-inset 
                         focus:ring-indigo-600 
-                        sm:text-sm 
+                        sm:text-md 
                         sm:leading-6
                         ${error ? 'ring-rose-500' : 'ring-gray-300'}
                         ${error ? 'focus:ring-rose-500' : 'focus:border-neutral-black'}
-                        `
-                    }
+                        `}
                 >
                     <option value="">{optionDefault}</option>
                     {
@@ -59,7 +61,7 @@ export const InputSelect = ({
                                 value={item.value}
                                 placeholder={placeholder}
                             >
-                                {item.description}
+                                {capitalizarPalabras(item.description)}
                             </option>
                         ))
 

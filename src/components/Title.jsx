@@ -6,13 +6,14 @@ export const Title = ({ title, center }) => {
             w-full 
         `}>
             <h2 className={`
-                text-xl
+                text-2xl
                 mb-8
-                font-semibold 
+                font-bold 
                 tracking-tight
-                text-gray-900
+                text-gray-800
                 ${center ? 'text-center' : 'text-start'}
             `}>{title}</h2>
         </div>
     )
 }
+

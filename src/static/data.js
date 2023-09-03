@@ -79,7 +79,7 @@ export const levelEducation = [
     { value: "Curso o capacitación", description: "Curso o capacitación" }
 ];
 
-export const language = [
+export const languages = [
     { value: "Ingles", description: "Ingles" },
     { value: "Frances", description: "Frances" },
     { value: "Japones", description: "Japones" },

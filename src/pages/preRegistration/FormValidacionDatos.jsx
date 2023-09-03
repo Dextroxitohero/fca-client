@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { validate } from './validationDatos';
-import { levelEducation, locationState, language } from '../../static/data';
+import { levelEducation, locationState, languages } from '../../static/data';
 import { toast } from 'react-hot-toast';
 import { format } from 'date-fns';
 import { useDispatch, useSelector } from "react-redux";
@@ -261,7 +261,7 @@ export const FormValidacionDatos = () => {
 									label="Idioma de interes"
 									placeholder="Selecione un idioma"
 									formik={formik}
-									data={language}
+									data={languages}
 									optionDefault="Selecione un idioma"
 									value={formik.values.language}
 									error={formik.touched.language && formik.errors.language}

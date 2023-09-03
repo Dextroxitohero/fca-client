@@ -30,9 +30,7 @@ export const FormValidacionPago = () => {
 		userPreRegister
 	} = useSelector((state) => state.preRegistration)
 
-	const {
-		assessors
-	} = useSelector((state) => state.options)
+	const { assessors } = useSelector((state) => state.options);
 
 	useEffect(() => {
 		if(success){
