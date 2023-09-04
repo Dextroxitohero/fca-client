@@ -13,6 +13,7 @@ export const Button = ({
     <button
       disabled={disabled}
       onClick={onClick}
+      type='button'
       className={`
         relative
         disabled:opacity-70
