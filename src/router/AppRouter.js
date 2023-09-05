@@ -28,6 +28,7 @@ import { FormValidacionDatos } from '../pages/preRegistration/FormValidacionDato
 import { FormValidacionPago } from '../pages/preRegistration/FormValidacionPago';
 import { FormValidacionProceso } from '../pages/preRegistration/FormValidacionProceso';
 import { ValidateCandidate } from '../pages/candidates/ValidateCandidate';
+import { CreateCurse } from '../pages/curses/CreateCurse';
 
 
 export const AppRouter = () => {
@@ -98,6 +99,14 @@ export const AppRouter = () => {
                         element={
                             <PrivateRoute>
                                 <CursesPage />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/nuevo-curso"
+                        element={
+                            <PrivateRoute>
+                                <CreateCurse />
                             </PrivateRoute>
                         }
                     />

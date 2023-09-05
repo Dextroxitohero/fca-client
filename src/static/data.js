@@ -92,3 +92,20 @@ export const accounts = [
     { value: "9232 2200 1100 0010", description: "9232 2200 1100 0010" },
     { value: "9078 9890 0912 1230", description: "9078 9890 0912 1230" },
 ];
+
+export const nivels = [
+    { value: "nivel 1", description: "nivel 1" },
+    { value: "nivel 2", description: "nivel 2" },
+    { value: "nivel 3", description: "nivel 3" },
+    { value: "nivel 4", description: "nivel 4" },
+    { value: "nivel 5", description: "nivel 5" },
+];
+
+export const colors = [
+    { value: "rojo", description: "rojo" },
+    { value: "azul", description: "azul" },
+    { value: "verde", description: "verde" },
+    { value: "amarillo", description: "amarillo" },
+    { value: "naranja", description: "naranja" },
+    { value: "morado", description: "morado" },
+];

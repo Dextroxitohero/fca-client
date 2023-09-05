@@ -58,15 +58,7 @@ export const FormLogin = () => {
 				</div>
 
 				{/* Body form */}
-				<div
-					className="
-                    grid 
-                    grid-cols-1 
-                    gap-y-4 
-                    sm:grid-cols-6 
-                    mb-16
-                    "
-				>
+				<div className="grid grid-cols-1 gap-y-4 sm:grid-cols-6 mb-16">
 					<div className="sm:col-span-6">
 						<Input
 							id="email"

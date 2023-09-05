@@ -12,7 +12,7 @@ import { InputSelect } from '../../components/inputs/InputSelect'
 
 
 import { useFormik } from 'formik';
-import { validate } from './validation';
+import { validate } from './validate';
 
 import { optionsAssessors } from '../../redux/actions/options';
 import { Button } from '../../components/buttons/Button';

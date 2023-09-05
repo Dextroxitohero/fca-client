@@ -21,6 +21,7 @@ export const Button = ({
         hover:opacity-80
         transition
         w-full
+        p-15
         ${outline ? 'bg-white' : 'bg-cyan'}
         ${outline ? 'border-black' : 'bg-cyan-700'}
         ${outline ? 'text-black' : 'text-white'}

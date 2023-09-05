@@ -97,19 +97,8 @@ export const FormValidacionDatos = () => {
 				return (
 					<div>
 						{/* Header form */}
-						<div className="
-							mx-auto 
-							max-w-2xl 
-							sm:text-start 
-							mb-12
-						">
-							<h2 className="
-								text-3xl 
-								font-semibold 
-								tracking-tight 
-								text-gray-900 
-								sm:text-4xl
-							">
+						<div className="mx-auto max-w-2xl sm:text-start mb-12">
+							<h2 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
 								Bienvenido CFA
 							</h2>
 							<p className="
@@ -219,15 +208,7 @@ export const FormValidacionDatos = () => {
 							</p>
 						</div>
 						{/* Body form */}
-						<div
-							className="
-							grid 
-							grid-cols-1 
-							gap-y-4 
-							sm:grid-cols-6 
-							mb-24
-							"
-						>
+						<div className="grid grid-cols-1gap-y-4 sm:grid-cols-6 mb-24">
 							<div className="sm:col-span-6">
 								<InputSelect
 									id="location"
@@ -309,12 +290,7 @@ export const FormValidacionDatos = () => {
 							</p>
 						</div>
 						{/* Body form */}
-						<div className="
-							mt-10 
-							flex items-center 
-							justify-center 
-							gap-x-6
-						">
+						<div className="mt-10 flex items-center justify-center gap-x-6">
 							<div
 								onClick={handleContinue}
 								className="

@@ -3,6 +3,8 @@ import { DataGrid, esES } from '@mui/x-data-grid';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllPreRegister } from '../../redux/actions/preRegistration';
 import { Link } from 'react-router-dom';
+import { ContainerFull } from '../../components/ContainerFull';
+import { Heading } from '../../components/Heading';
 
 
 
@@ -48,12 +50,7 @@ export const CandidatesPage = () => {
 			headerName: 'Estatus',
 			flex: 1,
 			renderCell: (params) => (
-				<span className={`
-				inline-flex items-center rounded-md bg-${getStatusColor(params.value)}-600 px-2 py-1 text-xs font-medium text-${getStatusColor(params.value)}-700 ring-1 ring-inset ring-${getStatusColor(params.value)}-600/10"
-			`}>
-				{params.value}
-			</span>
-				// <span style={{ color: getStatusColor(params.value) }}>{params.value}</span>
+				<span style={{ color: getStatusColor(params.value) }}>{params.value}</span>
 			),
 		},
 		{
@@ -98,52 +95,37 @@ export const CandidatesPage = () => {
 	);
 
 	return (
-		<div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-16 pt-4">
+		<ContainerFull>
+			<Heading
+				title={`Lista de canditados`}
+				subtitle={`Muestra la lista candidatos con su estatus de proceso`}
+				center={false}
+			/>
 			{allPreRegisters && (
 
-				<>
-					<div>
-						<input
-							type="text"
-							placeholder="Buscar"
-							value={searchText}
-							onChange={handleSearchChange}
-							className={`
-									block 
-									w-1/5 
-									rounded-md 
-									border-0 
-									py-2 
-									px-4
-									text-gray-900 
-									shadow-sm 
-									ring-1 
-									ring-inset 
-									ring-gray-300 
-									placeholder:text-gray-400 
-									focus:ring-2 
-									focus:ring-inset 
-									focus:ring-indigo-600 
-									sm:text-sm 
-									sm:leading-6
-									mb-6
-								`}
-						/>
-						<DataGrid
-							rows={filteredRows}
-							columns={columns}
-							// onRowClick={handleRowClick}
-							localeText={esES.components.MuiDataGrid.defaultProps.localeText}
-							initialState={{
-								pagination: {
-									paginationModel: { pageSize: 10, page: 0, },
-								},
-							}}
-							pageSizeOptions={[10, 15, 25]}
-						/>
-					</div>
-				</>
+
+				<div className='mt-10'>
+					<input
+						type="text"
+						placeholder="Buscar"
+						value={searchText}
+						onChange={handleSearchChange}
+						className='block w-1/5 rounded-md border-0 py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mb-6'/>
+					<DataGrid
+						rows={filteredRows}
+						columns={columns}
+						// onRowClick={handleRowClick}
+						localeText={esES.components.MuiDataGrid.defaultProps.localeText}
+						initialState={{
+							pagination: {
+								paginationModel: { pageSize: 10, page: 0, },
+							},
+						}}
+						pageSizeOptions={[10, 15, 25]}
+					/>
+				</div>
+
 			)}
-		</div>
+		</ContainerFull>
 	);
 }
