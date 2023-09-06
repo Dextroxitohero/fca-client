@@ -23,12 +23,13 @@ import { PaymentsPage } from '../pages/payments/PaymentsPage';
 import { SettingPage } from '../pages/setting/SettingPage';
 import { NotificationsPage } from '../pages/notifications/NotificationsPage';
 import { ProfilePage } from '../pages/profile/ProfilePage';
-import { CursesPage } from '../pages/curses/CursesPage';
 import { FormValidacionDatos } from '../pages/preRegistration/FormValidacionDatos';
 import { FormValidacionPago } from '../pages/preRegistration/FormValidacionPago';
 import { FormValidacionProceso } from '../pages/preRegistration/FormValidacionProceso';
 import { ValidateCandidate } from '../pages/candidates/ValidateCandidate';
-import { CreateCurse } from '../pages/curses/CreateCurse';
+
+import { CoursesPage } from '../pages/courses/CoursesPage';
+import { CreateCourse } from '../pages/courses/CreateCourse';
 
 
 export const AppRouter = () => {
@@ -98,7 +99,7 @@ export const AppRouter = () => {
                         path="/cursos"
                         element={
                             <PrivateRoute>
-                                <CursesPage />
+                                <CoursesPage />
                             </PrivateRoute>
                         }
                     />
@@ -106,7 +107,7 @@ export const AppRouter = () => {
                         path="/nuevo-curso"
                         element={
                             <PrivateRoute>
-                                <CreateCurse />
+                                <CreateCourse />
                             </PrivateRoute>
                         }
                     />

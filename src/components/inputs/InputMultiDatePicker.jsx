@@ -23,6 +23,8 @@ export const InputMultiDatePicker = ({
                 placeholder='Ingresa tu fecha de nacimiento'
                 containerClassName="custom-container"
                 range
+                numberOfMonths={2}
+                dateSeparator=" al  " 
                 render={<InputIcon />}
             />
             {error && <p className="text-red-500">{error}</p>}

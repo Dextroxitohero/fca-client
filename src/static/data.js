@@ -80,10 +80,10 @@ export const levelEducation = [
 ];
 
 export const languages = [
-    { value: "Ingles", description: "Ingles" },
-    { value: "Frances", description: "Frances" },
-    { value: "Japones", description: "Japones" },
-    { value: "Italiano", description: "Italiano" },
+    { value: "ingles", description: "ingles" },
+    { value: "frances", description: "frances" },
+    { value: "japones", description: "japones" },
+    { value: "italiano", description: "italiano" },
 ];
 
 export const accounts = [
@@ -98,14 +98,13 @@ export const nivels = [
     { value: "nivel 2", description: "nivel 2" },
     { value: "nivel 3", description: "nivel 3" },
     { value: "nivel 4", description: "nivel 4" },
-    { value: "nivel 5", description: "nivel 5" },
 ];
 
 export const colors = [
-    { value: "rojo", description: "rojo" },
-    { value: "azul", description: "azul" },
-    { value: "verde", description: "verde" },
-    { value: "amarillo", description: "amarillo" },
-    { value: "naranja", description: "naranja" },
-    { value: "morado", description: "morado" },
-];
+    { name: 'red', class: 'bg-red-600', selectedClass: 'ring-red-600' },
+    { name: 'orange', class: 'bg-orange-500', selectedClass: 'ring-orange-500' },
+    { name: 'yellow', class: 'bg-yellow-400', selectedClass: 'ring-yellow-400' },
+    { name: 'green', class: 'bg-lime-600', selectedClass: 'ring-lime-600' },
+    { name: 'blue', class: 'bg-sky-500', selectedClass: 'ring-sky-500' },
+    { name: 'purple', class: 'bg-purple-500', selectedClass: 'ring-purple-500' },
+]

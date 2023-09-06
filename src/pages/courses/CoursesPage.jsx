@@ -10,10 +10,10 @@ const includedFeatures = [
     'Material de la clases',
     'Certificado',
 ]
-export const CursesPage = () => {
+export const CoursesPage = () => {
 
     const navigate = useNavigate();
-    const handleCreateNewCurse = ()=>{
+    const handleCreateNewCourse = ()=>{
         navigate('/nuevo-curso');
     }
 
@@ -24,10 +24,9 @@ export const CursesPage = () => {
                 subtitle={`Examina y verifica la información proporcionada por el candidato. Si la información es correcta y confiable, procede a la validación.`}
                 center={false}
             />
-
             
             <div className='w-full flex justify-end mt-10'>
-                <Button label={"Agregar nuevo curso"} onClick={handleCreateNewCurse}/>
+                <Button label={"Agregar nuevo curso"} onClick={handleCreateNewCourse}/>
             </div>
 
 
