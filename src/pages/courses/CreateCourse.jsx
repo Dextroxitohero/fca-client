@@ -28,6 +28,7 @@ function classNames(...classes) {
 export const CreateCourse = () => {
 	const [selectedColor, setSelectedColor] = useState()
 	const [selectedSize, setSelectedSize] = useState()
+	const [selectedLenguaje, setSelectedLenguaje] = useState()
 	const [selectedLimit, setSelectedLimit] = useState(1)
 	const [state, setState] = useState([
 		{
@@ -191,7 +192,7 @@ export const CreateCourse = () => {
 						<div className="flex items-center justify-between">
 							<h3 className="text-lg md:pl-5 font-semibold text-gray-900">Nivel</h3>
 						</div>
-						<RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-6">
+						<RadioGroup value={selectedLenguaje} onChange={setSelectedLenguaje} className="mt-6">
 							<RadioGroup.Label className="sr-only">Seleciona idioma</RadioGroup.Label>
 							<div className="grid grid-cols-1 px-10 gap-4 lg:grid-cols-2">
 								{nivels.map(({ value, description }) => (
