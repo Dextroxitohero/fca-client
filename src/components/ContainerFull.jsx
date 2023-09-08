@@ -10,7 +10,7 @@ export const ContainerFull = ({ children }) => {
             <div className={`
                 w-full 
                 md:w-11/12 
-                md:mt-16
+                md:mt-10
                 pt-12 
                 px-8 
                 md:px-0 

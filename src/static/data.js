@@ -101,10 +101,10 @@ export const nivels = [
 ];
 
 export const colors = [
-    { name: 'red', class: 'bg-red-600', selectedClass: 'ring-red-600' },
-    { name: 'orange', class: 'bg-orange-500', selectedClass: 'ring-orange-500' },
-    { name: 'yellow', class: 'bg-yellow-400', selectedClass: 'ring-yellow-400' },
-    { name: 'green', class: 'bg-lime-600', selectedClass: 'ring-lime-600' },
-    { name: 'blue', class: 'bg-sky-500', selectedClass: 'ring-sky-500' },
-    { name: 'purple', class: 'bg-purple-500', selectedClass: 'ring-purple-500' },
+    { name: 'red', clase: 'bg-red-600', selectedClass: 'ring-red-600 shadow-red-500' },
+    { name: 'orange', clase: 'bg-orange-500', selectedClass: 'ring-orange-500 shadow-orange-500' },
+    { name: 'yellow', clase: 'bg-yellow-400', selectedClass: 'ring-yellow-400 shadow-yellow-500' },
+    { name: 'green', clase: 'bg-lime-600', selectedClass: 'ring-lime-600 shadow-lime-500' },
+    { name: 'blue', clase: 'bg-sky-500', selectedClass: 'ring-sky-500 shadow-sky-500' },
+    { name: 'purple', clase: 'bg-purple-500', selectedClass: 'ring-purple-500 shadow-purple-500' },
 ]
