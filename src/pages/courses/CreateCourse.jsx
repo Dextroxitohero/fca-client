@@ -36,12 +36,12 @@ export const CreateCourse = () => {
 
 
 	const incrementarLimit = () => {
-		setSelectedLimit(selectedLimit + 1);
+		setSelectedLimit( (prev) => prev + 1);
 	};
 
 	const decrementarLimit = () => {
 		if (selectedLimit > 1) {
-			setSelectedLimit(selectedLimit - 1);
+			setSelectedLimit((prev) => prev - 1);
 		}
 	};
 
