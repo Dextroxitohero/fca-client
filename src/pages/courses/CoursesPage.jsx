@@ -1,8 +1,12 @@
-import { CheckIcon } from '@heroicons/react/20/solid'
-import { ContainerFull } from '../../components/ContainerFull'
-import { Heading } from '../../components/Heading'
-import { Button } from '../../components/buttons/Button'
-import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react';
+import { CheckIcon } from '@heroicons/react/20/solid';
+import { ContainerFull } from '../../components/ContainerFull';
+import { Heading } from '../../components/Heading';
+import { Button } from '../../components/buttons/Button';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllCourses } from '../../redux/actions/course';
+import { CardCourse } from './components/CardCourse';
 
 const includedFeatures = [
     'Aceesos a las clases en vivo',
@@ -11,11 +15,21 @@ const includedFeatures = [
     'Certificado',
 ]
 export const CoursesPage = () => {
-
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const handleCreateNewCourse = ()=>{
+
+    useEffect(() => {
+        dispatch(getAllCourses())
+    }, []);
+
+    const { courses } = useSelector((state) => state.course.courses);
+    console.log(courses)
+
+    const handleCreateNewCourse = () => {
         navigate('/nuevo-curso');
     }
+
+
 
     return (
         <ContainerFull>
@@ -24,9 +38,26 @@ export const CoursesPage = () => {
                 subtitle={`Examina y verifica la información proporcionada por el candidato. Si la información es correcta y confiable, procede a la validación.`}
                 center={false}
             />
-            
+
             <div className='w-full flex justify-end mt-10'>
-                <Button label={"Agregar nuevo curso"} onClick={handleCreateNewCourse}/>
+                <Button label={"Agregar nuevo curso"} onClick={handleCreateNewCourse} />
+            </div>
+
+            <div className="w-full md:w-6/6 py-5 px-10">
+                <div className='grid grid-cols-1 md:grid-cols-4 gap-x-6 gap-y-8'>
+                    {courses && courses.map(course => (
+                        <div>
+                            <CardCourse
+                                key={course._id}
+                                isCreating={false}
+                                clase={course.color.selectedClass}
+                                lenguaje={course.language.name}
+                                nivel={course.level.name}
+                                studentLimit={course.limitMembers}
+                            />
+                        </div>
+                    ))}
+                </div>
             </div>
 
 

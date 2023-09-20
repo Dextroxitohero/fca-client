@@ -1,3 +1,4 @@
+import { Button } from "../../../components/buttons/Button"
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
@@ -18,7 +19,13 @@ export const CardCourse = ({isCreating, clase, lenguaje, nivel, studentLimit }) 
                 </div>
                 {
                     !isCreating && (
-                        <>Editando</>
+                        <div className="w-full mt-6">
+                            <Button 
+                            label={'Editar'}
+                            small={true}
+                            onClick={()=>{}}
+                            />
+                        </div>
                     )
                 }
             </div>

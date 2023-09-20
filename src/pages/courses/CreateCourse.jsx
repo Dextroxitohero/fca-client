@@ -1,9 +1,10 @@
-import React, { Fragment, useRef, useState } from 'react'
-import { ContainerFull } from '../../components/ContainerFull'
-import { Heading } from '../../components/Heading'
+import React, { Fragment, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ContainerFull } from '../../components/ContainerFull';
+import { Heading } from '../../components/Heading';
 import { useFormik } from 'formik';
 import { validateCreateCurse } from './validate';
-import { languages, nivels, colors } from '../../static/data';
+// import { languages, nivels, colors } from '../../static/data';
 import { Button } from '../../components/buttons/Button';
 import { RadioGroup } from '@headlessui/react';
 import { DateRange } from 'react-date-range';
@@ -13,14 +14,20 @@ import { es } from 'react-date-range/dist/locale';
 import { addDays } from 'date-fns';
 import { CardCourse } from './components/CardCourse';
 
-import { Dialog, Transition } from '@headlessui/react'
-import { Square3Stack3DIcon  } from '@heroicons/react/24/outline'
+import { Dialog, Transition } from '@headlessui/react';
+import { Square3Stack3DIcon } from '@heroicons/react/24/outline';
+
+import { optionsColors, optionsLanguages, optionsNivels } from '../../redux/actions/options';
+import { useDispatch, useSelector } from 'react-redux';
+import { createCourse } from '../../redux/actions/course';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
 export const CreateCourse = () => {
+	const dispatch = useDispatch();
+	const navigate = useNavigate(); 
 	const [selectedLimit, setSelectedLimit] = useState(1)
 	const [state, setState] = useState([
 		{
@@ -30,13 +37,21 @@ export const CreateCourse = () => {
 		}
 	]);
 
+	useEffect(() => {
+		dispatch(optionsColors())
+		dispatch(optionsLanguages())
+		dispatch(optionsNivels())
+	}, []);
+
+	const { colors, languages, levels } = useSelector((state) => state.options);
+
 	const [open, setOpen] = useState(false);
 
-    const cancelButtonRef = useRef(null);
+	const cancelButtonRef = useRef(null);
 
 
 	const incrementarLimit = () => {
-		setSelectedLimit( (prev) => prev + 1);
+		setSelectedLimit((prev) => prev + 1);
 	};
 
 	const decrementarLimit = () => {
@@ -48,23 +63,39 @@ export const CreateCourse = () => {
 
 	const formikCreteCourse = useFormik({
 		initialValues: {
+			name: '',
 			language: '',
 			color: '',
-			nivel: '',
+			level: '',
 			limit: 1
 		},
 		validateCreateCurse,
 		onSubmit: values => {
+			dispatch(createCourse(values))
+			.then((response) => {
+				// Manejar la respuesta exitosa aquí
+				// console.log('Respuesta exitosa:', response);
+				navigate(`/cursos`);
 
-			console.log(values)
+			  })
+			  .catch((error) => {
+				// Manejar errores aquí
+				console.error('Error:', error);
+			  });
 			setOpen(false)
-			// dispatch(loginUser({ email, password }))
 		},
 
 	});
 
 	const handleCreateCourse = () => {
 		formikCreteCourse.setFieldValue('limit', selectedLimit)
+		const color = colors.find(item => item.description === formikCreteCourse.values.color.split('-')[1])
+		const language = languages.find(item => item.description === formikCreteCourse.values.language)
+		const level = levels.find(item => item.description === formikCreteCourse.values.level)
+		formikCreteCourse.setFieldValue('name', `${formikCreteCourse.values.language} - ${formikCreteCourse.values.level}`)
+		formikCreteCourse.setFieldValue('color', color.value)
+		formikCreteCourse.setFieldValue('language', language.value)
+		formikCreteCourse.setFieldValue('level', level.value)
 		setOpen(true)
 	}
 
@@ -110,9 +141,9 @@ export const CreateCourse = () => {
 							<RadioGroup value={formikCreteCourse.values.color} onChange={(value) => formikCreteCourse.setFieldValue('color', value)} className="mt-4">
 								<RadioGroup.Label className="sr-only">Seleciona el color identificador del curso</RadioGroup.Label>
 								<div className="flex items-center px-10 space-x-3">
-									{colors.map(({ name, clase, selectedClass }) => (
+									{colors.map(({ value, name, clase, selectedClass }) => (
 										<RadioGroup.Option
-											key={name}
+											key={value}
 											value={selectedClass}
 											className={({ active, checked }) =>
 												classNames(
@@ -151,7 +182,7 @@ export const CreateCourse = () => {
 								{languages.map(({ value, description }) => (
 									<RadioGroup.Option
 										key={value}
-										value={value}
+										value={description}
 										className={({ active }) =>
 											classNames(
 												active ? 'ring-2 ring-indigo-500' : '',
@@ -183,10 +214,10 @@ export const CreateCourse = () => {
 						<div className="flex items-center justify-between">
 							<h3 className="text-lg md:pl-5 font-semibold text-gray-900">Seleciona el nivel del curso</h3>
 						</div>
-						<RadioGroup value={formikCreteCourse.values.nivel} onChange={(value) => formikCreteCourse.setFieldValue('nivel', value)} className="mt-6">
+						<RadioGroup value={formikCreteCourse.values.level} onChange={(value) => formikCreteCourse.setFieldValue('level', value)} className="mt-6">
 							<RadioGroup.Label className="sr-only">Seleciona el nivel del curso</RadioGroup.Label>
 							<div className="grid grid-cols-1 px-10 gap-4 lg:grid-cols-2">
-								{nivels.map(({ value, description }) => (
+								{levels.map(({ value, description }) => (
 									<RadioGroup.Option
 										key={value}
 										value={description}
@@ -251,7 +282,7 @@ export const CreateCourse = () => {
 								isCreating={true}
 								clase={formikCreteCourse.values.color}
 								lenguaje={formikCreteCourse.values.language}
-								nivel={formikCreteCourse.values.nivel}
+								nivel={formikCreteCourse.values.level}
 								studentLimit={selectedLimit}
 							/>
 						</div>

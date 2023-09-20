@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./reducers/user";
-import userPreRegistration from './reducers/preRegistration';
-import optionsSlice from './reducers/options';
+import userPreRegistrationReducer from './reducers/preRegistration';
+import optionsReducer from './reducers/options';
+import courseReducer from './reducers/course';
 
 // Middleware personalizado para manejar valores no serializables
 const nonSerializableMiddleware = getDefaultMiddleware => getDefaultMiddleware({
@@ -11,8 +12,9 @@ const nonSerializableMiddleware = getDefaultMiddleware => getDefaultMiddleware({
 export const Store = configureStore({
   reducer: {
     user: userReducer,
-    options: optionsSlice,
-    preRegistration: userPreRegistration,
+    options: optionsReducer,
+    preRegistration: userPreRegistrationReducer,
+    course: courseReducer,
   },
   middleware: nonSerializableMiddleware
 });

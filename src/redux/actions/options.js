@@ -1,12 +1,14 @@
 // import { useNavigate } from 'react-router-dom';
 import {
 	optionsStart,
-	optionsSuccess,
+	optionsAssessorsSuccess,
+	optionsLanguagesSuccess,
+	optionsColorsSuccess,
+	optionsLevelsSuccess,
 	optionsFailure,
 } from '../reducers/options';
 
 import axios from "axios";
-
 
 export const optionsAssessors = () => async (dispatch) => {
 	try {
@@ -15,7 +17,54 @@ export const optionsAssessors = () => async (dispatch) => {
 
 		const response = await axios.get(`http://localhost:8000/options/assessors`);
 
-        dispatch(optionsSuccess(response.data));
+        dispatch(optionsAssessorsSuccess(response.data));
+
+	} catch (error) {
+		
+        dispatch(optionsFailure());
+
+	}
+};
+
+export const optionsLanguages = () => async (dispatch) => {
+	try {
+        
+		dispatch(optionsStart());
+
+		const response = await axios.get(`http://localhost:8000/options/languages`);
+
+        dispatch(optionsLanguagesSuccess(response.data));
+
+	} catch (error) {
+		
+        dispatch(optionsFailure());
+
+	}
+};
+export const optionsColors = () => async (dispatch) => {
+	try {
+        
+		dispatch(optionsStart());
+
+		const response = await axios.get(`http://localhost:8000/options/colors`);
+
+        dispatch(optionsColorsSuccess(response.data));
+
+	} catch (error) {
+		
+        dispatch(optionsFailure());
+
+	}
+};
+
+export const optionsNivels = () => async (dispatch) => {
+	try {
+        
+		dispatch(optionsStart());
+
+		const response = await axios.get(`http://localhost:8000/options/levels`);
+
+        dispatch(optionsLevelsSuccess(response.data));
 
 	} catch (error) {
 		
