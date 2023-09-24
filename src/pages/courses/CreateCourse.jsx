@@ -27,7 +27,15 @@ function classNames(...classes) {
 
 export const CreateCourse = () => {
 	const dispatch = useDispatch();
-	const navigate = useNavigate(); 
+	const navigate = useNavigate();
+
+	const [formData, setformData] = useState({
+		'color': '',
+		'lenguage': '',
+		'level': '',
+		'limit': 1,
+	});
+
 	const [selectedLimit, setSelectedLimit] = useState(1)
 	const [state, setState] = useState([
 		{
@@ -36,6 +44,8 @@ export const CreateCourse = () => {
 			key: 'selection'
 		}
 	]);
+
+	console.log(formData)
 
 	useEffect(() => {
 		dispatch(optionsColors())
@@ -72,16 +82,16 @@ export const CreateCourse = () => {
 		validateCreateCurse,
 		onSubmit: values => {
 			dispatch(createCourse(values))
-			.then((response) => {
-				// Manejar la respuesta exitosa aquí
-				// console.log('Respuesta exitosa:', response);
-				navigate(`/cursos`);
+				.then((response) => {
+					// Manejar la respuesta exitosa aquí
+					// console.log('Respuesta exitosa:', response);
+					navigate(`/cursos`);
 
-			  })
-			  .catch((error) => {
-				// Manejar errores aquí
-				console.error('Error:', error);
-			  });
+				})
+				.catch((error) => {
+					// Manejar errores aquí
+					console.error('Error:', error);
+				});
 			setOpen(false)
 		},
 
@@ -248,23 +258,23 @@ export const CreateCourse = () => {
 					</div>
 					{/*  student limit */}
 					<div className='w-full mt-2 md:mt-4'>
-						<div className="flex items-center justify-between mb-2 md:mb-6">
-							<h3 className="text-lg md:pl-5 font-semibold text-gray-900">Limite de alumnos</h3>
+						<div className="flex flex-col justify-between mt-2 md:mt-4 pb-5 md:pb-10">
+							<div>
+								<h3 className="text-lg md:pl-5 font-semibold flex-1 text-gray-900">Limite de alumnos</h3>
+							</div>
+							<div className='ml-8 mt-4'>
+								<input
+									className='bg-white text-center text-gray-900 flex-1 shadow-sm rounded-md border py-1 px-4 text-[18px] font-semibold cursor-default'
+									type="number"
+									value={formData.limit}
+									onChange={(e) => setformData({ ...formData, 'limit': e.target.value })}
+								/>
+							</div>
 						</div>
-						<div className='flex flex-row justify-center items-center gap-4'>
-							<button
-								onClick={decrementarLimit}
-								className='cursor-pointer bg-white text-gray-900 shadow-sm rounded-md border py-2 px-6 align-middle text-[18px] font-semibold hover:border-transparent hover:ring-2	 hover:ring-indigo-500 hover:bg-gray-50 focus:outline-none'
-							>-</button>
-							<span
-								className='bg-white text-gray-900 shadow-sm rounded-md border py-2 px-6 align-middle text-[18px] font-semibold cursor-default'
-							>{selectedLimit}</span>
-							<button
-								onClick={incrementarLimit}
-								className='cursor-pointer bg-white text-gray-900 shadow-sm rounded-md border py-2 px-6 align-middle text-[18px] font-semibold hover:border-transparent hover:ring-2	 hover:ring-indigo-500 hover:bg-gray-50 focus:outline-none'
-							>+</button>
-						</div>
+
 					</div>
+
+					{/* Button */}
 					<div className='w-full mt-5 md:mt-10'>
 						<button
 							type='button'
@@ -276,7 +286,7 @@ export const CreateCourse = () => {
 
 				</div>
 				<div className="w-full md:w-4/6 py-5 px-10">
-					<div className='grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-8'>
+					<div className='grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8'>
 						<div>
 							<CardCourse
 								isCreating={true}

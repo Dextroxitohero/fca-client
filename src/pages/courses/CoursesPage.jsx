@@ -44,7 +44,7 @@ export const CoursesPage = () => {
             </div>
 
             <div className="w-full md:w-6/6 py-5 px-10">
-                <div className='grid grid-cols-1 md:grid-cols-4 gap-x-6 gap-y-8'>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-8'>
                     {courses && courses.map(course => (
                         <div>
                             <CardCourse
