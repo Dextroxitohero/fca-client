@@ -2,10 +2,6 @@ import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ContainerFull } from '../../components/ContainerFull';
 import { Heading } from '../../components/Heading';
-import { useFormik } from 'formik';
-import { validateCreateCurse } from './validate';
-// import { languages, nivels, colors } from '../../static/data';
-import { Button } from '../../components/buttons/Button';
 import { RadioGroup } from '@headlessui/react';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
@@ -24,6 +20,7 @@ import { createCourse } from '../../redux/actions/course';
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
+
 
 export const CreateCourse = () => {
 	const dispatch = useDispatch();
@@ -82,17 +79,13 @@ export const CreateCourse = () => {
 
 	const handleValidateData = () => {
 
-		console.log(formData)
-
-		const setValues = {
+		setValues({
 			name: `Curso de ${formData.language.value}`,
 			color: formData.color.id,
 			language: formData.language.id,
 			level: formData.level.id,
 			limit: formData.limit
-		}
-
-		console.log(values)
+		})
 
 		// Agregar validacion de los inputs
 		setOpen(true)
@@ -109,9 +102,7 @@ export const CreateCourse = () => {
 	}
 
 	const handleLevel = (value) => {
-		console.log(value)
 		const level = levels.find(level => level.value === value)
-		console.log(level)
 		setformData({ ...formData, level: { 'id': level.value, 'value': level.description } })
 	}
 
@@ -290,7 +281,7 @@ export const CreateCourse = () => {
 
 				</div>
 				<div className="w-full md:w-4/6 py-5 px-10">
-					<div className='grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8'>
+					<div className='grid grid-cols-1 md:grid-cols-1 gap-x-6 gap-y-8'>
 						<div>
 							<CardCourse
 								isCreating={true}
@@ -298,6 +289,7 @@ export const CreateCourse = () => {
 								language={formData.language.value}
 								nivel={formData.level.value}
 								studentLimit={formData.limit}
+								flag={formData.language.value === '' ? '' : `${formData.language.value}.png`}
 							/>
 						</div>
 					</div>

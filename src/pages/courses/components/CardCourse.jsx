@@ -1,29 +1,32 @@
 import { Button } from "../../../components/buttons/Button";
-import flag from './../../../static/flags/ingles.png';
 
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export const CardCourse = ({ isCreating, clase, language, nivel, studentLimit }) => {
+const urlFlag = `http://localhost:8000/uploads/flags/`;
+
+export const CardCourse = ({ isCreating, clase, language, flag, nivel, studentLimit, status }) => {
     return (
         <>
             <div className='border border-gray-200 border-l rounded-md p-4'>
                 <div className='w-full flex flex-col px-2 md:px-4'>
                     <div className="flex justify-between">
                         <div>
-                            <p className='text-[22px] text-gray-900 font-bold tracking-wide uppercase'>{`Curso de Ingles`}</p>
+                            <p className='text-[22px] text-gray-900 font-bold tracking-wide uppercase'>{`Curso de ${language}`}</p>
                             <div className="flex items-center">
                                 <span className={classNames(
                                     clase,
-                                    'inline-block w-[14px] h-[14px] bg-red-500 rounded-lg mr-2'
+                                    'inline-block w-[14px] h-[14px] rounded-lg mr-2'
                                 )}></span>
-                                <p className='text-[14px] text-indigo-700 font-bold tracking-wide uppercase'>{${nivel}}</p>
+                                <p className='text-[14px] text-indigo-700 font-bold tracking-wide uppercase'>{nivel}</p>
                             </div>
                         </div>
                         <div>
-                            <img className="w-[32px]" src={flag} alt="flag" />
+                            {flag &&(
+                                <img className="w-[32px]" src={`${urlFlag}${flag}`} alt="flag" />
+                            )}
                         </div>
                     </div>
                     <div className="w-full flex flex-1 mt-10 justify-between">
@@ -55,11 +58,20 @@ export const CardCourse = ({ isCreating, clase, language, nivel, studentLimit })
                                 </li>
                             </ul>
                         </div>
-                        <div>
-                            <div className="border-none ring-2 ring-lime-600 shadow-lime-500 shadow-md py-0 px-1 rounded-sm text-lime-600 uppercase font-bold">
-                                <p className="text-[.8rem]">activo</p>
+                        {!isCreating && (
+                            <div>
+                                <div
+                                    className={classNames(
+                                        status === 'activo'
+                                            ? 'text-lime-600 ring-lime-600 shadow-lime-600'
+                                            : 'text-red-600 ring-red-600 shadow-red-600',
+                                        'border-none ring-2  shadow-md py-0 px-1 rounded-sm  uppercase font-bold'
+                                    )}>
+                                    <p className="text-[.8rem]">{status}</p>
+                                </div>
                             </div>
-                        </div>
+                        )}
+
                     </div>
 
                 </div>
