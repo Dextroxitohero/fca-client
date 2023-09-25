@@ -30,22 +30,28 @@ export const CreateCourse = () => {
 	const navigate = useNavigate();
 
 	const [formData, setformData] = useState({
-		'color': '',
-		'lenguage': '',
-		'level': '',
+		'color': {
+			'id': '',
+			'value': ''
+		},
+		'language': {
+			'id': '',
+			'value': ''
+		},
+		'level': {
+			'id': '',
+			'value': ''
+		},
 		'limit': 1,
 	});
 
-	const [selectedLimit, setSelectedLimit] = useState(1)
-	const [state, setState] = useState([
-		{
-			startDate: new Date(),
-			endDate: new Date(),
-			key: 'selection'
-		}
-	]);
-
-	console.log(formData)
+	// const [state, setState] = useState([
+	// 	{
+	// 		startDate: new Date(),
+	// 		endDate: new Date(),
+	// 		key: 'selection'
+	// 	}
+	// ]);
 
 	useEffect(() => {
 		dispatch(optionsColors())
@@ -56,61 +62,57 @@ export const CreateCourse = () => {
 	const { colors, languages, levels } = useSelector((state) => state.options);
 
 	const [open, setOpen] = useState(false);
-
+	const [values, setValues] = useState('')
 	const cancelButtonRef = useRef(null);
 
+	const handleCreatedCourse = () => {
+		dispatch(createCourse(values))
+			.then((response) => {
+				// Manejar la respuesta exitosa aquí
+				// console.log('Respuesta exitosa:', response);
+				navigate(`/cursos`);
 
-	const incrementarLimit = () => {
-		setSelectedLimit((prev) => prev + 1);
-	};
+			})
+			.catch((error) => {
+				// Manejar errores aquí
+				console.error('Error:', error);
+			});
+		setOpen(false)
+	}
 
-	const decrementarLimit = () => {
-		if (selectedLimit > 1) {
-			setSelectedLimit((prev) => prev - 1);
+	const handleValidateData = () => {
+
+		console.log(formData)
+
+		const setValues = {
+			name: `Curso de ${formData.language.value}`,
+			color: formData.color.id,
+			language: formData.language.id,
+			level: formData.level.id,
+			limit: formData.limit
 		}
-	};
 
+		console.log(values)
 
-	const formikCreteCourse = useFormik({
-		initialValues: {
-			name: '',
-			language: '',
-			color: '',
-			level: '',
-			limit: 1
-		},
-		validateCreateCurse,
-		onSubmit: values => {
-			dispatch(createCourse(values))
-				.then((response) => {
-					// Manejar la respuesta exitosa aquí
-					// console.log('Respuesta exitosa:', response);
-					navigate(`/cursos`);
-
-				})
-				.catch((error) => {
-					// Manejar errores aquí
-					console.error('Error:', error);
-				});
-			setOpen(false)
-		},
-
-	});
-
-	const handleCreateCourse = () => {
-		formikCreteCourse.setFieldValue('limit', selectedLimit)
-		const color = colors.find(item => item.description === formikCreteCourse.values.color.split('-')[1])
-		const language = languages.find(item => item.description === formikCreteCourse.values.language)
-		const level = levels.find(item => item.description === formikCreteCourse.values.level)
-		formikCreteCourse.setFieldValue('name', `${formikCreteCourse.values.language} - ${formikCreteCourse.values.level}`)
-		formikCreteCourse.setFieldValue('color', color.value)
-		formikCreteCourse.setFieldValue('language', language.value)
-		formikCreteCourse.setFieldValue('level', level.value)
+		// Agregar validacion de los inputs
 		setOpen(true)
 	}
 
-	const handleReset = () => {
-		formikCreteCourse.resetForm();
+	const handleColor = (value) => {
+		const color = colors.find(color => color.value === value)
+		setformData({ ...formData, color: { 'id': color.value, 'value': color.clase } })
+	}
+
+	const handleLanguage = (value) => {
+		const language = languages.find(language => language.value === value)
+		setformData({ ...formData, language: { 'id': language.value, 'value': language.description } })
+	}
+
+	const handleLevel = (value) => {
+		console.log(value)
+		const level = levels.find(level => level.value === value)
+		console.log(level)
+		setformData({ ...formData, level: { 'id': level.value, 'value': level.description } })
 	}
 
 	return (
@@ -148,13 +150,13 @@ export const CreateCourse = () => {
 							<div className="flex items-center justify-between">
 								<h3 className="text-lg md:pl-5 font-semibold text-gray-900">Seleciona el color identificador del curso</h3>
 							</div>
-							<RadioGroup value={formikCreteCourse.values.color} onChange={(value) => formikCreteCourse.setFieldValue('color', value)} className="mt-4">
+							<RadioGroup value={formData.color.id} onChange={(value) => handleColor(value)} className="mt-4">
 								<RadioGroup.Label className="sr-only">Seleciona el color identificador del curso</RadioGroup.Label>
 								<div className="flex items-center px-10 space-x-3">
 									{colors.map(({ value, name, clase, selectedClass }) => (
 										<RadioGroup.Option
 											key={value}
-											value={selectedClass}
+											value={value}
 											className={({ active, checked }) =>
 												classNames(
 													selectedClass,
@@ -186,13 +188,13 @@ export const CreateCourse = () => {
 						<div className="flex items-center justify-between">
 							<h3 className="text-lg md:pl-5 font-semibold text-gray-900">Seleciona el idioma del curso</h3>
 						</div>
-						<RadioGroup value={formikCreteCourse.values.language} onChange={(value) => formikCreteCourse.setFieldValue('language', value)} className="mt-6">
+						<RadioGroup value={formData.language.id} onChange={(value) => handleLanguage(value)} className="mt-6">
 							<RadioGroup.Label className="sr-only">Seleciona el idioma del curso</RadioGroup.Label>
 							<div className="grid grid-cols-1 px-10 gap-4 lg:grid-cols-2">
 								{languages.map(({ value, description }) => (
 									<RadioGroup.Option
 										key={value}
-										value={description}
+										value={value}
 										className={({ active }) =>
 											classNames(
 												active ? 'ring-2 ring-indigo-500' : '',
@@ -224,13 +226,13 @@ export const CreateCourse = () => {
 						<div className="flex items-center justify-between">
 							<h3 className="text-lg md:pl-5 font-semibold text-gray-900">Seleciona el nivel del curso</h3>
 						</div>
-						<RadioGroup value={formikCreteCourse.values.level} onChange={(value) => formikCreteCourse.setFieldValue('level', value)} className="mt-6">
+						<RadioGroup value={formData.level.id} onChange={(value) => handleLevel(value)} className="mt-6">
 							<RadioGroup.Label className="sr-only">Seleciona el nivel del curso</RadioGroup.Label>
 							<div className="grid grid-cols-1 px-10 gap-4 lg:grid-cols-2">
 								{levels.map(({ value, description }) => (
 									<RadioGroup.Option
 										key={value}
-										value={description}
+										value={value}
 										className={({ active }) =>
 											classNames(
 												active ? 'ring-2 ring-indigo-500' : '',
@@ -264,8 +266,10 @@ export const CreateCourse = () => {
 							</div>
 							<div className='ml-8 mt-4'>
 								<input
-									className='bg-white text-center text-gray-900 flex-1 shadow-sm rounded-md border py-1 px-4 text-[18px] font-semibold cursor-default'
+									className='bg-white text-center text-gray-900 flex-1 w-11/12 shadow-sm rounded-md border py-1 text-[18px] font-semibold cursor-default'
 									type="number"
+									max={5}
+									min={1}
 									value={formData.limit}
 									onChange={(e) => setformData({ ...formData, 'limit': e.target.value })}
 								/>
@@ -279,7 +283,7 @@ export const CreateCourse = () => {
 						<button
 							type='button'
 							className='disabled:opacity-95 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition py-3 font-semibold text-md text-white bg-indigo-600 bg-cyan w-full'
-							onClick={handleCreateCourse}
+							onClick={handleValidateData}
 						>Agregar Nuevo Curso</button>
 						{/* <Button label={"Agregar nuevo curso"} onClick={handleCreateCourse} /> */}
 					</div>
@@ -290,10 +294,10 @@ export const CreateCourse = () => {
 						<div>
 							<CardCourse
 								isCreating={true}
-								clase={formikCreteCourse.values.color}
-								lenguaje={formikCreteCourse.values.language}
-								nivel={formikCreteCourse.values.level}
-								studentLimit={selectedLimit}
+								clase={formData.color.value}
+								language={formData.language.value}
+								nivel={formData.level.value}
+								studentLimit={formData.limit}
 							/>
 						</div>
 					</div>
@@ -346,7 +350,7 @@ export const CreateCourse = () => {
 										<button
 											type="button"
 											className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 sm:ml-3 sm:w-auto"
-											onClick={formikCreteCourse.handleSubmit}
+											onClick={handleCreatedCourse}
 										>
 											Validar
 										</button>

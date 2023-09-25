@@ -6,7 +6,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export const CardCourse = ({ isCreating, clase, lenguaje, nivel, studentLimit }) => {
+export const CardCourse = ({ isCreating, clase, language, nivel, studentLimit }) => {
     return (
         <>
             <div className='border border-gray-200 border-l rounded-md p-4'>
@@ -15,8 +15,11 @@ export const CardCourse = ({ isCreating, clase, lenguaje, nivel, studentLimit })
                         <div>
                             <p className='text-[22px] text-gray-900 font-bold tracking-wide uppercase'>{`Curso de Ingles`}</p>
                             <div className="flex items-center">
-                                <span className="inline-block w-[14px] h-[14px] bg-red-500 rounded-lg mr-2"></span>
-                                <p className='text-[14px] text-indigo-700 font-bold tracking-wide uppercase'>{`Nivel 1`}</p>
+                                <span className={classNames(
+                                    clase,
+                                    'inline-block w-[14px] h-[14px] bg-red-500 rounded-lg mr-2'
+                                )}></span>
+                                <p className='text-[14px] text-indigo-700 font-bold tracking-wide uppercase'>{${nivel}}</p>
                             </div>
                         </div>
                         <div>
@@ -48,7 +51,7 @@ export const CardCourse = ({ isCreating, clase, lenguaje, nivel, studentLimit })
                                 </li>
                                 <li className="mb-2 uppercase">
                                     <span className="font-normal text-[0.7rem] text-gray-600 leading-6">Maximo de alumnos para el curso</span>
-                                    <span className="block text-slate-800 font-bold text-[0.9rem] tracking-wide"> 30</span>
+                                    <span className="block text-slate-800 font-bold text-[0.9rem] tracking-wide">{studentLimit}</span>
                                 </li>
                             </ul>
                         </div>
