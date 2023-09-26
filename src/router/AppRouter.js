@@ -30,6 +30,7 @@ import { ValidateCandidate } from '../pages/candidates/ValidateCandidate';
 
 import { CoursesPage } from '../pages/courses/CoursesPage';
 import { CreateCourse } from '../pages/courses/CreateCourse';
+import { CourseEdit } from '../pages/courses/CourseEdit';
 
 
 export const AppRouter = () => {
@@ -108,6 +109,14 @@ export const AppRouter = () => {
                         element={
                             <PrivateRoute>
                                 <CreateCourse />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/edit-curso/:idCourse"
+                        element={
+                            <PrivateRoute>
+                                <CourseEdit />
                             </PrivateRoute>
                         }
                     />

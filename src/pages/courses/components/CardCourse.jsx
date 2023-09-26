@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../../components/buttons/Button";
+import { formatDate } from "../../../common/formatDateText";
+import { capitalizarPalabras } from "../../../common/upperCaseWord";
 
 
 function classNames(...classes) {
@@ -7,7 +10,34 @@ function classNames(...classes) {
 
 const urlFlag = `http://localhost:8000/uploads/flags/`;
 
-export const CardCourse = ({ isCreating, clase, language, flag, nivel, studentLimit, status }) => {
+export const CardCourse = ({ 
+    idCourse, 
+    isCreating, 
+    clase, 
+    language, 
+    flag, 
+    nivel, 
+    studentLimit, 
+    status,
+    hours,
+    days,
+    teacher,
+    startDate,
+    endDate
+}) => {
+    const navigate = useNavigate();
+
+    const handleEdit = () => {
+        navigate(`/edit-curso/${idCourse}`);
+    }
+
+    console.log(hours)
+    console.log(days)
+    console.log(teacher)
+    console.log(startDate)
+    console.log(endDate)
+    
+
     return (
         <>
             <div className='border border-gray-200 border-l rounded-md p-4'>
@@ -34,27 +64,27 @@ export const CardCourse = ({ isCreating, clase, language, flag, nivel, studentLi
                             <ul>
                                 <li className="mb-2 uppercase">
                                     <span className="font-normal text-[0.7rem] text-gray-600 leading-6">Profesor del curso</span>
-                                    <span className="block text-slate-800 font-bold text-[0.9rem] tracking-wide"> Jorge Alberto Hernandez</span>
+                                    <span className="block text-slate-800 font-semibold text-[0.9rem] tracking-wide">{teacher !== '' ? teacher?.description : '-'}</span>
                                 </li>
                                 <li className="mb-2 uppercase">
                                     <span className="font-normal text-[0.7rem] text-gray-600 leading-6">Fecha de inicio de curso</span>
-                                    <span className="block text-slate-800 font-bold text-[0.9rem] tracking-wide"> 20 de octubre del 2022</span>
+                                    <span className="block text-slate-800 font-semibold text-[0.9rem] tracking-wide">{startDate !== '' ? formatDate(startDate) : '-'}</span>
                                 </li>
                                 <li className="mb-2 uppercase">
                                     <span className="font-normal text-[0.7rem] text-gray-600 leading-6">Fecha de fin de curso</span>
-                                    <span className="block text-slate-800 font-bold text-[0.9rem] tracking-wide"> 20 de diciembre del 2022</span>
+                                    <span className="block text-slate-800 font-semibold text-[0.9rem] tracking-wide">{endDate !== '' ? formatDate(endDate) : '-'}</span>
                                 </li>
                                 <li className="mb-2 uppercase">
                                     <span className="font-normal text-[0.7rem] text-gray-600 leading-6">Dias de clase</span>
-                                    <span className="block text-slate-800 font-bold text-[0.9rem] tracking-wide"> (Lunes, Miercoles, Viernes)</span>
+                                    <span className="block text-slate-800 font-semibold text-[0.9rem] tracking-wide">{days.length !== 0 ? days.map(day => <span key={day.id} className="bg-slate-100 px-2 rounded-sm ml-2">{day.day}</span>) : 'Hay dias selecionados'}</span>
                                 </li>
                                 <li className="mb-2 uppercase">
                                     <span className="font-normal text-[0.7rem] text-gray-600 leading-6">Horario</span>
-                                    <span className="block text-slate-800 font-bold text-[0.9rem] tracking-wide">7:00 PM - 8:30 PM</span>
+                                    <span className="block text-slate-800 font-semibold text-[0.9rem] tracking-wide">{ hours.length !== 0 ? `${hours[0].time} - ${hours[1]?.time}` : 'No hay tiempo selecionado' }</span>
                                 </li>
                                 <li className="mb-2 uppercase">
-                                    <span className="font-normal text-[0.7rem] text-gray-600 leading-6">Maximo de alumnos para el curso</span>
-                                    <span className="block text-slate-800 font-bold text-[0.9rem] tracking-wide">{studentLimit}</span>
+                                    <span className="font-normal text-[0.7rem] text-gray-600 leading-6">Maximo de alumnos</span>
+                                    <span className="block text-slate-800 font-semibold text-[0.9rem] tracking-wide">{studentLimit}</span>
                                 </li>
                             </ul>
                         </div>
@@ -78,7 +108,10 @@ export const CardCourse = ({ isCreating, clase, language, flag, nivel, studentLi
                 {
                     !isCreating && (
                         <div className="w-full flex mt-8 mb-4 gap-x-4 px-4">
-                            <button className="bg-indigo-600  flex-1 py-2 text-white font-semibold rounded-md focus:bg-indigo-700">Editar</button>
+                            <button 
+                                onClick={handleEdit}
+                                className="bg-indigo-600  flex-1 py-2 text-white font-semibold rounded-md focus:bg-indigo-700"
+                            >Editar</button>
                             {/* <button className="bg-indigo-600  flex-1 py-2 text-white font-semibold rounded-md focus:bg-indigo-700">Agragar nuevo curso</button> */}
 
                         </div>

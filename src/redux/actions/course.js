@@ -5,7 +5,10 @@ import {
     createCourseFailure,
     getAllCoursesStart,
     getAllCoursesSuccess,
-    getAllCoursesFailure
+    getAllCoursesFailure,
+    getCourseByStart,
+    getCourseBySuccess,
+    getCourseByFailure
 } from '../reducers/course';
 
 import axios from "axios";
@@ -52,6 +55,23 @@ export const getAllCourses = () => async (dispatch) => {
         }
     } catch (error) {
         dispatch(getAllCoursesFailure());
+        toast.error('Ocurrio un error.')
+    }
+};
+
+export const getCourseById = (idCourse) => async (dispatch) => {
+    try {
+        dispatch(getCourseByStart());
+
+        const response = await axios.get(`http://localhost:8000/course/findById/${idCourse}`);
+
+        if (response.status === 200) {
+            dispatch(getCourseBySuccess(response));
+        } else {
+            dispatch(getCourseByFailure());
+        }
+    } catch (error) {
+        dispatch(getCourseByFailure());
         toast.error('Ocurrio un error.')
     }
 };

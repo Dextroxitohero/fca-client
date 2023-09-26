@@ -4,7 +4,8 @@ const courseSlice = createSlice({
 	name: 'course',
 	initialState: {
 		loading: false,
-		courses: []
+		courses: [],
+		courseSelected: []
 	},
 	reducers: {
 		createCourseStart: (state) => {
@@ -26,6 +27,16 @@ const courseSlice = createSlice({
 		getAllCoursesFailure: (state, action) => {
 			state.loading = false;
 		},
+		getCourseByStart: (state) => {
+			state.loading = true;
+		},
+		getCourseBySuccess: (state, { payload: {data} }) => {
+			state.loading = false;
+			state.courseSelected = data;
+		},
+		getCourseByFailure: (state, action) => {
+			state.loading = false;
+		},
 	},
 });
 
@@ -35,6 +46,9 @@ export const {
     createCourseFailure,
 	getAllCoursesStart,
 	getAllCoursesSuccess,
-	getAllCoursesFailure
+	getAllCoursesFailure,
+	getCourseByStart,
+	getCourseBySuccess,
+	getCourseByFailure
 } = courseSlice.actions;
 export default courseSlice.reducer;

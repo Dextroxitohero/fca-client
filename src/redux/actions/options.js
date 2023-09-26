@@ -6,6 +6,7 @@ import {
 	optionsColorsSuccess,
 	optionsLevelsSuccess,
 	optionsFailure,
+	optionsTeachersSuccess,
 } from '../reducers/options';
 
 import axios from "axios";
@@ -65,6 +66,22 @@ export const optionsNivels = () => async (dispatch) => {
 		const response = await axios.get(`http://localhost:8000/options/levels`);
 
         dispatch(optionsLevelsSuccess(response.data));
+
+	} catch (error) {
+		
+        dispatch(optionsFailure());
+
+	}
+};
+
+export const optionsAllTeachers = () => async (dispatch) => {
+	try {
+        
+		dispatch(optionsStart());
+
+		const response = await axios.get(`http://localhost:8000/options/teachers`);
+
+        dispatch(optionsTeachersSuccess(response.data));
 
 	} catch (error) {
 		

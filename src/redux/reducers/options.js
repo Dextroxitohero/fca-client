@@ -7,6 +7,7 @@ const optionsSlice = createSlice({
 		languages: [],
 		colors: [],
 		levels: [],
+		teachers: [],
 		loading: false,
 	},
 	reducers: {
@@ -29,6 +30,10 @@ const optionsSlice = createSlice({
 			state.loading = false;
 			state.levels = data;
 		},
+		optionsTeachersSuccess: (state, { payload: { data } }) => {
+			state.loading = false;
+			state.teachers = data;
+		},
 		optionsFailure: (state, action) => {
 			state.loading = false;
 		},
@@ -41,6 +46,7 @@ export const {
 	optionsLanguagesSuccess,
 	optionsColorsSuccess,
 	optionsLevelsSuccess,
+	optionsTeachersSuccess,
 	optionsFailure,
 } = optionsSlice.actions;
 export default optionsSlice.reducer;

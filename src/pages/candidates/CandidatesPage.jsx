@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom';
 import { ContainerFull } from '../../components/ContainerFull';
 import { Heading } from '../../components/Heading';
 
-
-
 export const CandidatesPage = () => {
 	const dispatch = useDispatch();
 

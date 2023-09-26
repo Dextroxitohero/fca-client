@@ -41,13 +41,19 @@ export const CoursesPage = () => {
                     {courses && courses.map(course => (
                         <CardCourse
                             key={course._id}
+                            idCourse={course._id}
                             isCreating={false}
                             clase={course.color?.clase}
                             language={course.language.name}
                             flag={course.language.path}
                             nivel={course.level.name}
                             studentLimit={course.limitMembers}
-                            status={course.status}
+                            status={course.status}                            
+                            hours={[]}
+                            days={[]}
+                            teacher={[]}
+                            startDate={''}
+                            endDate={''}
                         />
                     ))}
                 </div>

@@ -3,11 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { ContainerFull } from '../../components/ContainerFull';
 import { Heading } from '../../components/Heading';
 import { RadioGroup } from '@headlessui/react';
-import { DateRange } from 'react-date-range';
-import 'react-date-range/dist/styles.css'; // main css file
-import 'react-date-range/dist/theme/default.css'; // theme css file
-import { es } from 'react-date-range/dist/locale';
-import { addDays } from 'date-fns';
 import { CardCourse } from './components/CardCourse';
 
 import { Dialog, Transition } from '@headlessui/react';
@@ -41,14 +36,6 @@ export const CreateCourse = () => {
 		},
 		'limit': 1,
 	});
-
-	// const [state, setState] = useState([
-	// 	{
-	// 		startDate: new Date(),
-	// 		endDate: new Date(),
-	// 		key: 'selection'
-	// 	}
-	// ]);
 
 	useEffect(() => {
 		dispatch(optionsColors())
@@ -114,65 +101,48 @@ export const CreateCourse = () => {
 				center={false}
 			/>
 			<div className="w-full flex flex-col md:flex-row mt-5 md:mt-10">
-				{/* <div className="w-full md:w-5/12 py-5 flex flex-col">
-					<div className="w-full self-start mb-2 md:mb-2">
-						<h3 className="text-lg md:pl-5 font-semibold text-gray-900">Duracion de curso</h3>
-					</div>
-					<div className='w-full px-10 mt-4'>
-						<DateRange
-							editableDateInputs={true}
-							onChange={item => setState([item.selection])}
-							moveRangeOnFirstSelection={false}
-							ranges={state}
-							months={2}
-							direction='vertical'
-							locale={es}
-							date={new Date()}
-							rangeColors={['#4f46e5']}
-							minDate={addDays(new Date(), 0)}
-						/>
-					</div>
-				</div> */}
-
 				<div className="w-full md:w-2/6 px-10 md:border-r md:border-gray-200">
 					{/* Colors */}
-					<div className='w-full pb-2 md:pb-4 border-b border-gray-200'>
-						<div className="md:w-11/12 mb-2 md:mb-4">
-							<div className="flex items-center justify-between">
-								<h3 className="text-lg md:pl-5 font-semibold text-gray-900">Seleciona el color identificador del curso</h3>
-							</div>
-							<RadioGroup value={formData.color.id} onChange={(value) => handleColor(value)} className="mt-4">
-								<RadioGroup.Label className="sr-only">Seleciona el color identificador del curso</RadioGroup.Label>
-								<div className="flex items-center px-10 space-x-3">
-									{colors.map(({ value, name, clase, selectedClass }) => (
-										<RadioGroup.Option
-											key={value}
-											value={value}
-											className={({ active, checked }) =>
-												classNames(
-													selectedClass,
-													active && checked ? 'ring ring-offset-1' : '',
-													!active && checked ? 'ring-2' : '',
-													'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'
-												)
-											}
-										>
-											<RadioGroup.Label as="span" className="sr-only">
-												{name}
-											</RadioGroup.Label>
-											<span
-												aria-hidden="true"
-												className={classNames(
-													clase,
-													'h-8 w-8 rounded-full border border-black border-opacity-10'
-												)}
-											/>
-										</RadioGroup.Option>
-									))}
+					{colors && (
+						<div className='w-full pb-2 md:pb-4 border-b border-gray-200'>
+							<div className="md:w-11/12 mb-2 md:mb-4">
+								<div className="flex items-center justify-between">
+									<h3 className="text-lg md:pl-5 font-semibold text-gray-900">Seleciona el color identificador del curso</h3>
 								</div>
-							</RadioGroup>
+								<RadioGroup value={formData.color.id} onChange={(value) => handleColor(value)} className="mt-4">
+									<RadioGroup.Label className="sr-only">Seleciona el color identificador del curso</RadioGroup.Label>
+									<div className="flex items-center px-10 space-x-3">
+										{colors.map(({ value, name, clase, selectedClass }) => (
+											<RadioGroup.Option
+												key={value}
+												value={value}
+												className={({ active, checked }) =>
+													classNames(
+														selectedClass,
+														active && checked ? 'ring ring-offset-1' : '',
+														!active && checked ? 'ring-2' : '',
+														'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'
+													)
+												}
+											>
+												<RadioGroup.Label as="span" className="sr-only">
+													{name}
+												</RadioGroup.Label>
+												<span
+													aria-hidden="true"
+													className={classNames(
+														clase,
+														'h-8 w-8 rounded-full border border-black border-opacity-10'
+													)}
+												/>
+											</RadioGroup.Option>
+										))}
+									</div>
+								</RadioGroup>
+							</div>
 						</div>
-					</div>
+					)}
+
 
 					{/* languages */}
 					<div className='w-full mt-2 md:mt-4 pb-5 md:pb-10 border-b border-gray-200'>
@@ -270,7 +240,7 @@ export const CreateCourse = () => {
 					</div>
 
 					{/* Button */}
-					<div className='w-full mt-5 md:mt-10'>
+					<div className='w-full mt-5 md:mt-0 md:mb-4'>
 						<button
 							type='button'
 							className='disabled:opacity-95 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition py-3 font-semibold text-md text-white bg-indigo-600 bg-cyan w-full'
@@ -290,6 +260,11 @@ export const CreateCourse = () => {
 								nivel={formData.level.value}
 								studentLimit={formData.limit}
 								flag={formData.language.value === '' ? '' : `${formData.language.value}.png`}
+								hours={[]}
+								days={[]}
+								teacher={[]}
+								startDate={''}
+								endDate={''}
 							/>
 						</div>
 					</div>
