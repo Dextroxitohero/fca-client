@@ -47,13 +47,13 @@ export const InputDays = ({ selectedDays, setSelectedDays }) => {
     };
 
     return (
-        <div className='w-full grid grid-cols-7 gap-x-3 gap-y-8'>
+        <div className='w-full flex justify-between gap-x-4'>
             {days.map(day => (
                 <button
                     key={day.id}
                     onClick={() => handleDayClick(day)}
                     className={`${selectedDays.includes(day) ? 'ring-2 ring-indigo-600 text-black' : 'bg-gray-100'
-                        } p-2 rounded-md cursor-pointer`}
+                        } py-2 flex-1  rounded-md cursor-pointer`}
                 >
                     {day.simbolo}
                 </button>

@@ -3,7 +3,7 @@ import { Combobox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
 
-export const ComboBox = ({ filterData, query, setQuery, selected, setSelected }) => {
+export const ComboBox = ({ filterData, query, setQuery, selected, setSelected, placeholder='' }) => {
 
     return (
         <div className="">
@@ -11,9 +11,10 @@ export const ComboBox = ({ filterData, query, setQuery, selected, setSelected })
                 <div className="relative mt-1">
                     <div>
                         <Combobox.Input
-                            className="w-full rounded-md border-none py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 uppercase"
+                            className="w-full rounded-md border-none py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 uppercase"
                             displayValue={(item) => item.description}
                             onChange={(event) => setQuery(event.target.value)}
+                            placeholder={placeholder}
                         />
                         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
                             <ChevronUpDownIcon

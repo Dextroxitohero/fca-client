@@ -31,13 +31,6 @@ export const CardCourse = ({
         navigate(`/edit-curso/${idCourse}`);
     }
 
-    console.log(hours)
-    console.log(days)
-    console.log(teacher)
-    console.log(startDate)
-    console.log(endDate)
-    
-
     return (
         <>
             <div className='border border-gray-200 border-l rounded-md p-4'>
@@ -80,7 +73,7 @@ export const CardCourse = ({
                                 </li>
                                 <li className="mb-2 uppercase">
                                     <span className="font-normal text-[0.7rem] text-gray-600 leading-6">Horario</span>
-                                    <span className="block text-slate-800 font-semibold text-[0.9rem] tracking-wide">{ hours.length !== 0 ? `${hours[0].time} - ${hours[1]?.time}` : 'No hay tiempo selecionado' }</span>
+                                    <span className="block text-slate-800 font-semibold text-[0.9rem] tracking-wide">{ hours.length !== 0 ? `${hours[0].time} - ${hours[hours.length - 1]?.time}` : 'No hay tiempo selecionado' }</span>
                                 </li>
                                 <li className="mb-2 uppercase">
                                     <span className="font-normal text-[0.7rem] text-gray-600 leading-6">Maximo de alumnos</span>

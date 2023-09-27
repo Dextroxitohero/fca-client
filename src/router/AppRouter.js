@@ -108,7 +108,7 @@ export const AppRouter = () => {
                         path="/nuevo-curso"
                         element={
                             <PrivateRoute>
-                                <CreateCourse />
+                                <CourseEdit isCreating={true} />
                             </PrivateRoute>
                         }
                     />
@@ -116,7 +116,7 @@ export const AppRouter = () => {
                         path="/edit-curso/:idCourse"
                         element={
                             <PrivateRoute>
-                                <CourseEdit />
+                                <CourseEdit isCreating={false} />
                             </PrivateRoute>
                         }
                     />

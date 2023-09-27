@@ -58,7 +58,7 @@ export const optionsColors = () => async (dispatch) => {
 	}
 };
 
-export const optionsNivels = () => async (dispatch) => {
+export const optionsLevels = () => async (dispatch) => {
 	try {
         
 		dispatch(optionsStart());

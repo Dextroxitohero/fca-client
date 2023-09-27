@@ -8,7 +8,7 @@ import { CardCourse } from './components/CardCourse';
 import { Dialog, Transition } from '@headlessui/react';
 import { Square3Stack3DIcon } from '@heroicons/react/24/outline';
 
-import { optionsColors, optionsLanguages, optionsNivels } from '../../redux/actions/options';
+import { optionsColors, optionsLanguages, optionsLevels } from '../../redux/actions/options';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCourse } from '../../redux/actions/course';
 
@@ -40,7 +40,7 @@ export const CreateCourse = () => {
 	useEffect(() => {
 		dispatch(optionsColors())
 		dispatch(optionsLanguages())
-		dispatch(optionsNivels())
+		dispatch(optionsLevels())
 	}, []);
 
 	const { colors, languages, levels } = useSelector((state) => state.options);

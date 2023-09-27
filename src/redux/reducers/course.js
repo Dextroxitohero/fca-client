@@ -30,12 +30,15 @@ const courseSlice = createSlice({
 		getCourseByStart: (state) => {
 			state.loading = true;
 		},
-		getCourseBySuccess: (state, { payload: {data} }) => {
+		getCourseBySuccess: (state, { payload: {course} }) => {
 			state.loading = false;
-			state.courseSelected = data;
+			state.courseSelected = course;
 		},
 		getCourseByFailure: (state, action) => {
 			state.loading = false;
+		},
+		cleanSelectedCourse: (state, action) => {
+			state.courseSelected = [];
 		},
 	},
 });
@@ -49,6 +52,7 @@ export const {
 	getAllCoursesFailure,
 	getCourseByStart,
 	getCourseBySuccess,
-	getCourseByFailure
+	getCourseByFailure,
+	cleanSelectedCourse
 } = courseSlice.actions;
 export default courseSlice.reducer;

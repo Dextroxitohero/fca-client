@@ -4,7 +4,7 @@ import { Heading } from '../../components/Heading';
 import { Button } from '../../components/buttons/Button';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCourses } from '../../redux/actions/course';
+import { cleanActionSelectedCourse, getAllCourses } from '../../redux/actions/course';
 import { CardCourse } from './components/CardCourse';
 
 
@@ -13,22 +13,23 @@ export const CoursesPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        dispatch(cleanActionSelectedCourse())
+    }, []);
+    
+    useEffect(() => {
         dispatch(getAllCourses())
     }, []);
 
     const { courses } = useSelector((state) => state.course.courses);
-    console.log(courses)
 
     const handleCreateNewCourse = () => {
         navigate('/nuevo-curso');
     }
 
-
     return (
         <ContainerFull>
             <Heading
                 title={`Lista de cursos`}
-                subtitle={`Examina y verifica la información proporcionada por el candidato. Si la información es correcta y confiable, procede a la validación.`}
                 center={false}
             />
 
@@ -37,7 +38,7 @@ export const CoursesPage = () => {
             </div>
 
             <div className="w-full md:w-6/6 py-5 px-10">
-                <div className='grid grid-cols-1 md:grid-cols-4 gap-x-6 gap-y-8'>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-8'>
                     {courses && courses.map(course => (
                         <CardCourse
                             key={course._id}

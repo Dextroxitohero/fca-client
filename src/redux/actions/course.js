@@ -8,7 +8,8 @@ import {
     getAllCoursesFailure,
     getCourseByStart,
     getCourseBySuccess,
-    getCourseByFailure
+    getCourseByFailure,
+    cleanSelectedCourse
 } from '../reducers/course';
 
 import axios from "axios";
@@ -16,17 +17,21 @@ import { toast } from 'react-hot-toast';
 
 
 // userActions login
-export const createCourse = ({ name, color, language, level, limit }) => async (dispatch) => {
+export const createCourse = ({ language, level, color, limitMembers, startDate, endDate, hours, days, teacher }) => async (dispatch) => {
     try {
         dispatch(createCourseStart());
 
         const response = await axios.post(`http://localhost:8000/course`,
             {
-                name,
-                color,
                 language,
                 level,
-                limitMembers: limit
+                limitMembers,
+                startDate,
+                hours,
+                days,
+                teacher,
+                endDate,
+                color
             });
 
         if (response.status === 201) {
@@ -66,7 +71,7 @@ export const getCourseById = (idCourse) => async (dispatch) => {
         const response = await axios.get(`http://localhost:8000/course/findById/${idCourse}`);
 
         if (response.status === 200) {
-            dispatch(getCourseBySuccess(response));
+            dispatch(getCourseBySuccess(response.data));
         } else {
             dispatch(getCourseByFailure());
         }
@@ -74,4 +79,8 @@ export const getCourseById = (idCourse) => async (dispatch) => {
         dispatch(getCourseByFailure());
         toast.error('Ocurrio un error.')
     }
+};
+
+export const cleanActionSelectedCourse = () => async (dispatch) => {
+    dispatch(cleanSelectedCourse());
 };

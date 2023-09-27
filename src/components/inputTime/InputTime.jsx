@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const hours = [
     { id: 1, time: "8:00" },
@@ -31,30 +31,46 @@ const hours = [
     { id: 28, time: "21:30" },
 ];
 
-export const TimeInput = ({ selectedTimes, setSelectedTimes }) => {
-    const handleTimeClick = (timeObj) => {
-        // Verificar si el tiempo ya está seleccionado
-        const isSelected = selectedTimes.some(selectedTime => selectedTime.id === timeObj.id);
 
-        if (isSelected) {
-            // Si ya está seleccionado, quitarlo de la lista de seleccionados
-            setSelectedTimes(selectedTimes.filter(selectedTime => selectedTime.id !== timeObj.id));
-        } else if (selectedTimes.length < 2) {
-            // Si hay menos de dos tiempos seleccionados, agregarlo a la lista de seleccionados
-            setSelectedTimes([...selectedTimes, timeObj]);
+export const TimeInput = ({ selectedTimes, setSelectedTimes }) => {
+    // const [selectedTimes, setSelectedTimes] = useState([]);
+    const [rangeStart, setRangeStart] = useState(null);
+
+    const handleTimeClick = (hour) => {
+        if (rangeStart === null) {
+            // Si no hay inicio de rango, comienza uno nuevo
+            setRangeStart(hour.id);
+            setSelectedTimes([hour]);
         } else {
-            // Si ya hay dos tiempos seleccionados, quitar el primero y agregar el nuevo
-            setSelectedTimes([...selectedTimes.slice(1), timeObj]);
+            // Si hay inicio de rango, verifica si la segunda selección es mayor o igual que la primera
+            if (hour.id >= rangeStart) {
+                // Establece el rango y selecciona los tiempos dentro
+                const start = rangeStart;
+                const end = hour.id;
+                const newSelectedTimes = [];
+                for (let i = start; i <= end; i++) {
+                    const selectedHour = hours.find((h) => h.id === i);
+                    newSelectedTimes.push(selectedHour);
+                }
+                setSelectedTimes(newSelectedTimes);
+                setRangeStart(null);
+            } else {
+                // La segunda selección es menor, cambia el inicio del rango y reinicia la selección
+                setRangeStart(hour.id);
+                setSelectedTimes([hour]);
+            }
         }
     };
 
     return (
-        <div className='w-full grid grid-cols-4 gap-x-6 gap-y-8'>
-            {hours.map(hour => (
+        <div className="w-full grid grid-cols-4 gap-x-6 gap-y-8">
+            {hours.map((hour) => (
                 <button
                     key={hour.id}
                     onClick={() => handleTimeClick(hour)}
-                    className={`${selectedTimes.some(selectedTime => selectedTime.id === hour.id) ? 'ring-2 ring-indigo-600 text-black' : 'bg-gray-100'
+                    className={`${selectedTimes.some((selectedHour) => selectedHour.id === hour.id)
+                            ? 'ring-2 ring-indigo-600 text-black'
+                            : 'bg-gray-100'
                         } p-2 rounded-md cursor-pointer`}
                 >
                     {hour.time}
