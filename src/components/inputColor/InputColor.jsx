@@ -4,18 +4,18 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export const InputColor = ({ colors, selectedColor, setSelectedColor }) => {
+export const InputColor = ({ colors, courseSelected, setCourseSelected }) => {
 
     const handleColor = (value) => {
-        const color = colors.find(color => color.value === value)
-        setSelectedColor({ 'id': color.value, 'name': color.clase })
+        const color = colors.find(color => color.value === value);
+        setCourseSelected({...courseSelected, color: { '_id': color.value, 'clase': color.clase } });
     }
 
     return (
         <div>
             {colors && (
 
-                <RadioGroup value={selectedColor.id} onChange={(value) => handleColor(value)}>
+                <RadioGroup value={courseSelected?.color?._id} onChange={(value) => handleColor(value)}>
                     <RadioGroup.Label className="sr-only">Seleciona el etiqueta</RadioGroup.Label>
                     <div className="flex px-1 space-x-3">
                         {colors.map(({ value, name, clase, selectedClass }) => (

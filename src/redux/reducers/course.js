@@ -17,12 +17,21 @@ const courseSlice = createSlice({
 		createCourseFailure: (state, action) => {
 			state.loading = false;
 		},
+		updateCourseStart: (state) => {
+			state.loading = true;
+		},
+		updateCourseSuccess: (state) => {
+			state.loading = false;
+		},
+		updateCourseFailure: (state, action) => {
+			state.loading = false;
+		},
 		getAllCoursesStart: (state) => {
 			state.loading = true;
 		},
-		getAllCoursesSuccess: (state, { payload: {data} }) => {
+		getAllCoursesSuccess: (state, { payload: { courses } }) => {
 			state.loading = false;
-			state.courses = data;
+			state.courses = courses;
 		},
 		getAllCoursesFailure: (state, action) => {
 			state.loading = false;
@@ -30,7 +39,7 @@ const courseSlice = createSlice({
 		getCourseByStart: (state) => {
 			state.loading = true;
 		},
-		getCourseBySuccess: (state, { payload: {course} }) => {
+		getCourseBySuccess: (state, { payload: { course } }) => {
 			state.loading = false;
 			state.courseSelected = course;
 		},
@@ -47,6 +56,9 @@ export const {
     createCourseStart,
 	createCourseSuccess,
     createCourseFailure,
+    updateCourseStart,
+	updateCourseSuccess,
+    updateCourseFailure,
 	getAllCoursesStart,
 	getAllCoursesSuccess,
 	getAllCoursesFailure,

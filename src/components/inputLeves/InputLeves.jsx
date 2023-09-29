@@ -4,17 +4,18 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export const InputLeves = ({ levels, selectedLevels, setSelectedLevels }) => {
+export const InputLeves = ({ levels, courseSelected, setCourseSelected  }) => {
 
     const handleLevel = (value) => {
         const level = levels.find(level => level.value === value)
-        setSelectedLevels({ 'id': level.value, 'name': level.description })
+        setCourseSelected({...courseSelected, level: { '_id': level.value, 'name': level.description } });
+        // setSelectedLevels({ 'id': level.value, 'name': level.description })
     }
 
     return (
         <div>
             {levels && (
-                <RadioGroup value={selectedLevels?.id} onChange={(value) => handleLevel(value)}>
+                <RadioGroup value={courseSelected?.level?._id} onChange={(value) => handleLevel(value)}>
                     <RadioGroup.Label className="sr-only">Seleciona el nivel del curso</RadioGroup.Label>
                     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         {levels.map(({ value, description }) => (

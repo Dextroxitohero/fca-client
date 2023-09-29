@@ -4,17 +4,17 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export const InputLanguage = ({ languages, selectedLanguage, setSelectedLanguage }) => {
+export const InputLanguage = ({ languages, courseSelected, setCourseSelected }) => {
 
     const handleLanguage = (value) => {
-        const language = languages.find(language => language.value === value)
-        setSelectedLanguage({ 'id': language.value, 'name': language.description })
+        const language = languages.find(language => language.value === value);
+        setCourseSelected({...courseSelected, language: { '_id': language.value, 'name': language.description, path: `${language.description}.png` } });
     }
 
     return (
         <div>
             {languages && (
-                <RadioGroup value={selectedLanguage?.id} onChange={(value) => handleLanguage(value)}>
+                <RadioGroup value={courseSelected?.language?._id} onChange={(value) => handleLanguage(value)}>
                     <RadioGroup.Label className="sr-only">Seleciona el idioma</RadioGroup.Label>
                     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         {languages.map(({ value, description }) => (

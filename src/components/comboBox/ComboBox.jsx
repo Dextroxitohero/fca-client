@@ -5,14 +5,18 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
 export const ComboBox = ({ filterData, query, setQuery, selected, setSelected, placeholder='' }) => {
 
+    const handleChange = (value)=>{
+        setSelected({...selected, teacher: value});
+    }
+
     return (
         <div className="">
-            <Combobox value={selected} onChange={setSelected}>
+            <Combobox value={selected?.teacher} onChange={(value)=>handleChange(value)}>
                 <div className="relative mt-1">
                     <div>
                         <Combobox.Input
                             className="w-full rounded-md border-none py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 uppercase"
-                            displayValue={(item) => item.description}
+                            displayValue={(item) => item.name}
                             onChange={(event) => setQuery(event.target.value)}
                             placeholder={placeholder}
                         />
@@ -38,7 +42,7 @@ export const ComboBox = ({ filterData, query, setQuery, selected, setSelected, p
                             ) : (
                                 filterData.map((item) => (
                                     <Combobox.Option
-                                        key={item.value}
+                                        key={item._id}
                                         className={({ active }) =>
                                             `relative cursor-default select-none py-2 pl-10 pr-4 uppercase ${active ? 'bg-indigo-600 text-white' : 'text-gray-900'
                                             }`
@@ -51,7 +55,7 @@ export const ComboBox = ({ filterData, query, setQuery, selected, setSelected, p
                                                     className={`block truncate uppercase  ${selected ? 'font-medium' : 'font-normal'
                                                         }`}
                                                 >
-                                                    {item.description}
+                                                    {item.name}
                                                 </span>
                                                 {selected ? (
                                                     <span

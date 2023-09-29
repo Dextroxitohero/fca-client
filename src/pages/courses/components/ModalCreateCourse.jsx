@@ -4,9 +4,7 @@ import { Square3Stack3DIcon } from '@heroicons/react/24/outline';
 import { Dialog } from '@headlessui/react';
 
 
-export const ModalCreateCourse = ({ open, setOpen, cancelButtonRef, confirmAction }) => {
-    const title = 'Crear curso';
-    const message ='Estas seguro que quieres crear este curso';
+export const ModalCreateCourse = ({ open, setOpen, cancelButtonRef, confirmAction, title, message, labelButonConfirm }) => {
 
     return (
         <Modal
@@ -37,7 +35,7 @@ export const ModalCreateCourse = ({ open, setOpen, cancelButtonRef, confirmActio
                     className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 sm:ml-3 sm:w-auto"
                     onClick={confirmAction}
                 >
-                    Crear curso
+                    {labelButonConfirm}
                 </button>
                 <button
                     type="button"

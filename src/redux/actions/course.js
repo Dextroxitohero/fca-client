@@ -3,6 +3,9 @@ import {
     createCourseStart,
     createCourseSuccess,
     createCourseFailure,
+    updateCourseStart,
+	updateCourseSuccess,
+    updateCourseFailure,
     getAllCoursesStart,
     getAllCoursesSuccess,
     getAllCoursesFailure,
@@ -15,12 +18,9 @@ import {
 import axios from "axios";
 import { toast } from 'react-hot-toast';
 
-
-// userActions login
 export const createCourse = ({ language, level, color, limitMembers, startDate, endDate, hours, days, teacher }) => async (dispatch) => {
     try {
         dispatch(createCourseStart());
-
         const response = await axios.post(`http://localhost:8000/course`,
             {
                 language,
@@ -47,6 +47,35 @@ export const createCourse = ({ language, level, color, limitMembers, startDate, 
     }
 };
 
+export const updateCourse = ({ id, language, level, color, limitMembers, startDate, endDate, hours, days, teacher }) => async (dispatch) => {
+    try {
+        dispatch(updateCourseStart());
+        const response = await axios.put(`http://localhost:8000/course/${id}`,
+            {
+                language,
+                level,
+                limitMembers,
+                startDate,
+                hours,
+                days,
+                teacher,
+                endDate,
+                color
+            });
+
+        if (response.status === 200) {
+            dispatch(updateCourseSuccess());
+            toast.success(response.data.message);
+        } else {
+            dispatch(updateCourseFailure());
+            toast.error(response.data.message)
+        }
+    } catch (error) {
+        dispatch(updateCourseFailure());
+        toast.error('Ocurrio un error.')
+    }
+};
+
 export const getAllCourses = () => async (dispatch) => {
     try {
         dispatch(getAllCoursesStart());
@@ -54,7 +83,7 @@ export const getAllCourses = () => async (dispatch) => {
         const response = await axios.get(`http://localhost:8000/course`);
 
         if (response.status === 200) {
-            dispatch(getAllCoursesSuccess(response));
+            dispatch(getAllCoursesSuccess(response.data));
         } else {
             dispatch(getAllCoursesFailure());
         }

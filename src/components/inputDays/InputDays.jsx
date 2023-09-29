@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-
 const days = [
     {
         id: 1,
@@ -33,31 +31,40 @@ const days = [
     },
 ];
 
-export const InputDays = ({ selectedDays, setSelectedDays }) => {
+export const InputDays = ({ courseSelected, setCourseSelected }) => {
 
     const handleDayClick = (day) => {
-        // Verificar si el día ya está seleccionado
-        if (selectedDays.includes(day)) {
-            // Si ya está seleccionado, quitarlo de la lista de seleccionados
-            setSelectedDays(selectedDays.filter(selectedDay => selectedDay !== day));
+      setCourseSelected(prev => {
+        const selectedDays = prev.days || [];
+        let updatedDays;
+  
+        if (selectedDays.some(selectedDay => selectedDay.id === day.id)) {
+          // Si ya está seleccionado, quitarlo de la lista de seleccionados
+          updatedDays = selectedDays.filter(selectedDay => selectedDay.id !== day.id);
         } else {
-            // Si no está seleccionado, agregarlo a la lista de seleccionados y ordenar por id
-            setSelectedDays([...selectedDays, day].sort((a, b) => a.id - b.id));
+          // Si no está seleccionado, agregarlo a la lista de seleccionados y ordenar por id
+          updatedDays = [...selectedDays, day].sort((a, b) => a.id - b.id);
         }
+  
+        return {
+          ...prev,
+          days: updatedDays,
+        };
+      });
     };
-
+  
     return (
-        <div className='w-full flex justify-between gap-x-4'>
-            {days.map(day => (
-                <button
-                    key={day.id}
-                    onClick={() => handleDayClick(day)}
-                    className={`${selectedDays.includes(day) ? 'ring-2 ring-indigo-600 text-black' : 'bg-gray-100'
-                        } py-2 flex-1  rounded-md cursor-pointer`}
-                >
-                    {day.simbolo}
-                </button>
-            ))}
-        </div>
+      <div className='w-full flex justify-between gap-x-4'>
+        {days.map(day => (
+          <button
+            key={day.id}
+            onClick={() => handleDayClick(day)}
+            className={`${courseSelected.days && courseSelected.days.some(selectedDay => selectedDay.id === day.id) ? 'ring-2 ring-indigo-600 text-black' : 'bg-gray-100'
+              } py-2 flex-1  rounded-md cursor-pointer`}
+          >
+            {day.simbolo}
+          </button>
+        ))}
+      </div>
     );
-};
+  };

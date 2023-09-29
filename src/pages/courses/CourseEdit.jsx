@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ContainerFull } from '../../components/ContainerFull';
 import { Heading } from '../../components/Heading';
 import { useDispatch, useSelector } from 'react-redux';
-import { createCourse, getCourseById } from '../../redux/actions/course';
+import { createCourse, getCourseById, updateCourse } from '../../redux/actions/course';
 import { CardCourse } from './components/CardCourse';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
@@ -25,34 +25,9 @@ export const CourseEdit = ({ isCreating }) => {
     const navigate = useNavigate();
     const params = useParams();
     const idCourse = params?.idCourse;
-    const course  = useSelector((state) => state.course.courseSelected);
+    const course = useSelector((state) => state.course.courseSelected);
+    const [courseSelected, setCourseSelected] = useState();
     const { teachers, levels, colors, languages } = useSelector((state) => state.options);
-    useEffect(() => {
-        if(idCourse){
-            dispatch(getCourseById(idCourse));
-        }
-    }, [dispatch]);
-    
-    useEffect(() => {
-        dispatch(optionsAllTeachers());
-        dispatch(optionsLevels());
-        dispatch(optionsColors());
-        dispatch(optionsLanguages());
-    }, [dispatch]);
-
-    console.log(course)
-    
-    const [openModalCreate, setModalOpenCreate] = useState(false);
-    const cancelCreateCourseRef = useRef(null);
-
-    const [values, setValues] = useState('')
-    //state languages
-    const [selectedLanguage, setSelectedLanguage] = useState( course !== '' ? course.language : '' );
-    //state Colors
-    const [selectedColor, setSelectedColor] = useState(course !== '' ? course.color : '' )
-    // state levels
-    const [selectedLevels, setSelectedLevels] = useState('')
-    // state dates
     const [selectedDates, setSelectedDates] = useState([
         {
             startDate: new Date(),
@@ -60,16 +35,48 @@ export const CourseEdit = ({ isCreating }) => {
             key: 'selection'
         }
     ]);
-    // times state
-    const [selectedTimes, setSelectedTimes] = useState([]);
-    // days state
-    const [selectedDays, setSelectedDays] = useState([]);
-    // state comboBox find
+
+    useEffect(() => {
+        if (idCourse) {
+            dispatch(getCourseById(idCourse));
+        }
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(optionsAllTeachers());
+        dispatch(optionsLevels());
+        dispatch(optionsColors());
+        dispatch(optionsLanguages());
+    }, [dispatch]);
+
+    useEffect(function initialState() {
+        setCourseSelected({
+            id: idCourse ? idCourse : '',
+            language: course !== '' ? course.language : '',
+            level: course !== '' ? course.level : '',
+            color: course !== '' ? course.color : '',
+            limitMembers: course.limitMembers !== undefined ? course.limitMembers : 0,
+            hours: course !== '' ? course.hours : [],
+            days: course !== '' ? course.days : [],
+            teacher: course.teacher !== undefined ? { _id: course?.teacher?._id, name: `${course?.teacher?.firstName} ${course?.teacher?.lastName}` } : ''
+        })
+    }, [course])
+
+    useEffect(() => {
+        if (course.startDate) {
+            setSelectedDates([
+                {
+                    startDate: new Date(course.startDate),
+                    endDate: new Date(course.endDate),
+                    key: 'selection'
+                }
+            ])
+        }
+    }, [course])
+
+    const [openModalCreate, setModalOpenCreate] = useState(false);
+    const cancelCreateCourseRef = useRef(null);
     const [findTeacher, setFindTeacher] = useState('');
-    // here is the teacher selected
-    const [selectedTeacher, setSelectedTeacher] = useState('');
-    //state limit 
-    const [selectedLimit, setSelectedLimit] = useState(0)
     const filteredTeachers = findTeacher === ''
         ? teachers
         : teachers.filter((teacher) =>
@@ -80,31 +87,28 @@ export const CourseEdit = ({ isCreating }) => {
         );
 
     const handleCreatedCourse = () => {
-        dispatch(createCourse(values))
-            .then((response) => {
-
-                navigate(`/cursos`);
-
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-            setModalOpenCreate(false)
+        if (idCourse) {
+            dispatch(updateCourse(courseSelected))
+                .then((response) => {
+                    navigate(`/cursos`);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        } else {
+            dispatch(createCourse(courseSelected))
+                .then((response) => {
+                    navigate(`/cursos`);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+        setModalOpenCreate(false);
     }
 
     const handleValidateData = () => {
-        setValues({
-            language: selectedLanguage !== '' ? selectedLanguage.id : '',
-            level: selectedLevels !== '' ? selectedLevels.id : '',
-            color: selectedColor !== '' ? selectedColor.id : '',
-            limitMembers: selectedLimit,
-            startDate: selectedDates[0].startDate,
-            endDate: selectedDates[0].endDate,
-            hours: selectedTimes,
-            days: selectedDays,
-            teacher: selectedTeacher !== '' ? selectedTeacher.value : '',
-        })
-        console.log(values)
+        setCourseSelected({ ...courseSelected, startDate: selectedDates[0].startDate, endDate: selectedDates[0].endDate })
         setModalOpenCreate(true)
     }
 
@@ -130,7 +134,6 @@ export const CourseEdit = ({ isCreating }) => {
                                 months={2}
                                 direction='vertical'
                                 locale={es}
-                                date={new Date()}
                                 rangeColors={['#4f46e5']}
                                 minDate={addDays(new Date(), 0)}
                             />
@@ -144,10 +147,13 @@ export const CourseEdit = ({ isCreating }) => {
                                 <h3 className="text-lg font-semibold text-gray-900">Seleciona los dias</h3>
                             </div>
                             <div className='mt-4'>
-                                <InputDays
-                                    selectedDays={selectedDays}
-                                    setSelectedDays={setSelectedDays}
-                                />
+                                {courseSelected && (
+
+                                    <InputDays
+                                        courseSelected={courseSelected}
+                                        setCourseSelected={setCourseSelected}
+                                    />
+                                )}
                             </div>
 
                         </div>
@@ -156,10 +162,12 @@ export const CourseEdit = ({ isCreating }) => {
                                 <h3 className="text-lg font-semibold text-gray-900">Seleciona el horario</h3>
                             </div>
                             <div className='mt-4'>
-                                <TimeInput
-                                    selectedTimes={selectedTimes}
-                                    setSelectedTimes={setSelectedTimes}
-                                />
+                                {courseSelected && (
+                                    <TimeInput
+                                        courseSelected={courseSelected}
+                                        setCourseSelected={setCourseSelected}
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>
@@ -173,8 +181,8 @@ export const CourseEdit = ({ isCreating }) => {
                             <div className='py-4'>
                                 <InputColor
                                     colors={colors}
-                                    selectedColor={selectedColor}
-                                    setSelectedColor={setSelectedColor}
+                                    courseSelected={courseSelected}
+                                    setCourseSelected={setCourseSelected}
                                 />
                             </div>
                         </div>
@@ -186,8 +194,8 @@ export const CourseEdit = ({ isCreating }) => {
                             <div className='py-4'>
                                 <InputLeves
                                     levels={levels}
-                                    selectedLevels={selectedLevels}
-                                    setSelectedLevels={setSelectedLevels}
+                                    courseSelected={courseSelected}
+                                    setCourseSelected={setCourseSelected}
                                 />
                             </div>
                         </div>
@@ -199,8 +207,8 @@ export const CourseEdit = ({ isCreating }) => {
                             <div className='py-4'>
                                 <InputLanguage
                                     languages={languages}
-                                    selectedLanguage={selectedLanguage}
-                                    setSelectedLanguage={setSelectedLanguage}
+                                    courseSelected={courseSelected}
+                                    setCourseSelected={setCourseSelected}
                                 />
                             </div>
                         </div>
@@ -214,8 +222,8 @@ export const CourseEdit = ({ isCreating }) => {
                                     filterData={filteredTeachers}
                                     query={findTeacher}
                                     setQuery={setFindTeacher}
-                                    selected={selectedTeacher}
-                                    setSelected={setSelectedTeacher}
+                                    selected={courseSelected}
+                                    setSelected={setCourseSelected}
                                     placeholder='Seleciona un profesor'
                                 />
                             </div>
@@ -223,8 +231,8 @@ export const CourseEdit = ({ isCreating }) => {
                         {/* limit */}
                         <div className='pb-4'>
                             <InputLimit
-                                selectedLimit={selectedLimit}
-                                setSelectedLimit={setSelectedLimit}
+                                selected={courseSelected}
+                                setSelected={setCourseSelected}
                             />
                         </div>
                         <div className='w-full mt-4 md:mt-4 mb-4 md:mb-0'>
@@ -232,26 +240,25 @@ export const CourseEdit = ({ isCreating }) => {
                                 type='button'
                                 className='disabled:opacity-95 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition py-2.5 font-semibold text-md text-white bg-indigo-600 bg-cyan w-full'
                                 onClick={handleValidateData}
-                            >Agregar Nuevo Curso</button>
+                            >{isCreating ? 'Agregar nuevo curso' :  'Actulizar curso'}</button>
                             {/* <Button label={"Agregar nuevo curso"} onClick={handleCreateCourse} /> */}
                         </div>
                     </div>
                 </div>
                 <div className="w-full md:w-[30%] my-5 md:mt-0 md:px-4 ">
-                    {course && (
+                    {courseSelected && (
                         <CardCourse
                             isCreating={true}
-                            clase={selectedColor !== '' ? selectedColor.value : ''}
-                            language={selectedLanguage !== '' ? selectedLanguage?.value : ''}
-                            nivel={selectedLevels !== '' ? selectedLevels?.name : ''}
-                            studentLimit={selectedLimit}
-                            // flag={course.language.path === '' ? '' : `${selectedLanguage?.value}.png`}
-                            // status={course.status}
-                            hours={selectedTimes}
-                            days={selectedDays}
-                            teacher={selectedTeacher}
+                            color={courseSelected.color?.clase}
+                            language={courseSelected.language?.name}
+                            path={courseSelected.language?.path}
+                            nivel={courseSelected.level?.name}
+                            hours={courseSelected?.hours}
+                            days={courseSelected?.days}
+                            teacher={courseSelected?.teacher?.name}
                             startDate={selectedDates[0].startDate}
                             endDate={selectedDates[0].endDate}
+                            studentLimit={courseSelected?.limitMembers}
                         />
                     )}
                 </div>
@@ -262,6 +269,9 @@ export const CourseEdit = ({ isCreating }) => {
                 setOpen={setModalOpenCreate}
                 cancelButtonRef={cancelCreateCourseRef}
                 confirmAction={handleCreatedCourse}
+                title={isCreating ? 'Agregar nuevo curso' : 'Actualizar informacion curso'}
+                message={isCreating ? 'Estas seguro que quieres agregar el curso?' : 'Estas seguro que quieres actulizar la informacion del curso?'}
+                labelButonConfirm={isCreating ? 'Agregar nuevo curso' : 'Actulizar curso'}
             />
         </ContainerFull>
     )

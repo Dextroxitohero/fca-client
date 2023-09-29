@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { cleanActionSelectedCourse, getAllCourses } from '../../redux/actions/course';
 import { CardCourse } from './components/CardCourse';
 
-
 export const CoursesPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -20,7 +19,7 @@ export const CoursesPage = () => {
         dispatch(getAllCourses())
     }, []);
 
-    const { courses } = useSelector((state) => state.course.courses);
+    const  courses  = useSelector((state) => state.course.courses);
 
     const handleCreateNewCourse = () => {
         navigate('/nuevo-curso');
@@ -42,19 +41,19 @@ export const CoursesPage = () => {
                     {courses && courses.map(course => (
                         <CardCourse
                             key={course._id}
-                            idCourse={course._id}
                             isCreating={false}
-                            clase={course.color?.clase}
-                            language={course.language.name}
-                            flag={course.language.path}
-                            nivel={course.level.name}
+                            idCourse={course?._id}
+                            color={course?.color}
+                            language={course?.language}
+                            path={course?.path}
+                            nivel={course?.level}
                             studentLimit={course.limitMembers}
-                            status={course.status}                            
-                            hours={[]}
-                            days={[]}
-                            teacher={[]}
-                            startDate={''}
-                            endDate={''}
+                            status={course?.status}                            
+                            hours={course?.hours}
+                            days={course?.days}
+                            teacher={course?.teacher}
+                            startDate={course?.startDate}
+                            endDate={course?.endDate}
                         />
                     ))}
                 </div>
