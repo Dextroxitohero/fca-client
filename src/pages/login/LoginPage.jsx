@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { FormLogin } from './FormLogin'
+import { FormLogin } from './FormLogin';
+import image from '../../static/image/5.png';
 
 export const LoginPage = () => {
 
@@ -11,9 +12,15 @@ export const LoginPage = () => {
 			return <Navigate to="/" replace />;
 		}
 		return (
-			<>
-				<FormLogin />
-			</>
+			<div className='w-full flex'>
+				<div className='w-full h-screen md:w-1/4'>
+					<FormLogin/>
+				</div>
+				<div
+					className='w-0 md:w-3/4 h-screen bg-cover'
+					style={{ backgroundImage: `url(${image})` }}
+				></div>
+			</div>
 		);
 	}
 }

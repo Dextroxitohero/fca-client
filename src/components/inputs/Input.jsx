@@ -14,12 +14,7 @@ export const Input = ({
         <div>
             <label
                 htmlFor={name}
-                className="
-                    block 
-                    text-sm 
-                    font-medium 
-                    leading-6 
-                    text-gray-900"
+                className="block text-sm font-medium leading-6 text-gray-900"
             >
                 {label}
             </label>
@@ -33,14 +28,7 @@ export const Input = ({
                     value={value}
                     placeholder={placeholder}
                     disabled={disabled}
-                    className={`
-                        block 
-                        w-full 
-                        rounded-md 
-                        border-0 
-                        py-1.5 
-                        px-2
-                        text-gray-900 
+                    className={`block w-full rounded-md border-0 py-1.5  px-2text-gray-900 
                         shadow-sm 
                         ring-1 
                         ring-inset 
