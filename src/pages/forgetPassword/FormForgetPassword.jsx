@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { Link } from "react-router-dom";
 import { InputText } from '../../components/inputs/InputText';
-import { loginUser } from '../../redux/actions/user';
 import logo from '../../static/image/logo.png';
 
-export const FormLogin = () => {
-    const dispatch = useDispatch();
+
+export const FormForgetPassword = () => {
+    const { activation_token } = useParams();
+    console.log(activation_token)
 
     const [formData, setFormData] = useState({
-        email: '',
-        password: ''
+        password: '',
+        confirmPassword: ''
     })
 
     const onChange = (e) => {
@@ -22,8 +23,8 @@ export const FormLogin = () => {
     }
 
     const handleLogin = () => {
-        const { email, password } = formData;
-        dispatch(loginUser({ email, password }))
+        const { password, confirmPassword } = formData;
+        //dispatch(signUp({ name, apellido, email, password }))
     }
 
     return (
@@ -34,29 +35,29 @@ export const FormLogin = () => {
                         <img src={logo} alt="logo" />
                     </div>
                 </div>
-                <div className='flex items-start py-20 h-[80%]'>
+                <div className='flex items-start py-5 h-[80%]'>
                     <div className='w-[80%] mx-auto grid grid-cols-1 gap-4'>
                         <div>
                             <InputText
-                                id={1}
-                                name={'email'}
-                                type={'email'}
-                                label={'Correo electronico'}
+                                id={'password'}
+                                name={'password'}
+                                type={'password'}
+                                label={'Nueva Contraseña'}
                                 onChange={(e) => onChange(e)}
-                                value={formData.email}
-                                placeholder={'Correo electronico'}
+                                value={formData.password}
+                                placeholder={'Nueva Contraseña'}
                                 disabled={false}
                             />
                         </div>
-                        <div className='mt-4'>
+                        <div>
                             <InputText
-                                id={1}
-                                name={'password'}
+                                id={'confirmPassword'}
+                                name={'confirmPassword'}
                                 type={'password'}
-                                label={'Ingresa tu contraseñas'}
+                                label={'Confirma Tu Contraseña'}
                                 onChange={(e) => onChange(e)}
-                                value={formData.password}
-                                placeholder={'Ingresa tu contraseñas'}
+                                value={formData.confirmPassword}
+                                placeholder={'Confirma Tu Contraseña'}
                                 disabled={false}
                             />
                         </div>
@@ -65,17 +66,11 @@ export const FormLogin = () => {
                                 type='button'
                                 className='disabled:opacity-95 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition py-2.5 font-semibold text-md text-white bg-indigo-600 bg-cyan w-full'
                                 onClick={handleLogin}
-                            >{'Iniciar sesion'}</button>
+                            >{'Confirmar Contraseña'}</button>
                             {/* <Button label={"Agregar nuevo curso"} onClick={handleCreateCourse} /> */}
-                        </div>
-                        <div className='flex justify-center mt-2'>
-                            <Link className='font-semibold text-indigo-600 text-sm'>Olvidaste tu contraseña?</Link>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className='text-sm text-gray-400'>
-                <p>Derechos Reservados © Centro de Formación Académica 2023</p>
             </div>
         </div>
     );

@@ -42,6 +42,35 @@ export const loginUser = ({ email, password }) => async (dispatch) => {
 	}
 };
 
+export const signUp = ({ name, apellido ,email, password }) => async (dispatch) => {
+	try {
+
+		const response = await axios.post(`http://localhost:8000/auth/signup`,
+			{
+				name,
+				apellido,
+				email,
+				password
+			},
+			{
+				withCredentials: true,
+			});
+		// Verifica si la respuesta es exitosa
+		if (response.status === 200 && response.data.success) {
+			dispatch(loginSuccess(response.data));
+			toast.success("Bienvenido");
+		} else {
+			// En caso de respuesta no exitosa, muestra el mensaje de error
+			dispatch(loginFailure());
+			toast.error(response.data.message)
+		}
+	} catch (error) {
+		// En caso de error en la llamada al servidor, muestra el mensaje de error
+		dispatch(loginFailure());
+		toast.error('Ocurrio un error.')
+	}
+};
+
 // load user
 export const loadUser = () => async (dispatch) => {
 	try {

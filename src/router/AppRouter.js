@@ -11,6 +11,7 @@ import { HomePage } from '../pages/home/HomePage';
 import { LoginPage } from '../pages/login/LoginPage';
 import { SignupPage } from '../pages/signup/SignupPage';
 import { ActivationPage } from '../pages/activation/ActivationPage';
+import { ForgetPasswordPage } from '../pages/forgetPassword/ForgetPasswordPage';
 
 import { NotFoundPage } from '../pages/notFound/NotFoundPage';
 
@@ -71,6 +72,10 @@ export const AppRouter = () => {
                     <Route
                         path="/validacion-proceso"
                         element={<FormValidacionProceso />}
+                    />
+                    <Route
+                        path="/forget-password"
+                        element={<ForgetPasswordPage />}
                     />
                     <Route
                         path="/"

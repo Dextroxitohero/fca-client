@@ -13,11 +13,11 @@ export const LoginPage = () => {
 		}
 		return (
 			<div className='w-full flex'>
-				<div className='w-full h-screen md:w-1/4'>
+				<div className='w-full h-screen md:w-1/3'>
 					<FormLogin/>
 				</div>
 				<div
-					className='w-0 md:w-3/4 h-screen bg-cover'
+					className='w-0 md:w-2/3 h-screen bg-cover'
 					style={{ backgroundImage: `url(${image})` }}
 				></div>
 			</div>

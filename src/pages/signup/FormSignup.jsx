@@ -1,146 +1,116 @@
-import { useFormik } from 'formik';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
-import { Input } from '../../components/inputs/Input';
-import { validate } from './validation';
-import { Button } from '../../components/buttons/Button';
-
-
+import { InputText } from '../../components/inputs/InputText';
+import { signUp } from '../../redux/actions/user';
+import logo from '../../static/image/logo.png';
 
 
 export const FormSignup = () => {
+    const dispatch = useDispatch();
 
-    const formik = useFormik({
-        initialValues: {
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            confirmPassword: ''
-        },
-        validate,
-        onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
-        },
+    const [formData, setFormData] = useState({
+        name: '',
+        apellido: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    })
 
-    });
-    const handleReset = () => {
-        formik.resetForm();
+    const onChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    }
+
+    const handleLogin = () => {
+        const { name, apellido, email, password, confirmPassword } = formData;
+        dispatch(signUp({ name, apellido, email, password }))
     }
 
     return (
-        <div
-            className="
-            min-h-screen 
-            bg-gray-50 
-            flex flex-col 
-            justify-center 
-            py-12 
-            sm:px-6
-            "
-        >
-            <div className="
-                sm:mx-auto 
-                sm:w-full 
-                sm:max-w-xl
-                bg-white 
-                sm:py-8
-                sm:px-20 
-                sm:rounded-md
-                shadow-md
-                "
-            >
-                {/* Header form */}
-                <div className="mb-16">
-                    <h2 className="mt-6 text-center text-3xl font-semibold text-gray-900">
-                        Crear una cuenta
-                    </h2>
-                </div>
-                {/* Body form */}
-                <div
-                    className="
-                    grid 
-                    grid-cols-1 
-                    gap-y-4 
-                    sm:grid-cols-6 
-                    mb-16
-                    "
-                >
-                    <div className="sm:col-span-6">
-                        <Input
-                            id="firstName"
-                            name="firstName"
-                            type="text"
-                            label="Nombre"
-                            placeholder="Ingresa tu nombre"
-                            formik={formik}
-                            value={formik.values.firstName}
-                            error={formik.touched.firstName && formik.errors.firstName}
-                        />
-                    </div>
-                    <div className="sm:col-span-6">
-                        <Input
-                            id="lastName"
-                            name="lastName"
-                            type="text"
-                            label="Apellido Paterno"
-                            placeholder="Ingresa tu nombre"
-                            formik={formik}
-                            value={formik.values.lastName}
-                            error={formik.touched.lastName && formik.errors.lastName}
-                        />
-                    </div>
-                    <div className="sm:col-span-6">
-                        <Input
-                            id="email"
-                            name="email"
-                            type="email"
-                            label="Correo electronico"
-                            placeholder="Ingresa tu correo electronico"
-                            formik={formik}
-                            value={formik.values.email}
-                            error={formik.touched.email && formik.errors.email}
-                        />
-                    </div>
-                    <div className="sm:col-span-6">
-                        <Input
-                            id="password"
-                            name="password"
-                            type="password"
-                            label="Contraseña"
-                            placeholder="Ingresa tu contraseña"
-                            formik={formik}
-                            value={formik.values.password}
-                            error={formik.touched.password && formik.errors.password}
-                        />
-                    </div>
-                    <div className="sm:col-span-6">
-                        <Input
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            type="password"
-                            label="Confirmar contraseña"
-                            placeholder="Confirma tu contraseña"
-                            formik={formik}
-                            value={formik.values.confirmPassword}
-                            error={formik.touched.confirmPassword && formik.errors.confirmPassword}
-                        />
+        <div className='w-full flex flex-col h-screen justify-center items-center bg-white'>
+            <div className='bg-white w-full h-5/6 border-none '>
+                <div className='flex h-[20%] justify-center items-center'>
+                    <div className='w-1/2'>
+                        <img src={logo} alt="logo" />
                     </div>
                 </div>
-                {/* Footer form */}
-                <div>
-                    <div
-                        className="mt-6 flex items-center justify-around gap-x-6 mb-16"
-                    >
-                        <Button
-                            label='Registrar'
-                            onClick={() => formik.handleSubmit()}
-                        />
-                    </div>
-                    <div className={`w-full`}>
-                        <span>Ya tienes cuenta?</span>
-                        <Link to="/login" className="text-indigo-700 pl-2">
-                            Iniciar sesion
-                        </Link>
+                <div className='flex items-start py-5 h-[80%]'>
+                    <div className='w-[80%] mx-auto grid grid-cols-1 gap-4'>
+                        <div>
+                            <InputText
+                                id={'name'}
+                                name={'name'}
+                                type={'text'}
+                                label={'Nombre'}
+                                onChange={(e) => onChange(e)}
+                                value={formData.name}
+                                placeholder={'Nombre'}
+                                disabled={false}
+                            />
+                        </div>
+                        <div>
+                            <InputText
+                                id={'apellido'}
+                                name={'apellido'}
+                                type={'text'}
+                                label={'Apellido'}
+                                onChange={(e) => onChange(e)}
+                                value={formData.apellido}
+                                placeholder={'Apellido'}
+                                disabled={false}
+                            />
+                        </div>
+                        <div>
+                            <InputText
+                                id={'email'}
+                                name={'email'}
+                                type={'email'}
+                                label={'Correo Electronico'}
+                                onChange={(e) => onChange(e)}
+                                value={formData.email}
+                                placeholder={'Correo Electronico'}
+                                disabled={false}
+                            />
+                        </div>
+                        <div className='mt-4'>
+                            <InputText
+                                id={'password'}
+                                name={'password'}
+                                type={'password'}
+                                label={'Ingresa tu contraseñas'}
+                                onChange={(e) => onChange(e)}
+                                value={formData.password}
+                                placeholder={'Ingresa tu contraseñas'}
+                                disabled={false}
+                            />
+                        </div>
+                        <div className='mt-4'>
+                            <InputText
+                                id={'confirmPassword'}
+                                name={'confirmPassword'}
+                                type={'password'}
+                                label={'Confirma tu contraseña'}
+                                onChange={(e) => onChange(e)}
+                                value={formData.confirmPassword}
+                                placeholder={'Confirma tu contraseña'}
+                                disabled={false}
+                            />
+                        </div>
+                        <div className='mt-8'>
+                            <button
+                                type='button'
+                                className='disabled:opacity-95 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition py-2.5 font-semibold text-md text-white bg-indigo-600 bg-cyan w-full'
+                                onClick={handleLogin}
+                            >{'Iniciar sesion'}</button>
+                            {/* <Button label={"Agregar nuevo curso"} onClick={handleCreateCourse} /> */}
+                        </div>
+                        <div className='flex justify-center mt-2'>
+                            <Link className='font-semibold text-indigo-600 text-sm' to={'/login'}>Ya tienes cuenta?</Link>
+                        </div>
                     </div>
                 </div>
             </div>
