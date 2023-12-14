@@ -3,10 +3,11 @@ import { useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
 import { InputText } from '../../components/inputs/InputText';
 import logo from '../../static/image/logo.png';
+import { forgotPasswordEmail } from '../../redux/actions/user';
 
 
 export const FormForgetPasswordEmail = () => {
-
+    const dispatch = useDispatch();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -23,6 +24,7 @@ export const FormForgetPasswordEmail = () => {
     const handleLogin = () => {
         const { email } = formData;
         console.log(email)
+        dispatch(forgotPasswordEmail({ email }));
         //dispatch(signUp({ name, apellido, email, password }))
     }
 

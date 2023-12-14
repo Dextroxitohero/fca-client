@@ -1,11 +1,8 @@
-// import { useNavigate } from 'react-router-dom';
 import {
 	loginStart,
 	loginSuccess,
+	refreshTokenSuccess,
 	loginFailure,
-	LoadUserStart,
-	LoadUserSuccess,
-	LoadUserFail,
 	logout
 } from '../reducers/user';
 
@@ -24,16 +21,17 @@ export const loginUser = ({ email, password }) => async (dispatch) => {
 				password
 			},
 			{
+				headers: { 'Content-Type': 'application/json' },
 				withCredentials: true,
 			});
 		// Verifica si la respuesta es exitosa
-		if (response.status === 200 && response.data.success) {
+		if (response.status === 200) {
+			localStorage.setItem('token', response.data.accessToken);
 			dispatch(loginSuccess(response.data));
 			toast.success("Bienvenido");
 		} else {
-			// En caso de respuesta no exitosa, muestra el mensaje de error
-			dispatch(loginFailure());
-			toast.error(response.data.message)
+			dispatch(logout());
+			// toast.error(response.data.message)
 		}
 	} catch (error) {
 		// En caso de error en la llamada al servidor, muestra el mensaje de error
@@ -71,18 +69,7 @@ export const signUp = ({ name, apellido ,email, password }) => async (dispatch) 
 	}
 };
 
-// load user
-export const loadUser = () => async (dispatch) => {
-	try {
-		dispatch(LoadUserStart());
-		const response = await axios.get(`http://localhost:8000/users`, {
-			withCredentials: true,
-		});
-		dispatch(LoadUserSuccess(response.data))
-	} catch (error) {
-		dispatch(LoadUserFail());
-	}
-};
+
 
 export const logoutUser = () => async (dispatch) => {
 	try {
@@ -91,10 +78,54 @@ export const logoutUser = () => async (dispatch) => {
 			{
 				withCredentials: true,
 			});
+		localStorage.removeItem('token');
 		dispatch(logout());
 
 	} catch (error) {
 		// En caso de error en la llamada al servidor, muestra el mensaje de error
+		toast.error('Ocurrio un error.')
+	}
+};
+export const refreshToken = () => async (dispatch) => {
+	try {
+		const response = await axios.get(`http://localhost:8000/auth/refresh-token`,
+			{
+				withCredentials: true,
+			});
+		console.log(response)
+		dispatch(refreshTokenSuccess(response.data));
+
+	} catch (error) {
+		// En caso de error en la llamada al servidor, muestra el mensaje de error
+		// toast.error('Ocurrio un error.')
+	}
+};
+
+export const forgotPasswordEmail = ({ email }) => async (dispatch) => {
+	try {
+		const response = await axios.post(`http://localhost:8000/auth/forgot-password-email`,
+			{
+				email
+			},
+			{
+				withCredentials: true,
+			});
+		toast.success(response.data.message)
+	} catch (error) {
+		toast.error('Ocurrio un error.')
+	}
+};
+
+export const updatedPassword = ({ email, password }) => async (dispatch) => {
+	console.log(email, password)
+	try {
+		const response = await axios.put(`http://localhost:8000/auth/update-password`,
+			{	
+				email,
+				password
+			});
+		toast.success(response.data.message)
+	} catch (error) {
 		toast.error('Ocurrio un error.')
 	}
 };

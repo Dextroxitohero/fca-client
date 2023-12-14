@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { InputText } from '../../components/inputs/InputText';
 import { loginUser } from '../../redux/actions/user';
@@ -7,6 +7,9 @@ import logo from '../../static/image/logo.png';
 
 export const FormLogin = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     const [formData, setFormData] = useState({
         email: '',
@@ -22,8 +25,10 @@ export const FormLogin = () => {
     }
 
     const handleLogin = () => {
-        const { email, password } = formData;
+        // const { email, password } = formData;
+        const { email='tiras_lp@hotmail.com', password='Linkinlp' } = formData;
         dispatch(loginUser({ email, password }))
+        navigate(from, { replace: true });
     }
 
     return (
@@ -69,7 +74,7 @@ export const FormLogin = () => {
                             {/* <Button label={"Agregar nuevo curso"} onClick={handleCreateCourse} /> */}
                         </div>
                         <div className='flex justify-center mt-2'>
-                            <Link className='font-semibold text-indigo-600 text-sm'>Olvidaste tu contraseña?</Link>
+                            <Link to={'/forget-password'}className='font-semibold text-indigo-600 text-sm'>Olvidaste tu contraseña?</Link>
                         </div>
                     </div>
                 </div>
