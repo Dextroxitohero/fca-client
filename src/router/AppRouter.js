@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
-import { loadUser } from '../redux/actions/user';
-
 import { PrivateRoute } from './PrivateRoute';
+import { PublicRoute } from './PublicRouter'
 
 import { HomePage } from '../pages/home/HomePage';
 
@@ -19,7 +17,6 @@ import { NotFoundPage } from '../pages/notFound/NotFoundPage';
 import { ToasterProvider } from '../providers/ToasterProvider';
 import { PreRegistrationPage } from '../pages/preRegistration/PreRegistrationPage';
 import { CandidatesPage } from '../pages/candidates/CandidatesPage';
-import { TeamsPage } from '../pages/teams/TeamsPage';
 import { UsersPage } from '../pages/users/UsersPage';
 import { PaymentsPage } from '../pages/payments/PaymentsPage';
 import { SettingPage } from '../pages/setting/SettingPage';
@@ -33,7 +30,6 @@ import { ValidateCandidate } from '../pages/candidates/ValidateCandidate';
 import { CoursesPage } from '../pages/courses/CoursesPage';
 import { CreateCourse } from '../pages/courses/CreateCourse';
 import { CourseEdit } from '../pages/courses/CourseEdit';
-import { Persist } from '../components/auth/Persist';
 import { Navigation } from '../components/auth/Navigation';
 
 export const AppRouter = () => {
@@ -46,42 +42,71 @@ export const AppRouter = () => {
                         <Route
                             path="/signup"
                             element={
-                                //<PublicRoute>
+                                <PublicRoute>
                                     <SignupPage />
-                               // </PublicRoute>
+                                </PublicRoute>
                             }
                         />
                         <Route
                             path="/activation/:activation_token"
                             element={<ActivationPage />}
+
                         />
                         <Route
                             path="/login"
-                            element={<LoginPage />}
+                            element={
+                                <PublicRoute>
+                                    <LoginPage />
+                                </PublicRoute>
+                            }
                         />
                         <Route
                             path="/pre-registro"
-                            element={<PreRegistrationPage />}
+                            element={
+                                <PublicRoute>
+                                    <PreRegistrationPage />
+                                </PublicRoute>
+                            }
                         />
                         <Route
                             path="/validacion-datos"
-                            element={<FormValidacionDatos />}
+                            element={
+                                <PublicRoute>
+                                    <FormValidacionDatos />
+                                </PublicRoute>
+                            }
                         />
                         <Route
                             path="/validacion-pago"
-                            element={<FormValidacionPago />}
+                            element={
+                                <PublicRoute>
+                                    <FormValidacionPago />
+                                </PublicRoute>
+                            }
                         />
                         <Route
                             path="/validacion-proceso"
-                            element={<FormValidacionProceso />}
+                            element={
+                                <PublicRoute>
+                                    <FormValidacionProceso />
+                                </PublicRoute>
+                            }
                         />
                         <Route
                             path="/forget-password"
-                            element={<ForgetPasswordPage />}
+                            element={
+                                <PublicRoute>
+                                    <ForgetPasswordPage />
+                                </PublicRoute>
+                            }
                         />
                         <Route
                             path="/forget-password/:token"
-                            element={<FormForgetPassword />}
+                            element={
+                                <PublicRoute>
+                                    <FormForgetPassword />
+                                </PublicRoute>
+                            }
                         />
 
                         <Route

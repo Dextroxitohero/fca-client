@@ -81,6 +81,7 @@ export const logoutUser = () => async (dispatch) => {
 				withCredentials: true,
 			});
 		localStorage.removeItem('token');
+		localStorage.removeItem('lastRoutevisited');
 		dispatch(logout());
 
 	} catch (error) {
@@ -95,7 +96,6 @@ export const refreshToken = () => async (dispatch) => {
 			{
 				withCredentials: true,
 			});
-		console.log(response)
 		dispatch(refreshTokenSuccess(response.data));
 		return response.status;
 	} catch (error) {
@@ -121,7 +121,6 @@ export const forgotPasswordEmail = ({ email }) => async (dispatch) => {
 };
 
 export const updatedPassword = ({ email, password }) => async (dispatch) => {
-	console.log(email, password)
 	try {
 		const response = await axios.put(`http://localhost:8000/auth/update-password`,
 			{	
