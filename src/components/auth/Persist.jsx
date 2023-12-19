@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshToken } from '../../redux/actions/user';
 import { useNavigate } from 'react-router-dom';
-import { el } from 'react-date-range/dist/locale';
+
 
 export const Persist = ({ children }) => {
     const dispatch = useDispatch();
@@ -15,10 +15,12 @@ export const Persist = ({ children }) => {
         const checkTokenValidity = async () => {
             const token = localStorage.getItem('token');
 
+            if(!isAuthenticated){
+                navigate('/login');
+            }
+            
             if (token) {
                 dispatch(refreshToken());
-            }else{
-                navigate('/login');
             }
         };
 

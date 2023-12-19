@@ -21,6 +21,13 @@ const userSlice = createSlice({
 			state.roles = roles;
 			state.accessToken = accessToken;
 		},
+		refreshTokenStart: (state) => {
+			state.loading = true;
+			state.isAuthenticated = false;
+			state.user = null;
+			state.roles = null;
+			state.accessToken = null;
+		},
 		refreshTokenSuccess: (state, { payload: { user, accessToken, roles } }) => {
 			state.loading = false;
 			state.isAuthenticated = true;
@@ -28,14 +35,19 @@ const userSlice = createSlice({
 			state.roles = roles;
 			state.accessToken = accessToken;
 		},
-		loginFailure: (state, action) => {
-			state.loading = false;
-		},
-		logout: (state, action) => {
-			state.user = null;
-			state.roles = null;
+		loginFailure: (state) => {
 			state.loading = false;
 			state.isAuthenticated = false;
+			state.user = null;
+			state.roles = null;
+			state.accessToken = null;
+		},
+		logout: (state) => {
+			state.loading = false;
+			state.isAuthenticated = false;
+			state.user = null;
+			state.roles = null;
+			state.accessToken = null;
 		},
 	},
 });
@@ -43,6 +55,7 @@ const userSlice = createSlice({
 export const {
 	loginStart,
 	loginSuccess,
+	refreshTokenStart,
 	refreshTokenSuccess,
 	loginFailure,
 	logout

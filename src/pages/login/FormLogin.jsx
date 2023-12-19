@@ -55,7 +55,7 @@ export const FormLogin = () => {
                         </div>
                         <div className='mt-4'>
                             <InputText
-                                id={1}
+                                id={2}
                                 name={'password'}
                                 type={'password'}
                                 label={'Ingresa tu contraseñas'}

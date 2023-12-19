@@ -1,6 +1,7 @@
 import {
 	loginStart,
 	loginSuccess,
+	refreshTokenStart,
 	refreshTokenSuccess,
 	loginFailure,
 	logout
@@ -72,6 +73,7 @@ export const signUp = ({ name, apellido ,email, password }) => async (dispatch) 
 
 
 export const logoutUser = () => async (dispatch) => {
+
 	try {
 		// Realiza la llamada al servidor para hacer el logout
 		const response = await axios.get(`http://localhost:8000/auth/logout`,
@@ -87,6 +89,7 @@ export const logoutUser = () => async (dispatch) => {
 	}
 };
 export const refreshToken = () => async (dispatch) => {
+	dispatch(refreshTokenStart());
 	try {
 		const response = await axios.get(`http://localhost:8000/auth/refresh-token`,
 			{
@@ -94,8 +97,9 @@ export const refreshToken = () => async (dispatch) => {
 			});
 		console.log(response)
 		dispatch(refreshTokenSuccess(response.data));
-
+		return response.status;
 	} catch (error) {
+		dispatch(logout());
 		// En caso de error en la llamada al servidor, muestra el mensaje de error
 		// toast.error('Ocurrio un error.')
 	}

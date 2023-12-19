@@ -45,7 +45,11 @@ export const AppRouter = () => {
                     <Routes>
                         <Route
                             path="/signup"
-                            element={<SignupPage />}
+                            element={
+                                //<PublicRoute>
+                                    <SignupPage />
+                               // </PublicRoute>
+                            }
                         />
                         <Route
                             path="/activation/:activation_token"
