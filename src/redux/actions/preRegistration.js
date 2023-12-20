@@ -18,7 +18,7 @@ import {
 	getSelectedPreRegisterFailure,
 } from '../reducers/preRegistration';
 
-import axios from "axios";
+import axios from '../../api/axios'
 import { toast } from 'react-hot-toast';
 
 // userActions login
@@ -26,7 +26,7 @@ export const emailVerification = (email) => async (dispatch) => {
 	try {
 		dispatch(emailVerificationStart(email));
 		// Realiza la llamada al servidor para email existente
-		const response = await axios.get(`http://localhost:8000/preRegister/emailVerification/${email}`);
+		const response = await axios.get(`/preRegister/emailVerification/${email}`);
 
 		// Verifica si la respuesta es exitosa
 		dispatch(emailVerificationSuccess(response));
@@ -56,7 +56,7 @@ export const registerPreRegitration = ({
 	try {
 		dispatch(preRegistrationStart());
 		// Realiza la llamada al servidor para autenticar al usuario y obtener la respuesta
-		const response = await axios.post(`http://localhost:8000/preRegister`,
+		const response = await axios.post(`/preRegister`,
 			{
 				firstName,
 				lastName,
@@ -96,7 +96,7 @@ export const validatePaymentVoucher = ({
 		formData.append('file', file);
 
 		// Realizamos la llamada al servidor para validar el comprobante de pago
-		const response = await axios.post('http://localhost:8000/preRegister/validatePaymentVoucher', formData,
+		const response = await axios.post('/preRegister/validatePaymentVoucher', formData,
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
@@ -118,7 +118,7 @@ export const getAllPreRegister = () => async (dispatch) => {
 	dispatch(getAllPreRegisterStart());
 	try {
 
-		const response = await axios.get('http://localhost:8000/preRegister/allPreRegister', {
+		const response = await axios.get('/preRegister/allPreRegister', {
 			headers: {
 				'Content-Type': 'application/json'
 			}
@@ -136,7 +136,7 @@ export const getSelectedPreRegister = (preRegisterId) => async (dispatch) => {
 	dispatch(getSelectedPreRegisterStart());
 	try {
 
-		const response = await axios.get(`http://localhost:8000/preRegister/getPreRegisterById/${preRegisterId}`, {
+		const response = await axios.get(`/preRegister/getPreRegisterById/${preRegisterId}`, {
 			headers: {
 				'Content-Type': 'application/json'
 			}

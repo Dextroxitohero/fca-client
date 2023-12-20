@@ -15,13 +15,15 @@ import {
     cleanSelectedCourse
 } from '../reducers/course';
 
-import axios from "axios";
+// import axios from "axios";
+import axios from '../../api/axios';
 import { toast } from 'react-hot-toast';
+
 
 export const createCourse = ({ language, level, color, limitMembers, startDate, endDate, hours, days, teacher }) => async (dispatch) => {
     try {
         dispatch(createCourseStart());
-        const response = await axios.post(`http://localhost:8000/course`,
+        const response = await axios.post(`/course`,
             {
                 language,
                 level,
@@ -50,7 +52,7 @@ export const createCourse = ({ language, level, color, limitMembers, startDate, 
 export const updateCourse = ({ id, language, level, color, limitMembers, startDate, endDate, hours, days, teacher }) => async (dispatch) => {
     try {
         dispatch(updateCourseStart());
-        const response = await axios.put(`http://localhost:8000/course/${id}`,
+        const response = await axios.put(`/course/${id}`,
             {
                 language,
                 level,
@@ -80,7 +82,7 @@ export const getAllCourses = () => async (dispatch) => {
     try {
         dispatch(getAllCoursesStart());
 
-        const response = await axios.get(`http://localhost:8000/course`);
+        const response = await axios.get(`/course`);
 
         if (response.status === 200) {
             dispatch(getAllCoursesSuccess(response.data));
@@ -97,7 +99,7 @@ export const getCourseById = (idCourse) => async (dispatch) => {
     try {
         dispatch(getCourseByStart());
 
-        const response = await axios.get(`http://localhost:8000/course/findById/${idCourse}`);
+        const response = await axios.get(`/course/findById/${idCourse}`);
 
         if (response.status === 200) {
             dispatch(getCourseBySuccess(response.data));

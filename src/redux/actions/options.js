@@ -9,14 +9,14 @@ import {
 	optionsTeachersSuccess,
 } from '../reducers/options';
 
-import axios from "axios";
+import axios from '../../api/axios';
 
 export const optionsAssessors = () => async (dispatch) => {
 	try {
         
 		dispatch(optionsStart());
 
-		const response = await axios.get(`http://localhost:8000/options/assessors`);
+		const response = await axios.get(`/options/assessors`);
 
         dispatch(optionsAssessorsSuccess(response.data));
 
@@ -32,7 +32,7 @@ export const optionsLanguages = () => async (dispatch) => {
         
 		dispatch(optionsStart());
 
-		const response = await axios.get(`http://localhost:8000/options/languages`);
+		const response = await axios.get(`/options/languages`);
 
         dispatch(optionsLanguagesSuccess(response.data));
 
@@ -47,7 +47,7 @@ export const optionsColors = () => async (dispatch) => {
         
 		dispatch(optionsStart());
 
-		const response = await axios.get(`http://localhost:8000/options/colors`);
+		const response = await axios.get(`/options/colors`);
 
         dispatch(optionsColorsSuccess(response.data));
 
@@ -63,7 +63,7 @@ export const optionsLevels = () => async (dispatch) => {
         
 		dispatch(optionsStart());
 
-		const response = await axios.get(`http://localhost:8000/options/levels`);
+		const response = await axios.get(`/options/levels`);
 
         dispatch(optionsLevelsSuccess(response.data));
 
@@ -79,7 +79,7 @@ export const optionsAllTeachers = () => async (dispatch) => {
         
 		dispatch(optionsStart());
 
-		const response = await axios.get(`http://localhost:8000/options/teachers`);
+		const response = await axios.get(`/options/teachers`);
 
         dispatch(optionsTeachersSuccess(response.data));
 

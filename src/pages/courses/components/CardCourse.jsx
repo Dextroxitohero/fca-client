@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { formatDate } from "../../../common/formatDateText";
 
+
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-const urlFlag = `http://localhost:8000/uploads/flags/`;
+// const urlFlag = `http://localhost:8000/uploads/flags/`;
+const urlFlag = `https://fca-server-production.up.railway.app/uploads/flags/`;
 
 export const CardCourse = ({
     idCourse,
