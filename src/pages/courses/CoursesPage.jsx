@@ -14,12 +14,12 @@ export const CoursesPage = () => {
     useEffect(() => {
         dispatch(cleanActionSelectedCourse())
     }, []);
-    
+
     useEffect(() => {
         dispatch(getAllCourses())
     }, []);
 
-    const  courses  = useSelector((state) => state.course.courses);
+    const courses = useSelector((state) => state.course.courses);
 
     const handleCreateNewCourse = () => {
         navigate('/nuevo-curso');
@@ -48,7 +48,7 @@ export const CoursesPage = () => {
                             path={course?.path}
                             nivel={course?.level}
                             studentLimit={course.limitMembers}
-                            status={course?.status}                            
+                            status={course?.status}
                             hours={course?.hours}
                             days={course?.days}
                             teacher={course?.teacher}

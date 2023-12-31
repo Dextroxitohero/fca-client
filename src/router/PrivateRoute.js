@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { PrivateLayout } from '../layout/private/PrivateLayout';
 import { refreshToken } from '../redux/actions/user';
 import { Navbar } from '../components/navbar/Navbar';
+import { is } from 'react-date-range/dist/locale';
 
 export const PrivateRoute = ({ children }) => {
     const dispatch = useDispatch();
@@ -28,11 +29,12 @@ export const PrivateRoute = ({ children }) => {
                         }
                     })
             }
-
         };
 
         checkTokenValidity();
-    }, [dispatch, navigate]);
+    }, [dispatch]);
+
+    console.log(loading)
 
     if (loading) {
         return (
@@ -48,14 +50,18 @@ export const PrivateRoute = ({ children }) => {
     }
 
     if (!loading) {
-        if (!isAuthenticated) {
-            return <Navigate to="/login" replace />;
+
+        if (isAuthenticated) {
+            return (
+                <PrivateLayout>
+                    {children}
+                </PrivateLayout>
+            );
         }
-        return (
-            <PrivateLayout>
-                {children}
-            </PrivateLayout>
-        );
+
+        return <Navigate to="/login" replace />;
+
+
     }
 };
 

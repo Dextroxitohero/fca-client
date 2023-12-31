@@ -32,7 +32,7 @@ export const PublicRoute = ({ children }) => {
         };
 
         checkTokenValidity();
-    }, [dispatch, navigate]);
+    }, [dispatch]);
 
     if (loading) {
         return (
