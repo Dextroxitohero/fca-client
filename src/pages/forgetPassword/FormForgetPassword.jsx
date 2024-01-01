@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from 'react-hot-toast';
 import { useParams } from "react-router-dom";
 import { InputText } from '../../components/inputs/InputText';
 import logo from '../../static/image/logo.png';
-
+import { Wrapper } from '../../components/Wrapper';
 import { jwtDecode } from 'jwt-decode';
 import { updatedPassword } from '../../redux/actions/user';
 
 
 export const FormForgetPassword = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { token } = useParams();
     const { email } = jwtDecode(token);
-
-    console.log(email)
 
     const [formData, setFormData] = useState({
         password: '',
         confirmPassword: ''
     })
+    const [loading, setLoading] = useState(false);
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -29,17 +31,32 @@ export const FormForgetPassword = () => {
     }
 
     const matchPassword = () => {
-        if (formData.password === formData.confirmPassword)
+        if(formData.password.length === 0 || formData.confirmPassword.length === 0){
+            toast.error('Ingresa tu nueva contraseña');
+            return false;
+        }
+        if (formData.password !== formData.confirmPassword){
+            toast.error('Las contraseñas no coinciden');
+            return false;
+        }
+        if (formData.password === formData.confirmPassword){
             return true;
-        return false;
-        
+        }
     }
 
     const handleUpdatePassword = () => {
+        setLoading(true);
         const match = matchPassword();
         if (match) {
             const password = formData.password;
-            dispatch(updatedPassword({ email, password}))
+            dispatch(updatedPassword({ email, password }))
+                .then((result) => {
+                    if (result.status === 200) {
+                        toast.success(result.message);
+                        navigate('/');
+                    }
+                    setLoading(false);
+                });
         }
     }
 
@@ -52,15 +69,21 @@ export const FormForgetPassword = () => {
         );
 
     return (
-        <div className='w-full flex flex-col h-screen justify-center items-center bg-white'>
-            <div className='bg-white w-full h-4/6 border-none'>
-                <div className='flex h-[20%] justify-center items-center'>
-                    <div className='w-[300px]'>
+        <div className='flex w-11/12 md:w-5/12 mx-auto items-center h-screen'>
+            <Wrapper>
+                <div className='flex justify-center items-center py-10'>
+                    <div className='w-1/2'>
                         <img src={logo} alt="logo" />
                     </div>
                 </div>
-                <div className='flex items-start py-5 h-[80%]'>
-                    <div className='w-[80%] md:w-[30%] mx-auto grid grid-cols-1 gap-4'>
+                <div className='flex justify-center items-center mt-4'>
+                    <div className='w-10/12 mx-auto'>
+                        <h1 className='text-sm md:text-md font-normal text-gray-400 text-center'>Ingresa tu nueva contrasena</h1>
+                    </div>
+                </div>
+                <div className='flex items-center mt-8'>
+                    <div className='w-10/12 mx-auto grid grid-cols-1 gap-4'>
+
                         <div>
                             <InputText
                                 id={'password'}
@@ -85,17 +108,21 @@ export const FormForgetPassword = () => {
                                 disabled={false}
                             />
                         </div>
-                        <div className='mt-8'>
+
+                        <div className='mt-2'>
                             <button
                                 type='button'
+                                disabled={loading}
                                 className='disabled:opacity-95 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition py-2.5 font-semibold text-md text-white bg-indigo-600 bg-cyan w-full'
                                 onClick={handleUpdatePassword}
                             >{'Confirmar cambio de contraseña'}</button>
-                            {/* <Button label={"Agregar nuevo curso"} onClick={handleCreateCourse} /> */}
                         </div>
                     </div>
                 </div>
-            </div>
+                <div className='flex justify-center mt-8 mb-4'>
+                    <Link to={'/'} className='font-semibold text-indigo-600 text-sm'>Iniciar sesion</Link>
+                </div>
+            </Wrapper>
         </div>
     );
 };

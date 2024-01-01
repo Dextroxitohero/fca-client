@@ -1,5 +1,5 @@
 import React from 'react';
-import { Disclosure  } from '@headlessui/react';
+import { Disclosure } from '@headlessui/react';
 import {
     Bars3Icon,
     XMarkIcon,
@@ -13,17 +13,15 @@ export const ButtonMenuMovil = ({ open }) => {
             inline-flex 
             items-center 
             justify-center 
-            rounded-md 
-            bg-gray-800 
-            p-2 
-            text-gray-400 
-            hover:bg-gray-700 
-            hover:text-white 
-            focus:outline-none 
-            focus:ring-2 
-            focus:ring-white 
-            focus:ring-offset-2 
-            focus:ring-offset-gray-800
+            rounded-md
+            bg-gray-100
+            p-2
+            text-indigo-600 
+            hover:bg-gray-50
+            hover:text-indigo-900
+            focus:shadow-inner 
+            focus:shadow-indigo-100
+            focus:bg-gray-50
         ">
             <span className="sr-only">Open main menu</span>
             {open ? (

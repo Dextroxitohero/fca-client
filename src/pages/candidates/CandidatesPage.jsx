@@ -5,6 +5,7 @@ import { getAllPreRegister } from '../../redux/actions/preRegistration';
 import { Link } from 'react-router-dom';
 import { ContainerFull } from '../../components/ContainerFull';
 import { Heading } from '../../components/Heading';
+import { Wrapper } from '../../components/Wrapper';
 
 export const CandidatesPage = () => {
 	const dispatch = useDispatch();
@@ -100,28 +101,31 @@ export const CandidatesPage = () => {
 				center={false}
 			/>
 			{allPreRegisters && (
+				<>
+					<Wrapper>
+						<input
+							type="text"
+							placeholder="Buscar un candidato"
+							value={searchText}
+							onChange={handleSearchChange}
+							className='block w-full rounded-md border-0 py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' />
+					</Wrapper>
 
-
-				<div className='mt-10'>
-					<input
-						type="text"
-						placeholder="Buscar"
-						value={searchText}
-						onChange={handleSearchChange}
-						className='block w-1/5 rounded-md border-0 py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mb-6'/>
-					<DataGrid
-						rows={filteredRows}
-						columns={columns}
-						// onRowClick={handleRowClick}
-						localeText={esES.components.MuiDataGrid.defaultProps.localeText}
-						initialState={{
-							pagination: {
-								paginationModel: { pageSize: 10, page: 0, },
-							},
-						}}
-						pageSizeOptions={[10, 15, 25]}
-					/>
-				</div>
+					<Wrapper>
+						<DataGrid
+							rows={filteredRows}
+							columns={columns}
+							// onRowClick={handleRowClick}
+							localeText={esES.components.MuiDataGrid.defaultProps.localeText}
+							initialState={{
+								pagination: {
+									paginationModel: { pageSize: 10, page: 0, },
+								},
+							}}
+							pageSizeOptions={[10, 15, 25]}
+						/>
+					</Wrapper>
+				</>
 
 			)}
 		</ContainerFull>

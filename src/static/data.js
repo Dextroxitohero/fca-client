@@ -16,7 +16,6 @@ export const navigation = [
 export const userNavigation = [
     { name: 'Perfil', href: '#' },
     { name: 'Configuracion', href: '#' },
-    { name: 'Cerrar sesion', href: '#' },
 ]
 
 export const userMenu = [
@@ -25,7 +24,6 @@ export const userMenu = [
     { name: 'Notificaciones', description: "Administrar las notificaciones de la aplicación", href: 'notificaciones', icon: "BellIcon" },
     { name: 'Cursos', description: 'Ver y gestionar tus cursos.', href: 'cursos', icon: "BookOpenIcon" },
     { name: 'Tareas', description: 'Acceder y completar las tareas asignadas', href: 'tareas', icon: "RectangleStackIcon" },
-    { name: 'Cerrar Sesesion', description: 'Build strategic funnels that will convert', href: '#', icon: "ArrowRightOnRectangleIcon" },
 ]
 
 

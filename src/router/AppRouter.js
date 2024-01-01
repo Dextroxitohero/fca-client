@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { PrivateRoute } from './PrivateRoute';
@@ -9,7 +9,7 @@ import { HomePage } from '../pages/home/HomePage';
 import { LoginPage } from '../pages/login/LoginPage';
 import { SignupPage } from '../pages/signup/SignupPage';
 import { ActivationPage } from '../pages/activation/ActivationPage';
-import { ForgetPasswordPage } from '../pages/forgetPassword/ForgetPasswordPage';
+import { FormForgetPasswordEmail } from '../pages/forgetPassword/FormForgetPasswordEmail';
 import { FormForgetPassword } from '../pages/forgetPassword/FormForgetPassword';
 
 import { NotFoundPage } from '../pages/notFound/NotFoundPage';
@@ -28,14 +28,13 @@ import { FormValidacionProceso } from '../pages/preRegistration/FormValidacionPr
 import { ValidateCandidate } from '../pages/candidates/ValidateCandidate';
 
 import { CoursesPage } from '../pages/courses/CoursesPage';
-import { CreateCourse } from '../pages/courses/CreateCourse';
 import { CourseEdit } from '../pages/courses/CourseEdit';
 import { Navigation } from '../components/auth/Navigation';
 
 export const AppRouter = () => {
 
     return (
-        <>
+        <Fragment>
             <BrowserRouter>
                 <Navigation>
                     <Routes>
@@ -96,7 +95,7 @@ export const AppRouter = () => {
                             path="/forget-password"
                             element={
                                 <PublicRoute>
-                                    <ForgetPasswordPage />
+                                    <FormForgetPasswordEmail />
                                 </PublicRoute>
                             }
                         />
@@ -213,7 +212,7 @@ export const AppRouter = () => {
 
             </BrowserRouter >
             <ToasterProvider />
-        </>
+        </Fragment>
 
     );
 };

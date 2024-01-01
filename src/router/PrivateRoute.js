@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { PrivateLayout } from '../layout/private/PrivateLayout';
 import { refreshToken } from '../redux/actions/user';
 import { Navbar } from '../components/navbar/Navbar';
-import { is } from 'react-date-range/dist/locale';
 
 export const PrivateRoute = ({ children }) => {
     const dispatch = useDispatch();

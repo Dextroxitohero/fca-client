@@ -41,7 +41,7 @@ export const loginUser = ({ email, password }) => async (dispatch) => {
 	}
 };
 
-export const signUp = ({ name, apellido ,email, password }) => async (dispatch) => {
+export const signUp = ({ name, apellido, email, password }) => async (dispatch) => {
 	try {
 
 		const response = await axios.post(`/auth/signup`,
@@ -114,7 +114,10 @@ export const forgotPasswordEmail = ({ email }) => async (dispatch) => {
 			{
 				withCredentials: true,
 			});
-		toast.success(response.data.message)
+		return {
+			status: response.status,
+			message: response.data.message
+		};
 	} catch (error) {
 		toast.error('Ocurrio un error.')
 	}
@@ -123,11 +126,14 @@ export const forgotPasswordEmail = ({ email }) => async (dispatch) => {
 export const updatedPassword = ({ email, password }) => async (dispatch) => {
 	try {
 		const response = await axios.put(`/auth/update-password`,
-			{	
+			{
 				email,
 				password
 			});
-		toast.success(response.data.message)
+		return {
+			status: response.status,
+			message: response.data.message
+		};
 	} catch (error) {
 		toast.error('Ocurrio un error.')
 	}

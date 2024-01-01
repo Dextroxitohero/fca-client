@@ -12,34 +12,35 @@ export const Navbar = () => {
 
     return (
         <>
-            <Disclosure as="nav" className="bg-gray-800 fixed w-full z-10 shadow-sm">
+            <Disclosure as="nav" className="bg-white fixed w-full z-10 shadow-md shadow-indigo-50">
                 {({ open }) => (
                     <>
-                        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div className="mx-auto  max-w-[90%] px-4 sm:px-6 lg:px-0">
                             <div
-                                className="flex h-16 items-center justify-between">
-                                <div className="flex items-center">
-                                    {/* LOGO */}
+                                className="flex h-20 items-center justify-between"
+                            >
+                                
+                                <div className="flex w-1/4">
                                     <Logo/>
-                                    {/* MENU NAVIGATION */}
+                                </div>
+                                <div className='w-2/4'>
                                     <MenuNavbar/>
                                 </div>
-                                <div className="hidden md:block">
-                                    <div className="ml-4 flex items-center md:ml-6">
-                                        {/* <ButtonNotification/> */}
+                                <div className="hidden md:block w-1/4">
                                         {/* PROFILE DROPDOWN */}
-                                        <Menu as="div" className="relative ml-3">
+                                        <Menu as="div" className="flex justify-end relative">
                                             {/* BUTTON USER MENU */}
                                             <ButtonUserMenu/>
                                             {/* USER MENU */}
                                             <UserMenu/>
                                         </Menu>
-                                    </div>
                                 </div>
                                 {/* MOBILE MENU BUTTOM */}
-                                <div className="-mr-2 flex md:hidden">
+                                <div className="flex md:hidden">
                                     <ButtonMenuMovil open={open} />
                                 </div>
+
+                                
                             </div>
                         </div>
                         {/* DROP DOWN MOBILE MENU */}

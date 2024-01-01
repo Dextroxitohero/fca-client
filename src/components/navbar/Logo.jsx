@@ -1,11 +1,18 @@
+import { NavLink } from 'react-router-dom';
+import logo from '../../static/image/logo.png';
+
 export const Logo = () => {
     return (
         <div className="flex-shrink-0">
-            <img
-                className="h-10 w-10 rounded-full"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company"
-            />
+            <NavLink
+                to={'/'}
+            >
+                <img
+                    className="with-12 h-14"
+                    src={logo}
+                    alt="Your Company"
+                />
+            </NavLink>
         </div>
     )
 }

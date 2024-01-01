@@ -43,22 +43,14 @@ export const UserMenu = () => {
                     shadow-md
                     bg-white
                     overflow-hidden 
-                    right-0
-                    top-12 
+                    right-2
+                    top-[56px] 
                     text-sm
+                    ring-2
+                    ring-indigo-900/10
+                    shadow-indigo-100
                 ">
-                    <div className="
-                        w-screen 
-                        max-w-md 
-                        flex-auto 
-                        overflow-hidden 
-                        rounded-3xl 
-                        bg-whitetext-sm 
-                        leading-6 
-                        shadow-lg 
-                        ring-1 
-                        ring-gray-900/5
-                    ">
+                    <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-whitetext-sm leading-6">
                         <div className="p-4">
                             {userMenu.map((item) => (
                                 <MenuItem
@@ -69,41 +61,18 @@ export const UserMenu = () => {
                                     icon={item.icon}
                                 />
                             ))}
-                            <hr />
+                            <hr className='mt-4'/>
 
                             <div
                                 onClick={handleLogOut}
-                                className="
-                                group relative 
-                                flex gap-x-6 
-                                rounded-lg p-4 
-                                hover:bg-gray-50
-                                mt-5
-                                "
-
+                                className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50 mt-5"
                             >
                                 <div
-                                    className="
-                                    mt-1 
-                                    flex 
-                                    h-11 
-                                    w-11 
-                                    flex-none 
-                                    items-center 
-                                    justify-center 
-                                    rounded-lg 
-                                    bg-gray-50 
-                                    group-hover:bg-white
-                                    "
+                                    className="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white"
                                 >
                                     <ArrowRightOnRectangleIcon
                                         aria-hidden="true"
-                                        className="
-                                        h-6 
-                                        w-6 
-                                        text-gray-600 
-                                        group-hover:text-indigo-600
-                                    "
+                                        className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
                                     />
                                 </div>
                                 <div className="flex items-center">

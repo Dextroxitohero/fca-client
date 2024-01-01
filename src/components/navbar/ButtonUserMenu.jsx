@@ -10,13 +10,12 @@ export const ButtonUserMenu = () => {
             max-w-xs 
             items-center 
             rounded-full 
-            bg-gray-800 
-            text-sm 
+            text-sm
             focus:outline-none 
             focus:ring-2 
             focus:ring-white 
-            focus:ring-offset-2 
-            focus:ring-offset-gray-800
+            focus:ring-offset-4
+            focus:ring-offset-indigo-700
         ">
             <span className="sr-only">Open user menu</span>
             <ImagenUser />

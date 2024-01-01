@@ -3,10 +3,13 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    background-color: #f7f7ff;
+}
+
 .custom-container {
     width: 100%;
 }
-
 .custom-container .rmdp-input {
     width: 100%;
     box-sizing: border-box;

@@ -8,20 +8,19 @@ export const MenuNavbar = () => {
 
   return (
     <div className="hidden md:block">
-      <div className="ml-10 flex items-baseline space-x-4">
+      <div className="flex items-center h-20 justify-center space-x-6">
         {navigation.map((item) => (
           <NavLink
             to={item.href}
             key={item.name}
             className={`
-                rounded-md 
-                px-3 
-                py-2 
-                text-sm 
-                font-medium 
+                text-md
+                px-6 py-4
+                rounded-md
+                font-medium
                 ${location.pathname === item.href 
-                    ? 'bg-gray-900 text-white' 
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                    ? 'bg-gray-50 text-indigo-600 shadow-inner shadow-indigo-100' 
+                    : 'text-gray-950 hover:bg-gray-50 hover:text-indigo-600'
                 }`
             }
           >
