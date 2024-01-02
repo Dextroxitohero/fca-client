@@ -29,8 +29,7 @@ export const emailVerification = (email) => async (dispatch) => {
 		const response = await axios.get(`/preRegister/emailVerification/${email}`);
 
 		// Verifica si la respuesta es exitosa
-		dispatch(emailVerificationSuccess(response));
-
+		dispatch(emailVerificationSuccess(response));		
 		if (!response.data.emailExist) {
 			dispatch(resetEmailVarification())
 			toast.error(response.data.message)

@@ -33,8 +33,6 @@ export const PrivateRoute = ({ children }) => {
         checkTokenValidity();
     }, [dispatch]);
 
-    console.log(loading)
-
     if (loading) {
         return (
             <div>

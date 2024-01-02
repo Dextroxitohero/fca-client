@@ -105,7 +105,7 @@ export const refreshToken = () => async (dispatch) => {
 	}
 };
 
-export const forgotPasswordEmail = ({ email }) => async (dispatch) => {
+export const forgotPasswordEmail = (email) => async (dispatch) => {
 	try {
 		const response = await axios.post(`/auth/forgot-password-email`,
 			{
@@ -114,12 +114,17 @@ export const forgotPasswordEmail = ({ email }) => async (dispatch) => {
 			{
 				withCredentials: true,
 			});
-		return {
-			status: response.status,
-			message: response.data.message
-		};
+		if (response.status === 200) {
+			return {
+				status: response.status,
+				message: response.data.message
+			};
+		}
 	} catch (error) {
-		toast.error('Ocurrio un error.')
+		return {
+			status: error.response.status,
+			message: error.response.data.message
+		};
 	}
 };
 

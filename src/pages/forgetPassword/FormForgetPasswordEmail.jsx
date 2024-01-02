@@ -2,19 +2,22 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from 'react-hot-toast';
-import { InputText } from '../../components/inputs/InputText';
-import logo from '../../static/image/logo.png';
+
 import { forgotPasswordEmail } from '../../redux/actions/user';
+
+import { InputText } from '../../components/inputs/InputText';
 import { Wrapper } from '../../components/Wrapper';
 
+import logo from '../../static/image/logo.png';
 
 export const FormForgetPasswordEmail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
-    })
-    const [loading, setLoading] = useState(false);
+    });
+
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -24,21 +27,25 @@ export const FormForgetPasswordEmail = () => {
         }));
     }
 
-    const handleLogin = () => {
-        setLoading(true);        
+    const handleSendEmail = () => {
+        setLoading(true);
         const { email } = formData;
-        if(!email){
+        if (!email) {
             toast.error('Ingresa tu correo electronico');
+            setLoading(false);
         }
-        if(email){
-            dispatch(forgotPasswordEmail({ email }))
-            .then((result) => {
-                if (result.status === 200) {
-                    toast.success(result.message);
-                    navigate('/');
-                }
-                setLoading(false);
-            });
+        if (email) {
+            dispatch(forgotPasswordEmail(email))
+                .then((result) => {
+                    if (result.status === 200) {
+                        toast.success(result.message);
+                        navigate('/');
+                    }
+                    if (result.status === 400) {
+                        toast.error(result.message);
+                    }
+                    setLoading(false);
+                });
         }
     }
 
@@ -74,13 +81,13 @@ export const FormForgetPasswordEmail = () => {
                                 type='button'
                                 disabled={loading}
                                 className='disabled:opacity-95 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition py-2.5 font-semibold text-md text-white bg-indigo-600 bg-cyan w-full'
-                                onClick={handleLogin}
-                            >{'Solicitar Nueva Contraseña'}</button>
+                                onClick={handleSendEmail}
+                            >Solicitar nueva contraseña</button>
                         </div>
                     </div>
                 </div>
                 <div className='flex justify-center mt-8 mb-4'>
-                    <Link to={'/'} className='font-semibold text-indigo-600 text-sm'>Iniciar sesion</Link>
+                    <Link to={'/'} className='font-semibold text-indigo-600 text-sm'><span className='text-gray-700'>Ya tienes una cuenta?  </span>Iniciar sesion</Link>
                 </div>
             </Wrapper>
         </div>

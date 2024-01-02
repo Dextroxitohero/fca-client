@@ -19,8 +19,8 @@ export const MenuNavbar = () => {
                 rounded-md
                 font-medium
                 ${location.pathname === item.href 
-                    ? 'bg-gray-50 text-indigo-600 shadow-inner shadow-indigo-100' 
-                    : 'text-gray-950 hover:bg-gray-50 hover:text-indigo-600'
+                    ? 'bg-indigo-600 text-white shadow-inner shadow-gray-950/40' 
+                    : 'text-gray-950 hover:bg-gray-100 hover:text-indigo-600'
                 }`
             }
           >

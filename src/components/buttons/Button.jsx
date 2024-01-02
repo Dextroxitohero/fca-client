@@ -1,7 +1,3 @@
-import React from 'react';
-
-
-
 export const Button = ({
 	label,
 	onClick,
@@ -15,12 +11,13 @@ export const Button = ({
 			onClick={onClick}
 			type='button'
 			className={`
+				flex
 				disabled:opacity-70
 				disabled:cursor-not-allowed
 				rounded-md
 				hover:opacity-80
 				transition
-				px-10
+				px-8
 				${outline ? 'bg-white' : 'bg-cyan'}
 				${outline ? 'border-black' : 'bg-indigo-600'}
 				${outline ? 'text-black' : 'text-white'}
