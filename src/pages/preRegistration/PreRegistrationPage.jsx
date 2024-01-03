@@ -1,10 +1,7 @@
-import React from 'react'
-import { FormPreRegistration } from './FormPreRegistration'
+import { FormPreRegistration } from './FormPreRegistration';
 
 export const PreRegistrationPage = () => {
     return (
-        <>
-            <FormPreRegistration />
-        </>
+        <FormPreRegistration />
     )
 }

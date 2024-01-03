@@ -31,15 +31,17 @@ export const FormForgetPassword = () => {
     }
 
     const matchPassword = () => {
-        if(formData.password.length === 0 || formData.confirmPassword.length === 0){
+        if (formData.password.length === 0 || formData.confirmPassword.length === 0) {
+            setLoading(false);
             toast.error('Ingresa tu nueva contraseña');
             return false;
         }
-        if (formData.password !== formData.confirmPassword){
+        if (formData.password !== formData.confirmPassword) {
+            setLoading(false);
             toast.error('Las contraseñas no coinciden');
             return false;
         }
-        if (formData.password === formData.confirmPassword){
+        if (formData.password === formData.confirmPassword) {
             return true;
         }
     }
@@ -69,7 +71,7 @@ export const FormForgetPassword = () => {
         );
 
     return (
-        <div className='flex w-11/12 md:w-5/12 mx-auto items-center h-screen'>
+        <div className='flex w-11/12 md:w-5/12 mx-auto items-baseline md:items-center h-screen'>
             <Wrapper>
                 <div className='flex justify-center items-center py-10'>
                     <div className='w-1/2'>
@@ -78,7 +80,7 @@ export const FormForgetPassword = () => {
                 </div>
                 <div className='flex justify-center items-center mt-4'>
                     <div className='w-10/12 mx-auto'>
-                        <h1 className='text-sm md:text-md font-normal text-gray-400 text-center'>Ingresa tu nueva contrasena</h1>
+                        <h1 className='text-sm md:text-md font-normal text-gray-400 text-center'>Ingresa tu nueva contraseña</h1>
                     </div>
                 </div>
                 <div className='flex items-center mt-8'>
@@ -113,7 +115,7 @@ export const FormForgetPassword = () => {
                             <button
                                 type='button'
                                 disabled={loading}
-                                className='disabled:opacity-95 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition py-2.5 font-semibold text-md text-white bg-indigo-600 bg-cyan w-full'
+                                className='disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold text-md text-white bg-indigo-600 w-full'
                                 onClick={handleUpdatePassword}
                             >{'Confirmar cambio de contraseña'}</button>
                         </div>

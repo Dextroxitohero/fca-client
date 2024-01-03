@@ -32,7 +32,7 @@ export const FormValidacionDatos = () => {
 		if (!email) {
 			navigate(`/pre-registro`)
 		}
-	}, [])
+	})
 
 	useEffect(() => {
 		if (success) {
@@ -82,6 +82,9 @@ export const FormValidacionDatos = () => {
 	}
 
 	const handleFinish = () => {
+		if (birthDate === undefined)
+			return toast.error('Ingresa tu fecha de nacimiento')
+
 		const date = new Date(birthDate);
 		const formattedDate = format(date, 'yyyy-MM-dd');
 		setFormData((prevData) => ({
@@ -287,7 +290,7 @@ export const FormValidacionDatos = () => {
 							<div className="flex w-full md:w-10/12 mx-auto justify-center mt-8">
 								<div
 									onClick={handleContinue}
-									className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+									className="rounded-lg bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
 									Continuar
 									<span
 										className='ml-3'
@@ -308,7 +311,7 @@ export const FormValidacionDatos = () => {
 
 
 	return (
-		<div className='flex w-11/12 md:w-6/12 mx-auto items-center h-screen'>
+		<div className='flex w-11/12 md:w-6/12 mx-auto items-baseline md:items-center h-screen'>
 			<Wrapper>
 				{renderStep()}
 			</Wrapper>

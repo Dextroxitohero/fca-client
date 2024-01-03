@@ -1,4 +1,3 @@
-// import { useNavigate } from 'react-router-dom';
 import {
 	preRegistrationStart,
 	preRegistrationSuccess,
@@ -18,10 +17,9 @@ import {
 	getSelectedPreRegisterFailure,
 } from '../reducers/preRegistration';
 
-import axios from '../../api/axios'
+import axios from '../../api/axios';
 import { toast } from 'react-hot-toast';
 
-// userActions login
 export const emailVerification = (email) => async (dispatch) => {
 	try {
 		dispatch(emailVerificationStart(email));
@@ -29,7 +27,7 @@ export const emailVerification = (email) => async (dispatch) => {
 		const response = await axios.get(`/preRegister/emailVerification/${email}`);
 
 		// Verifica si la respuesta es exitosa
-		dispatch(emailVerificationSuccess(response));		
+		dispatch(emailVerificationSuccess(response));
 		if (!response.data.emailExist) {
 			dispatch(resetEmailVarification())
 			toast.error(response.data.message)
@@ -41,7 +39,6 @@ export const emailVerification = (email) => async (dispatch) => {
 	}
 };
 
-// userActions 
 export const registerPreRegitration = ({
 	firstName,
 	lastName,
@@ -53,8 +50,9 @@ export const registerPreRegitration = ({
 	language
 }) => async (dispatch) => {
 	try {
+		
 		dispatch(preRegistrationStart());
-		// Realiza la llamada al servidor para autenticar al usuario y obtener la respuesta
+
 		const response = await axios.post(`/preRegister`,
 			{
 				firstName,
@@ -94,7 +92,6 @@ export const validatePaymentVoucher = ({
 		formData.append('id', id);
 		formData.append('file', file);
 
-		// Realizamos la llamada al servidor para validar el comprobante de pago
 		const response = await axios.post('/preRegister/validatePaymentVoucher', formData,
 			{
 				headers: {
@@ -102,17 +99,22 @@ export const validatePaymentVoucher = ({
 				},
 			}
 		);
-		toast.success(response.data.message);
-		dispatch(validatePaymentSuccess(response))
+
+		dispatch(validatePaymentSuccess(response));
+
+		if (response.status === 200) {
+			return {
+				status: response.status,
+				message: response.data.message
+			};
+		}
 
 	} catch (error) {
-		console.log(error)
 		dispatch(validatePaymentFailure());
 		toast.error(error.response.data.message)
 	}
 };
 
-// Get all pre register
 export const getAllPreRegister = () => async (dispatch) => {
 	dispatch(getAllPreRegisterStart());
 	try {
@@ -122,7 +124,7 @@ export const getAllPreRegister = () => async (dispatch) => {
 				'Content-Type': 'application/json'
 			}
 		});
-		
+
 		dispatch(getAllPreRegisterSuccess(response.data))
 
 	} catch (error) {

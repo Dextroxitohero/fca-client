@@ -1,5 +1,6 @@
 export const capitalizarPalabras = (str)=> {
-    // Dividir el string en palabras usando un espacio como separador
+  if(str === undefined || str === null || str === '') return str;
+    // Dividir el string en palabras usando un espacio como separador    
     const palabras = str.split(' ');
   
     // Iterar a través de las palabras y capitalizar la primera letra de cada una
@@ -21,4 +22,9 @@ export const capitalizarPalabras = (str)=> {
     const resultado = palabrasCapitalizadas.join(' ');
   
     return resultado;
+}
+
+export const firstCapitalLetter = (word) => {
+  if(word === undefined || word === null || word === '') return word;
+  return word.charAt(0).toUpperCase() + word.slice(1);
 }

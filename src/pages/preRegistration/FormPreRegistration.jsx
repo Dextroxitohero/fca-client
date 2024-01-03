@@ -56,7 +56,7 @@ export const FormPreRegistration = () => {
 	}
 
 	return (
-		<div className='flex w-11/12 md:w-5/12 mx-auto items-center h-screen'>
+		<div className='flex w-11/12 md:w-5/12 mx-auto items-baseline md:items-center h-screen'>
 			<Wrapper>
 				<div className='flex justify-center items-center py-10'>
 					<div className='w-1/2'>
@@ -74,7 +74,7 @@ export const FormPreRegistration = () => {
 					<div className='w-10/12 mx-auto'>
 
 						<h2 className='text-sm md:text-md font-normal text-gray-600 text-center'>
-							Para continuar con el proceso de registro ingresa tu correo electronico y sigue las instrucciones del correo electronico.
+							Para continuar con el proceso de registro ingresa tu correo electronico.
 						</h2>
 					</div>
 				</div>
@@ -96,7 +96,7 @@ export const FormPreRegistration = () => {
 							<button
 								type='button'
 								disabled={loading}
-								className='disabled:opacity-95 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition py-2.5 font-semibold text-md text-white bg-indigo-600 bg-cyan w-full'
+								className='disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold text-md text-white bg-indigo-600 w-full'
 								onClick={handleEmailVarification}
 							>Registrar cuenta</button>
 						</div>

@@ -50,7 +50,7 @@ export const FormForgetPasswordEmail = () => {
     }
 
     return (
-        <div className='flex w-11/12 md:w-5/12 mx-auto items-center h-screen'>
+        <div className='flex w-11/12 md:w-5/12 mx-auto items-baseline md:items-center h-screen'>
             <Wrapper>
                 <div className='flex justify-center items-center py-10'>
                     <div className='w-1/2'>
@@ -59,7 +59,7 @@ export const FormForgetPasswordEmail = () => {
                 </div>
                 <div className='flex justify-center items-center mt-4'>
                     <div className='w-10/12 mx-auto'>
-                        <h1 className='text-sm md:text-md font-normal text-gray-400 text-center'>Para recuperar tu contrasena ingresa tu correo electronico y sigue las intruciones del correo electronico.</h1>
+                        <h1 className='text-sm md:text-md font-normal text-gray-400 text-center'>Para recuperar tu contraseña ingresa tu correo electronico y sigue las intruciones del correo electronico.</h1>
                     </div>
                 </div>
                 <div className='flex items-center mt-8'>
@@ -80,7 +80,7 @@ export const FormForgetPasswordEmail = () => {
                             <button
                                 type='button'
                                 disabled={loading}
-                                className='disabled:opacity-95 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition py-2.5 font-semibold text-md text-white bg-indigo-600 bg-cyan w-full'
+                                className='disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold text-md text-white bg-indigo-600 w-full'
                                 onClick={handleSendEmail}
                             >Solicitar nueva contraseña</button>
                         </div>

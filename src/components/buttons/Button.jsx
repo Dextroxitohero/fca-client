@@ -12,9 +12,7 @@ export const Button = ({
 			type='button'
 			className={`
 				flex
-				disabled:opacity-70
-				disabled:cursor-not-allowed
-				rounded-md
+				rounded-lg
 				hover:opacity-80
 				transition
 				px-8

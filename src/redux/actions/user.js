@@ -9,13 +9,11 @@ import {
 
 import axios from "../../api/axios";
 import { toast } from 'react-hot-toast';
+import { firstCapitalLetter } from '../../common/upperCaseWord';
 
-// userActions login
 export const loginUser = ({ email, password }) => async (dispatch) => {
 	try {
 		dispatch(loginStart());
-
-		// Realiza la llamada al servidor para autenticar al usuario y obtener la respuesta
 		const response = await axios.post(`/auth/login`,
 			{
 				email,
@@ -25,19 +23,20 @@ export const loginUser = ({ email, password }) => async (dispatch) => {
 				headers: { 'Content-Type': 'application/json' },
 				withCredentials: true,
 			});
-		// Verifica si la respuesta es exitosa
 		if (response.status === 200) {
 			localStorage.setItem('token', response.data.accessToken);
 			dispatch(loginSuccess(response.data));
-			toast.success("Bienvenido");
-		} else {
-			dispatch(logout());
-			// toast.error(response.data.message)
+			return {
+				status: response.status,
+				message: `Bienvenido ${firstCapitalLetter(response.data.user.firstName)} ${firstCapitalLetter(response.data.user.lastName)}`
+			};
 		}
 	} catch (error) {
-		// En caso de error en la llamada al servidor, muestra el mensaje de error
 		dispatch(loginFailure());
-		toast.error('Ocurrio un error.')
+		return {
+			status: error.response.status,
+			message: error.response.data.message
+		};
 	}
 };
 
@@ -57,7 +56,6 @@ export const signUp = ({ name, apellido, email, password }) => async (dispatch) 
 		// Verifica si la respuesta es exitosa
 		if (response.status === 200 && response.data.success) {
 			dispatch(loginSuccess(response.data));
-			toast.success("Bienvenido");
 		} else {
 			// En caso de respuesta no exitosa, muestra el mensaje de error
 			dispatch(loginFailure());
@@ -100,8 +98,6 @@ export const refreshToken = () => async (dispatch) => {
 		return response.status;
 	} catch (error) {
 		dispatch(logout());
-		// En caso de error en la llamada al servidor, muestra el mensaje de error
-		// toast.error('Ocurrio un error.')
 	}
 };
 

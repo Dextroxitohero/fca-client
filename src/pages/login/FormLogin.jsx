@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { InputText } from '../../components/inputs/InputText';
 import { loginUser } from '../../redux/actions/user';
 import logo from '../../static/image/logo.png';
+import { toast } from 'react-hot-toast';
 
 export const FormLogin = () => {
     const dispatch = useDispatch();
@@ -11,10 +12,11 @@ export const FormLogin = () => {
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
         password: ''
-    })
+    });
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -24,11 +26,64 @@ export const FormLogin = () => {
         }));
     }
 
+    function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    const validateForm = () => {
+        const { email, password } = formData;
+
+        if(!validateEmail(email)){
+            toast.error('Ingresa un correo electronico valido');
+            setLoading(false);
+            return false;
+        }
+
+        if (!email && !password) {
+            toast.error('Ingresa tu correo electronico y contraseña');
+            setLoading(false);
+            return false;
+        }
+        if (!email) {
+            toast.error('Ingresa tu correo electronico');
+            setLoading(false);
+            return false;
+        }
+        if (!password) {
+            toast.error('Ingresa tu contraseña');
+            setLoading(false);
+            return false;
+        }
+        if (email && password) {
+            return true;
+        }
+    }
+
     const handleLogin = () => {
-        // const { email, password } = formData;
-        const { email='tiras_lp@hotmail.com', password='Linkinlp' } = formData;
-        dispatch(loginUser({ email, password }))
-        navigate(from, { replace: true });
+        setLoading(true);
+        const { email, password } = formData;
+        const isValid = validateForm();
+
+        if (isValid) {
+            dispatch(loginUser({ email, password }))
+                .then((result) => {
+                    if (result.status === 200) {
+                        toast.success(result.message);
+                        navigate(from, { replace: true });
+                    }
+                    if (result.status === 401) {
+                        toast.error(result.message);
+
+                    }
+                    if (result.status === 404) {
+                        toast.error(result.message);
+
+                    }
+                    setLoading(false);
+                });
+        }
+
     }
 
     return (
@@ -39,7 +94,7 @@ export const FormLogin = () => {
                         <img src={logo} alt="logo" />
                     </div>
                 </div>
-                <div className='flex items-start py-20 h-[80%]'>
+                <div className='flex items-start py-16 h-[80%]'>
                     <div className='w-[80%] mx-auto grid grid-cols-1 gap-4'>
                         <div>
                             <InputText
@@ -67,15 +122,21 @@ export const FormLogin = () => {
                         </div>
                         <div className='mt-8'>
                             <button
+                                disabled={loading}
                                 type='button'
-                                className='disabled:opacity-95 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition py-2.5 font-semibold text-md text-white bg-indigo-600 bg-cyan w-full'
+                                className='disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold text-md text-white bg-indigo-600 w-full'
                                 onClick={handleLogin}
-                            >{'Iniciar sesion'}</button>
-                            {/* <Button label={"Agregar nuevo curso"} onClick={handleCreateCourse} /> */}
+                            >Iniciar sesion</button>
                         </div>
-                        <div className='flex justify-center mt-2'>
-                            <Link to={'/forget-password'}className='font-semibold text-indigo-600 text-sm'>Olvidaste tu contraseña?</Link>
+                        <div className='flex justify-center '>
+                            <Link to={'/forget-password'} className='font-semibold text-gray-950 text-sm'>Tienes problemas para iniciar sesion?</Link>
                         </div>
+                        <div className='mt-2 border-t-2 pt-6'>
+                            <Link
+                                to={'/pre-registro'}
+                                className='block disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold bg-white ring-inset ring-4 ring-indigo-600 text-md text-gray-950 w-full hover:bg-indigo-600 hover:text-white text-center '>Crear una cuenta</Link>
+                        </div>
+
                     </div>
                 </div>
             </div>
