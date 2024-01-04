@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./reducers/user";
 import userPreRegistrationReducer from './reducers/preRegistration';
+import userReducer from "./reducers/user";
+import usersReducer from "./reducers/users";
 import optionsReducer from './reducers/options';
 import courseReducer from './reducers/course';
 
@@ -12,6 +13,7 @@ const nonSerializableMiddleware = getDefaultMiddleware => getDefaultMiddleware({
 export const Store = configureStore({
   reducer: {
     user: userReducer,
+    users: usersReducer,
     options: optionsReducer,
     preRegistration: userPreRegistrationReducer,
     course: courseReducer,

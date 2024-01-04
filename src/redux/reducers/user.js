@@ -58,6 +58,6 @@ export const {
 	refreshTokenStart,
 	refreshTokenSuccess,
 	loginFailure,
-	logout
+	logout,
 } = userSlice.actions;
 export default userSlice.reducer;

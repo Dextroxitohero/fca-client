@@ -1,16 +1,16 @@
 import { Fragment } from 'react'
 import {
-  BriefcaseIcon,
-  CalendarIcon,
-  MapPinIcon,
+	BriefcaseIcon,
+	CalendarIcon,
+	MapPinIcon,
 } from '@heroicons/react/20/solid'
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import { firstCapitalLetter } from '../../common/upperCaseWord';
 
 
 export const HomePage = () => {
 
-	const {email} = useSelector((state) => state.user?.user)
-
+	const { firstName, lastName } = useSelector((state) => state.user?.user)
 	return (
 		<>
 			<main>
@@ -19,8 +19,8 @@ export const HomePage = () => {
 
 					<div className="lg:flex lg:items-center lg:justify-between">
 						<div className="min-w-0 flex-1">
-							<h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">								
-								Tom Cook - { email }
+							<h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+								{`Bienvenido ${firstCapitalLetter(firstName)} ${firstCapitalLetter(lastName)}`}
 							</h2>
 							<div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
 								<div className="mt-2 flex items-center text-sm text-gray-500">

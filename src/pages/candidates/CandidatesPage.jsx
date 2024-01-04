@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { DataGrid, esES } from '@mui/x-data-grid';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { getAllPreRegister } from '../../redux/actions/preRegistration';
-import { Link } from 'react-router-dom';
+
 import { ContainerFull } from '../../components/ContainerFull';
 import { Heading } from '../../components/Heading';
 import { Wrapper } from '../../components/Wrapper';

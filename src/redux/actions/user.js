@@ -4,7 +4,7 @@ import {
 	refreshTokenStart,
 	refreshTokenSuccess,
 	loginFailure,
-	logout
+	logout,
 } from '../reducers/user';
 
 import axios from "../../api/axios";
