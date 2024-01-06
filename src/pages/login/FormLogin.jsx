@@ -5,6 +5,7 @@ import { InputText } from '../../components/inputs/InputText';
 import { loginUser } from '../../redux/actions/user';
 import logo from '../../static/image/logo.png';
 import { toast } from 'react-hot-toast';
+import { validateEmail } from '../../common/validations';
 
 export const FormLogin = () => {
     const dispatch = useDispatch();
@@ -26,26 +27,22 @@ export const FormLogin = () => {
         }));
     }
 
-    function validateEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-
     const validateForm = () => {
         const { email, password } = formData;
+        const emailValid = validateEmail(email);
 
-        if(!validateEmail(email)){
+        if(!emailValid){
             toast.error('Ingresa un correo electronico valido');
             setLoading(false);
             return false;
         }
 
-        if (!email && !password) {
+        if (!emailValid && !password) {
             toast.error('Ingresa tu correo electronico y contraseña');
             setLoading(false);
             return false;
         }
-        if (!email) {
+        if (!emailValid) {
             toast.error('Ingresa tu correo electronico');
             setLoading(false);
             return false;
@@ -55,7 +52,7 @@ export const FormLogin = () => {
             setLoading(false);
             return false;
         }
-        if (email && password) {
+        if (emailValid && password) {
             return true;
         }
     }

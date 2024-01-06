@@ -16,6 +16,7 @@ import { registerPreRegitration } from '../../redux/actions/preRegistration';
 
 import { levelEducation, locationState, languages } from '../../static/data';
 import logo from '../../static/image/logo.png';
+import { ButtonLoader } from '../../components/buttons/ButtonLoader';
 
 export const FormValidacionDatos = () => {
 
@@ -27,6 +28,7 @@ export const FormValidacionDatos = () => {
 		success,
 		loading
 	} = useSelector((state) => state.preRegistration);
+	const [loadingForm, setLoadingForm] = useState(false)
 
 	useEffect(() => {
 		if (!email) {
@@ -54,7 +56,6 @@ export const FormValidacionDatos = () => {
 		education: ''
 	});
 
-	const [birthDate, setbirthDate] = useState();
 
 	const handleContinue = () => {
 		dispatch(resetEmailVarification())
@@ -82,33 +83,33 @@ export const FormValidacionDatos = () => {
 	}
 
 	const handleFinish = () => {
-		if (birthDate === undefined)
-			return toast.error('Ingresa tu fecha de nacimiento')
-
-		const date = new Date(birthDate);
-		const formattedDate = format(date, 'yyyy-MM-dd');
-		setFormData((prevData) => ({
-			...prevData,
-			dateBirth: formattedDate,
-		}));
-		const valid = validarCampos()
+		setLoadingForm(true);
+		const valid = validarCampos();
 		if (valid) {
-			dispatch(registerPreRegitration(formData))
+			dispatch(registerPreRegitration(formData));
 		} else {
 			toast.error('Todos los campos son requeridos');
+			setLoadingForm(false);
 		}
 	};
 
 	const validarCampos = () => {
 		for (const key in formData) {
 			if (formData.hasOwnProperty(key)) {
-				if (formData[key].trim() === '') {
+				if (formData[key] === '') {
 					return false;
 				}
 			}
 		}
 		return true;
 	};
+
+	const handleDate = (date) => {
+		setFormData((prevData) => ({
+			...prevData,
+			dateBirth: date,
+		}));
+	}
 
 	const renderStep = () => {
 		switch (step) {
@@ -171,8 +172,8 @@ export const FormValidacionDatos = () => {
 								<InputDate
 									name={'dateBirth'}
 									label={'Fecha de nacimiento'}
-									onChange={(date) => setbirthDate(date)}
-									value={birthDate}
+									onChange={(date) => handleDate(date)}
+									value={formData.dateBirth}
 									placeholder={'Ingresa tu fecha de nacimiento'}
 									disabled={false}
 								/>
@@ -253,7 +254,11 @@ export const FormValidacionDatos = () => {
 								onClick={handlePrev}
 							/>
 							<Button
-								label='Siguiente'
+								label={loadingForm
+									?
+									<ButtonLoader />
+									: 'Siguiente'
+								}
 								disabled={loading}
 								onClick={handleFinish}
 							/>

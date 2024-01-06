@@ -4,7 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from 'react-hot-toast';
 
 import { forgotPasswordEmail } from '../../redux/actions/user';
+import { validateEmail } from '../../common/validations';
 
+import { ButtonLoader } from '../../components/buttons/ButtonLoader';
 import { InputText } from '../../components/inputs/InputText';
 import { Wrapper } from '../../components/Wrapper';
 
@@ -30,11 +32,14 @@ export const FormForgetPasswordEmail = () => {
     const handleSendEmail = () => {
         setLoading(true);
         const { email } = formData;
-        if (!email) {
-            toast.error('Ingresa tu correo electronico');
+        const emailValid = validateEmail(email);
+
+        if (!emailValid) {
+            toast.error('Ingresa un correo electronico valido');
             setLoading(false);
         }
-        if (email) {
+
+        if (emailValid) {
             dispatch(forgotPasswordEmail(email))
                 .then((result) => {
                     if (result.status === 200) {
@@ -80,9 +85,15 @@ export const FormForgetPasswordEmail = () => {
                             <button
                                 type='button'
                                 disabled={loading}
-                                className='disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold text-md text-white bg-indigo-600 w-full'
+                                className='disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold text-md text-white text-center bg-indigo-600 w-full'
                                 onClick={handleSendEmail}
-                            >Solicitar nueva contraseña</button>
+                            >
+                                {loading
+                                    ?
+                                    <ButtonLoader />
+                                    : 'Solicitar nueva contraseña'
+                                }
+                            </button>
                         </div>
                     </div>
                 </div>

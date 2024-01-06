@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from 'react-hot-toast';
 
+import { validateEmail } from '../../common/validations';
 import { Wrapper } from '../../components/Wrapper';
 import { InputText } from '../../components/inputs/InputText';
 
@@ -46,11 +47,13 @@ export const FormPreRegistration = () => {
 
 
 	const handleEmailVarification = () => {
-		const { email } = formData;
-		if (!email) {
-			toast.error('Ingresa tu correo electronico');
-		}
-		if (email) {
+		const { email } = formData;	
+        const emailValid = validateEmail(email);
+
+        if (!emailValid) {
+            toast.error('Ingresa un correo electronico valido');
+        }
+		if (emailValid) {
 			dispatch(emailVerification(email))
 		}
 	}

@@ -3,12 +3,15 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from 'react-hot-toast';
 import { useParams } from "react-router-dom";
-import { InputText } from '../../components/inputs/InputText';
-import logo from '../../static/image/logo.png';
-import { Wrapper } from '../../components/Wrapper';
-import { jwtDecode } from 'jwt-decode';
-import { updatedPassword } from '../../redux/actions/user';
 
+import { updatedPassword } from '../../redux/actions/user';
+import { jwtDecode } from 'jwt-decode';
+
+import { ButtonLoader } from '../../components/buttons/ButtonLoader';
+import { Wrapper } from '../../components/Wrapper';
+import { InputText } from '../../components/inputs/InputText';
+
+import logo from '../../static/image/logo.png';
 
 export const FormForgetPassword = () => {
     const dispatch = useDispatch();
@@ -117,12 +120,17 @@ export const FormForgetPassword = () => {
                                 disabled={loading}
                                 className='disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold text-md text-white bg-indigo-600 w-full'
                                 onClick={handleUpdatePassword}
-                            >{'Confirmar cambio de contraseña'}</button>
+                            >
+                                {loading
+                                    ? <ButtonLoader />
+                                    : 'Confirmar cambio de contraseña'
+                                }
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div className='flex justify-center mt-8 mb-4'>
-                    <Link to={'/'} className='font-semibold text-indigo-600 text-sm'>Iniciar sesion</Link>
+                    <Link to={'/'} className='font-semibold text-indigo-600 text-sm'><span className='text-gray-700'>Ya tienes una cuenta?  </span>Iniciar sesion</Link>
                 </div>
             </Wrapper>
         </div>

@@ -14,6 +14,7 @@ import { optionsAssessors } from '../../redux/actions/options';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import logo from '../../static/image/logo.png';
 import { accounts } from '../../static/data';
+import { ButtonLoader } from '../../components/buttons/ButtonLoader';
 
 
 export const FormValidacionPago = () => {
@@ -227,7 +228,11 @@ export const FormValidacionPago = () => {
 							<div className="flex w-full md:w-11/12 justify-end mt-8">
 								<Button
 									disabled={loadingForm}
-									label='Siguiente'
+									label={loadingForm
+										?
+										<ButtonLoader />
+										: 'Siguiente'
+									}
 									onClick={handeleSubmitValidationPayment}
 								/>
 							</div>
