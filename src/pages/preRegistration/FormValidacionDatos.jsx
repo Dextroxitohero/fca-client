@@ -255,8 +255,7 @@ export const FormValidacionDatos = () => {
 							/>
 							<Button
 								label={loadingForm
-									?
-									<ButtonLoader />
+									? <ButtonLoader />
 									: 'Siguiente'
 								}
 								disabled={loading}

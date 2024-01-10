@@ -36,14 +36,15 @@ export const PublicRoute = ({ children }) => {
 
     if (loading) {
         return (
-            <div>
-                <Navbar />
-                <div className='pt-[4rem]'>
-                    <div className='flex justify-center items-center'>
-                        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+            <>
+                <div className="flex justify-center items-center h-screen bg-white/25">
+                    <div className="relative inline-flex">
+                        <div className="w-16 h-16 bg-indigo-500 rounded-full"></div>
+                        <div className="w-16 h-16 bg-indigo-600 rounded-full absolute top-0 left-0 animate-ping"></div>
+                        <div className="w-16 h-16 bg-indigo-600 rounded-full absolute top-0 left-0 animate-pulse"></div>
                     </div>
                 </div>
-            </div>
+            </>
         )
     }
 
