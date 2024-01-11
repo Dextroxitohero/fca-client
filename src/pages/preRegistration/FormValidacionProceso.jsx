@@ -14,6 +14,8 @@ export const FormValidacionProceso = () => {
 
 	const { email } = useSelector((state) => state.preRegistration);
 
+
+
 	useEffect(() => {
 		if (!email) {
 			navigate(`/pre-registro`)

@@ -84,11 +84,24 @@ export const languages = [
     { value: "italiano", description: "italiano" },
 ];
 
+
 export const accounts = [
     { value: "9801 9878 0978 0919", description: "9801 9878 0978 0919" },
     { value: "9878 9889 0019 0918", description: "9878 9889 0019 0918" },
     { value: "9232 2200 1100 0010", description: "9232 2200 1100 0010" },
     { value: "9078 9890 0912 1230", description: "9078 9890 0912 1230" },
+];
+
+export const typeUserOptions = [
+    { value: "director", description: "director" },
+    { value: "subdirector", description: "subdirector" },
+    { value: "administrativo", description: "administrativo" },
+    { value: "control escolar", description: "control escolar" },
+    { value: "coordinador", description: "coordinador" },
+    { value: "cobranza", description: "cobranza" },
+    { value: "ventas", description: "ventas" },
+    { value: "profesor", description: "profesor" },
+    { value: "estudiante", description: "estudiante" },
 ];
 
 export const nivels = [

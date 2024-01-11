@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react'
+import { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Dialog } from '@headlessui/react'
 import { Modal } from '../../components/modal/Modal';
 import { toast } from 'react-hot-toast';
@@ -8,10 +9,11 @@ import { validateEmail } from '../../common/validations';
 import { InputText } from '../../components/inputs/InputText';
 import { InputSelect } from '../../components/inputs/InputSelect';
 import { ButtonLoader } from '../../components/buttons/ButtonLoader';
-import { Button } from '../../components/buttons/Button';
-
+import { typeUserOptions } from '../../static/data';
+import { createNewUserByInvitation } from '../../redux/actions/users';
 
 export const AddNewUserModal = ({ open, setOpen }) => {
+	const dispatch = useDispatch();
 	const cancelButtonRef = useRef(null);
 	const [loading, setLoading] = useState(false);
 	const [formData, setFormData] = useState({
@@ -27,21 +29,61 @@ export const AddNewUserModal = ({ open, setOpen }) => {
 		}));
 	}
 
-	const handleSendEmail = () => {
-		setLoading(true);
-		const { email } = formData;
+	const formValidations = () => {
+		const { email, typeUser } = formData;
 		const emailValid = validateEmail(email);
+
+		if (!emailValid && !typeUser) {
+			toast.error('Ingresa un correo electronico valido y selecciona el tipo de usuario');
+			setLoading(false);
+			return false;
+		}
 
 		if (!emailValid) {
 			toast.error('Ingresa un correo electronico valido');
 			setLoading(false);
+			return false;
 		}
+
+		if (!typeUser) {
+			toast.error('Selecciona el tipo de usuario');
+			setLoading(false);
+			return false;
+		}
+
+		return true;
+	}
+
+	const handleSendEmail = () => {
+		setLoading(true);
+		const { email, typeUser } = formData;
+		const formValidation = formValidations();
+		if (formValidation) {
+			// toast.success('Se envio la invitacion correctamente');
+			dispatch(createNewUserByInvitation({ email, typeUser }))
+				.then((result) => {
+					if (result.status === 201) {
+						toast.success(result.message);
+						setOpen(false);
+						setFormData({
+							email: '',
+							typeUser: ''
+						});
+					}
+					if (result.status === 409) {
+						toast.error(result.message);
+					}
+					setLoading(false);
+				});
+		}
+
+
+
 	}
 
 
 
 	return (
-
 		<Modal open={open} setOpen={setOpen} cancelButtonRef={cancelButtonRef}>
 			<div className="bg-white px-4 py-4">
 				<div className="sm:flex sm:items-center">
@@ -73,10 +115,10 @@ export const AddNewUserModal = ({ open, setOpen }) => {
 								<div>
 									<InputSelect
 										id="typeUser"
-										name="tyepUser"
+										name="typeUser"
 										label="Tipo de usuario"
 										placeholder="Selecione el tipo de usuario"
-										data={[]}
+										data={typeUserOptions}
 										optionDefault="Selecione el tipo de usuario"
 										value={formData.typeUser}
 										onChange={(e) => onChange(e)}

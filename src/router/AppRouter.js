@@ -11,6 +11,7 @@ import { SignupPage } from '../pages/signup/SignupPage';
 import { ActivationPage } from '../pages/activation/ActivationPage';
 import { FormForgetPasswordEmail } from '../pages/forgetPassword/FormForgetPasswordEmail';
 import { FormForgetPassword } from '../pages/forgetPassword/FormForgetPassword';
+import { AddNewUserPage } from '../pages/users/AddNewUserPage';
 
 import { NotFoundPage } from '../pages/notFound/NotFoundPage';
 
@@ -107,6 +108,16 @@ export const AppRouter = () => {
                                 </PublicRoute>
                             }
                         />
+
+                        <Route
+                            path="/nuevo-usuario/:token"
+                            element={
+                                <PublicRoute>
+                                    <AddNewUserPage />
+                                </PublicRoute>
+                            }
+                        />
+
 
                         <Route
                             path="/"

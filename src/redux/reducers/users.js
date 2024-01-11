@@ -11,11 +11,11 @@ const usersSlice = createSlice({
 			state.loading = true;
 		},
 		getAllUsersSucSuccess: (state, { payload: { users } }) => {
-			state.loading = true;
+			state.loading = false;
             state.users = users;
 		},
 		getAllUsersFailure: (state) => {
-			state.loading = true;
+			state.loading = false;
 		},
 	},
 });
