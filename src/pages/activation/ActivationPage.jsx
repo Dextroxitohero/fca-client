@@ -2,11 +2,10 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-// import { server } from "../server";
-
 
 export const ActivationPage = () => {
     const { activation_token } = useParams();
+    console.log(activation_token)
     
     const [error, setError] = useState(false);
 

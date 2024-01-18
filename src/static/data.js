@@ -96,6 +96,7 @@ export const typeUserOptions = [
     { value: "director", description: "director" },
     { value: "subdirector", description: "subdirector" },
     { value: "administrativo", description: "administrativo" },
+    { value: "desarrollador", description: "desarrollador" },
     { value: "control escolar", description: "control escolar" },
     { value: "coordinador", description: "coordinador" },
     { value: "cobranza", description: "cobranza" },
