@@ -1,24 +1,26 @@
 // import { useNavigate } from 'react-router-dom';
 import {
 	optionsStart,
-	optionsAssessorsSuccess,
+	optionsCoordinadorsSuccess,
 	optionsLanguagesSuccess,
 	optionsColorsSuccess,
 	optionsLevelsSuccess,
 	optionsFailure,
 	optionsTeachersSuccess,
+	optionsAccountsBankSuccess,
+	optionsCourseListSuccess
 } from '../reducers/options';
 
 import axios from '../../api/axios';
 
-export const optionsAssessors = () => async (dispatch) => {
+export const optionsCoordinadors = () => async (dispatch) => {
 	try {
         
 		dispatch(optionsStart());
 
-		const response = await axios.get(`/options/assessors`);
+		const response = await axios.get(`/options/coordinadors`);
 
-        dispatch(optionsAssessorsSuccess(response.data));
+        dispatch(optionsCoordinadorsSuccess(response.data));
 
 	} catch (error) {
 		
@@ -82,6 +84,38 @@ export const optionsAllTeachers = () => async (dispatch) => {
 		const response = await axios.get(`/options/teachers`);
 
         dispatch(optionsTeachersSuccess(response.data));
+
+	} catch (error) {
+		
+        dispatch(optionsFailure());
+
+	}
+};
+
+export const optionsAllAccountsBank = () => async (dispatch) => {
+	try {
+        
+		dispatch(optionsStart());
+
+		const response = await axios.get(`/options/accountsBank`);
+
+        dispatch(optionsAccountsBankSuccess(response.data));
+
+	} catch (error) {
+		
+        dispatch(optionsFailure());
+
+	}
+};
+
+export const optionsAllCourseList = () => async (dispatch) => {
+	try {
+        
+		dispatch(optionsStart());
+
+		const response = await axios.get(`/options/coursesList`);
+
+        dispatch(optionsCourseListSuccess(response.data));
 
 	} catch (error) {
 		

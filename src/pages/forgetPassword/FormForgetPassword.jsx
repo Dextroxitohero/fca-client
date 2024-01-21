@@ -22,7 +22,8 @@ export const FormForgetPassword = () => {
     const [formData, setFormData] = useState({
         password: '',
         confirmPassword: ''
-    })
+    });
+    
     const [loading, setLoading] = useState(false);
 
     const onChange = (e) => {

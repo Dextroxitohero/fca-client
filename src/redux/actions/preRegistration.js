@@ -77,7 +77,7 @@ export const registerPreRegitration = ({
 // payment voucher
 export const validatePaymentVoucher = ({
 	account,
-	assessor,
+	coordinador,
 	file,
 	email,
 	id
@@ -87,7 +87,7 @@ export const validatePaymentVoucher = ({
 
 		const formData = new FormData();
 		formData.append('account', account);
-		formData.append('assessor', assessor);
+		formData.append('coordinador', coordinador);
 		formData.append('email', email);
 		formData.append('id', id);
 		formData.append('file', file);

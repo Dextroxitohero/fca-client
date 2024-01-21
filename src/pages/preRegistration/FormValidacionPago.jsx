@@ -9,11 +9,10 @@ import { Wrapper } from '../../components/Wrapper';
 
 import { validatePaymentVoucher } from '../../redux/actions/preRegistration';
 import { resetEmailVarification } from '../../redux/reducers/preRegistration';
-import { optionsAssessors } from '../../redux/actions/options';
+import { optionsAllAccountsBank, optionsCoordinadors } from '../../redux/actions/options';
 
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import logo from '../../static/image/logo.png';
-import { accounts } from '../../static/data';
 import { ButtonLoader } from '../../components/buttons/ButtonLoader';
 
 
@@ -21,7 +20,7 @@ export const FormValidacionPago = () => {
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { assessors } = useSelector((state) => state.options);
+	const { coordinadors, accountsBank } = useSelector((state) => state.options);
 
 	const [step, setStep] = useState(1);
 
@@ -43,7 +42,8 @@ export const FormValidacionPago = () => {
 	});
 
 	useEffect(() => {
-		dispatch(optionsAssessors())
+		dispatch(optionsCoordinadors());
+		dispatch(optionsAllAccountsBank());
 	}, []);
 
 	useEffect(() => {
@@ -53,7 +53,7 @@ export const FormValidacionPago = () => {
 	}, [success]);
 
 	const [formData, setFormData] = useState({
-		assessor: '',
+		coordinador: '',
 		account: '',
 		file: null,
 		email: email,
@@ -87,8 +87,8 @@ export const FormValidacionPago = () => {
 	}
 
 	const validForm = () => {
-		const { assessor, account, file, email, id } = formData;
-		if (assessor.trim() === '' || account.trim() === '' || file === null || email.trim() === '' || id === null) {
+		const { coordinador, account, file, email, id } = formData;
+		if (coordinador.trim() === '' || account.trim() === '' || file === null || email.trim() === '' || id === null) {
 			return false;
 		}
 		return true;
@@ -204,13 +204,13 @@ export const FormValidacionPago = () => {
 										</div>
 									)}
 									<InputSelect
-										id="assessor"
-										name="assessor"
-										label="Assesor"
-										placeholder="Selecione a tu assesor"
-										data={assessors}
-										optionDefault="Selecione a tu assesor"
-										value={formData.assessor}
+										id="coordinador"
+										name="coordinador"
+										label="Coordinador"
+										placeholder="Selecione a tu coordinador"
+										data={coordinadors}
+										optionDefault="Selecione a tu coordinador"
+										value={formData.coordinador}
 										onChange={(e) => onChange(e)}
 									/>
 									<InputSelect
@@ -218,7 +218,7 @@ export const FormValidacionPago = () => {
 										name="account"
 										label="Numero de cuenta bancaria"
 										placeholder="Selecione a tu numero de cuenta"
-										data={accounts}
+										data={accountsBank}
 										optionDefault="Selecione el numero de cuenta"
 										value={formData.account}
 										onChange={(e) => onChange(e)}

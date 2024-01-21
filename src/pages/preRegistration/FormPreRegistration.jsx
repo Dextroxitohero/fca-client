@@ -47,12 +47,12 @@ export const FormPreRegistration = () => {
 
 
 	const handleEmailVarification = () => {
-		const { email } = formData;	
-        const emailValid = validateEmail(email);
+		const { email } = formData;
+		const emailValid = validateEmail(email);
 
-        if (!emailValid) {
-            toast.error('Ingresa un correo electronico valido');
-        }
+		if (!emailValid) {
+			toast.error('Ingresa un correo electronico valido');
+		}
 		if (emailValid) {
 			dispatch(emailVerification(email))
 		}
@@ -110,70 +110,5 @@ export const FormPreRegistration = () => {
 				</div>
 			</Wrapper>
 		</div>
-		// <div
-		// 	className="
-		// 	min-h-screen 
-		// 	bg-gray-50 
-		// 	flex flex-col 
-		// 	justify-center 
-		// 	py-12 
-		// 	sm:px-6
-		// 	"
-		// >
-		// 	<div className="
-		// 	sm:mx-auto 
-		// 	sm:w-full 
-		// 	sm:max-w-screen-md
-		// 	bg-white 
-		// 	sm:py-24
-		// 	sm:px-24 
-		// 	sm:rounded-md
-		// 	shadow-md
-		// 	"
-		// 	>
-		// 		<div>
-		// 			{/* Header form */}
-		// 			<div className="mx-auto max-w-2xl sm:text-start mb-12">
-		// 				<h2 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">Bienvenido CFA</h2>
-		// 				<p className="mt-2 text-lg leading-8 text-gray-500">
-		// 					Crear una cuenta
-		// 				</p>
-		// 			</div>
-		// 			{/* Body form */}
-		// 			<div
-		// 				className="
-		// 					grid 
-		// 					grid-cols-1 
-		// 					gap-y-4 
-		// 					sm:grid-cols-6 
-		// 					mb-16
-		// 					"
-		// 			>
-		// 				<div className="sm:col-span-6">
-		// 					<Input
-		// 						id="email"
-		// 						name="email"
-		// 						type="email"
-		// 						label="Ingresa tu correo electronico"
-		// 						placeholder="Correo electronico"
-		// 						formik={formik}
-		// 						value={formik.values.email}
-		// 						error={formik.touched.email && formik.errors.email}
-		// 					/>
-		// 				</div>
-		// 			</div>
-		// 			{/* Footer form */}
-		// 			<div
-		// 				className="mt-6 flex items-center justify-around gap-x-6"
-		// 			>
-		// 				<Button
-		// 					label='Siguiente'
-		// 					disabled={loading}
-		// 					onClick={formik.handleSubmit}
-		// 				/>
-		// 			</div>
-		// 		</div>
-		// 	</div>
-		// </div>
 	);
 };

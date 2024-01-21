@@ -3,20 +3,22 @@ import { createSlice } from '@reduxjs/toolkit';
 const optionsSlice = createSlice({
 	name: 'options',
 	initialState: {
-		assessors: [],
+		coordinadors: [],
 		languages: [],
+		accountsBank: [],
 		colors: [],
 		levels: [],
 		teachers: [],
+		coursesList: [],
 		loading: false,
 	},
 	reducers: {
 		optionsStart: (state) => {
 			state.loading = true;
 		},
-		optionsAssessorsSuccess: (state, { payload: { data } }) => {
+		optionsCoordinadorsSuccess: (state, { payload: { data } }) => {
 			state.loading = false;
-			state.assessors = data;
+			state.coordinadors = data;
 		},
 		optionsLanguagesSuccess: (state, { payload: { data } }) => {
 			state.loading = false;
@@ -34,6 +36,14 @@ const optionsSlice = createSlice({
 			state.loading = false;
 			state.teachers = data;
 		},
+		optionsAccountsBankSuccess: (state, { payload: { data } }) => {
+			state.loading = false;
+			state.accountsBank = data;
+		},
+		optionsCourseListSuccess: (state, { payload: { data } }) => {
+			state.loading = false;
+			state.coursesList = data;
+		},
 		optionsFailure: (state, action) => {
 			state.loading = false;
 		},
@@ -42,11 +52,13 @@ const optionsSlice = createSlice({
 
 export const {
 	optionsStart,
-	optionsAssessorsSuccess,
+	optionsCoordinadorsSuccess,
 	optionsLanguagesSuccess,
 	optionsColorsSuccess,
 	optionsLevelsSuccess,
 	optionsTeachersSuccess,
+	optionsAccountsBankSuccess,
+	optionsCourseListSuccess,
 	optionsFailure,
 } = optionsSlice.actions;
 export default optionsSlice.reducer;

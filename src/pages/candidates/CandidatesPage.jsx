@@ -44,7 +44,7 @@ export const CandidatesPage = () => {
 		{ field: 'location', headerName: 'Locacion', flex: 1 },
 		{ field: 'education', headerName: 'Nivel educativo', flex: 1 },
 		{ field: 'language', headerName: 'Idioma', flex: 1 },
-		{ field: 'assessor', headerName: 'Asesor', flex: 1 },
+		{ field: 'coordinador', headerName: 'Coordinador', flex: 1 },
 		{ field: 'createdAtFormatted', headerName: 'Fecha de registro', flex: 1 },
 		{
 			field: 'status',
@@ -91,7 +91,7 @@ export const CandidatesPage = () => {
 			row.education?.toLowerCase().includes(searchText.toLowerCase()) ||
 			row.language?.toLowerCase().includes(searchText.toLowerCase()) ||
 			row.createdAtFormatted?.toLowerCase().includes(searchText.toLowerCase()) ||
-			row.assessor?.toLowerCase().includes(searchText.toLowerCase()) ||
+			row.coordinador?.toLowerCase().includes(searchText.toLowerCase()) ||
 			row.status?.toLowerCase().includes(searchText.toLowerCase())
 	);
 

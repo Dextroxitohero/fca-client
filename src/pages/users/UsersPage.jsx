@@ -23,7 +23,6 @@ export const UsersPage = () => {
 		users
 	} = useSelector((state) => state.users);
 
-	const [openModalAddNewUser, setOpenModalAddNewUser] = useState(false)
 	const [openAddNewUserModal, setOpenAddNewUserModal] = useState(false)
 	const [searchText, setSearchText] = useState('');
 

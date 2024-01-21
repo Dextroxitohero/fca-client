@@ -1,52 +1,37 @@
 import { jwtDecode } from 'jwt-decode';
 import { useParams } from 'react-router-dom';
+
+import { TokenInvalid } from '../notFound/TokenInvalid';
 import { ContainerFull } from '../../components/ContainerFull';
-import { Heading } from '../../components/Heading';
 import { Wrapper } from '../../components/Wrapper';
+import { AddFormNewUser } from './AddFormNewUser'
 
 export const AddNewUserPage = () => {
     const { token } = useParams();
-    console.log(token);
 
     try {
         const { email, typeUser } = jwtDecode(token);
-      } catch (error) {
-        return(
+        if (!email) {
+            return (
+                <TokenInvalid />
+            )
+        }
+
+        return (
             <ContainerFull>
-                <Wrapper>
-                    <h1>Invitacion invalida</h1>
-                </Wrapper>
+                {
+                    email && (
+                        <Wrapper>
+                            <AddFormNewUser email={email} typeUser={typeUser}/>
+                        </Wrapper>
+                    )
+                }
             </ContainerFull>
         )
-      }
-    const { email, typeUser } = jwtDecode(token);
 
-
-    if(!email){
-        return(
-            <ContainerFull>
-                <Wrapper>
-                    <h1>Invitacion invalida</h1>
-                </Wrapper>
-            </ContainerFull>
+    } catch (error) {
+        return (
+            <TokenInvalid />
         )
     }
-
-    return (
-        <ContainerFull>
-            <Heading
-                title={`Lista de usuarios`}
-                subtitle={`Muestra la lista de los todos los usuarios registrados en el sistema`}
-                center={false}
-            />
-
-            {
-                email && (
-                    <Wrapper>
-                        <h1>{email}</h1>
-                    </Wrapper>
-                )
-            }
-        </ContainerFull>
-    )
 }

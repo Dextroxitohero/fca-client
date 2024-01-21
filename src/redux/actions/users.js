@@ -47,3 +47,37 @@ export const createNewUserByInvitation = ({ email, typeUser }) => async (dispatc
 		};
 	}
 };
+
+export const createNewUser = (payload) => async (dispatch) => {
+
+	const { firstName, secondName, lastName, secondSurname, email, location, typeUser, phone, dateBirth, password
+	} = payload;
+
+	try {
+		const response = await axios.post(`/users/`,
+			{
+				firstName,
+				secondName,
+				lastName,
+				secondSurname,
+				email,
+				location,
+				typeUser,
+				phone,
+				dateBirth,
+				password
+			});
+		if (response.status === 201) {
+
+			return {
+				status: response.status,
+				message: response.data.message
+			};
+		}
+	} catch (error) {
+		return {
+			status: error.response.status,
+			message: error.response.data.message
+		};
+	}
+};

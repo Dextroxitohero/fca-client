@@ -27,7 +27,8 @@ export const FormValidacionDatos = () => {
 		success,
 		loading
 	} = useSelector((state) => state.preRegistration);
-	const [loadingForm, setLoadingForm] = useState(false)
+	
+	const [loadingForm, setLoadingForm] = useState(false);
 
 	useEffect(() => {
 		if (!email) {

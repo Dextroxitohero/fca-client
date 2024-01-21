@@ -3,7 +3,7 @@ import { Wrapper } from '../../components/Wrapper';
 import logo from '../../static/image/logo.png';
 
 
-export const NotFoundPage = () => {
+export const TokenInvalid = () => {
 	return (
 		<div className='flex w-11/12 md:w-5/12 mx-auto items-baseline md:items-center h-screen'>
 			<Wrapper>
@@ -16,14 +16,14 @@ export const NotFoundPage = () => {
 				<div className='flex justify-center items-center mt-2'>
 					<div className='w-10/12 mx-auto'>
 						<h1 className='text-3xl sm:text-4xl font-bold text-gray-950  text-center'>
-							Pagina no encontrada
+							Tu invitacion ya no es valida.
 						</h1>
 					</div>
 				</div>
 				<div className='flex justify-center items-center mt-4'>
 					<div className='w-10/12 mx-auto'>
 						<h2 className='text-sm md:text-md font-normal text-gray-600 text-center'>
-							Lo sentimos, no pudimos encontrar la página que estás buscando.
+							Lo sentimos, el tiempo de registro se ha terminado y intenta de nuevo.
 						</h2>
 					</div>
 				</div>

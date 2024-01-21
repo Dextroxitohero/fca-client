@@ -13,8 +13,8 @@ export const Button = ({
 			className={`
 				flex
 				rounded-lg
-				hover:opacity-80
 				transition
+				hover:bg-indigo-700
 				px-8
 				${outline ? 'bg-white' : 'bg-cyan'}
 				${outline ? 'border-black' : 'bg-indigo-600'}

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Dialog } from '@headlessui/react'
+import { Dialog } from '@headlessui/react';
 import { Modal } from '../../components/modal/Modal';
 import { toast } from 'react-hot-toast';
 
@@ -59,7 +59,6 @@ export const AddNewUserModal = ({ open, setOpen }) => {
 		const { email, typeUser } = formData;
 		const formValidation = formValidations();
 		if (formValidation) {
-			// toast.success('Se envio la invitacion correctamente');
 			dispatch(createNewUserByInvitation({ email, typeUser }))
 				.then((result) => {
 					if (result.status === 201) {
@@ -76,12 +75,7 @@ export const AddNewUserModal = ({ open, setOpen }) => {
 					setLoading(false);
 				});
 		}
-
-
-
 	}
-
-
 
 	return (
 		<Modal open={open} setOpen={setOpen} cancelButtonRef={cancelButtonRef}>
