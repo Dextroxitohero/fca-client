@@ -79,9 +79,6 @@ export const ValidateCandidate = () => {
         }));
     }
 
-    if (preRegisterSelected.length === 0)
-        navigate(`/`);
-
     return (
         <ContainerFull>
             <Heading
@@ -112,7 +109,7 @@ export const ValidateCandidate = () => {
                                 description={capitalizarPalabras(formatDate(dateBirth))}
                             />
                             <PropertyItem
-                                title={`Fecha de nacimiento`}
+                                title={`Ubicacion`}
                                 description={firstCapitalLetter(location)}
                             />
                             <PropertyItem
@@ -135,14 +132,11 @@ export const ValidateCandidate = () => {
 
                         <DividerCenter title={''} />
 
-                        <div className='w-11/12 mx-auto grid grid-cols-2 gap-6'>
+                        <div className='w-11/12 mx-auto grid grid-col-1 md:grid-cols-2 gap-6'>
 
                             <div>
                                 <Title title='Lista de cursos' />
-                                <div className='min-h-[400px] bg-red-400 scroll-auto'>
-                                    <div>
-                                        <h3 className="text-lg font-semibold text-gray-900">Seleciona al idioma</h3>
-                                    </div>
+                                <div className='max-h-[400px] overflow-auto p-4'>
                                     <div className='py-4'>
                                         <InputCourse
                                             coursesList={coursesList}
