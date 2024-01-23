@@ -50,7 +50,7 @@ export const InputCourse = ({ coursesList, courseSelected, setCourseSelected }) 
     )
 }
 
-{
+
     //     "_id": "6516658bb6360d5f4a8b32e6",
     //     "language": "aleman",
     //     "level": "nivel 2",
