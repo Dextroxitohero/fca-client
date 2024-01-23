@@ -64,24 +64,19 @@ export const locationState = [
 
 
 export const levelEducation = [
-    { value: "Preescolar", description: "Preescolar" },
     { value: "Primaria", description: "Primaria" },
     { value: "Secundaria", description: "Secundaria" },
     { value: "Bachillerato o preparatoria", description: "Bachillerato o preparatoria" },
-    { value: "Educación técnica o profesional", description: "Educación técnica o profesional" },
+    { value: "Educación técnica o profesional", description: "Educación técnica" },
     { value: "Licenciatura", description: "Licenciatura" },
     { value: "Maestría", description: "Maestría" },
     { value: "Doctorado", description: "Doctorado" },
-    { value: "Especialización", description: "Especialización" },
-    { value: "Diplomado", description: "Diplomado" },
-    { value: "Curso o capacitación", description: "Curso o capacitación" }
 ];
 
 export const languages = [
     { value: "ingles", description: "ingles" },
     { value: "frances", description: "frances" },
     { value: "japones", description: "japones" },
-    { value: "italiano", description: "italiano" },
 ];
 
 
