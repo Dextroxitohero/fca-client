@@ -19,6 +19,7 @@ import { InputColor } from '../../components/inputColor/InputColor';
 import { InputLanguage } from '../../components/inputLanguage/InputLanguage';
 import { InputLimit } from '../../components/inputLimit/InputLimit';
 import { ModalCreateCourse } from './components/ModalCreateCourse';
+import { InputDateRange } from '../../components/inputDateRange/InputDateRange';
 
 export const CourseEdit = ({ isCreating }) => {
     const dispatch = useDispatch();
@@ -119,6 +120,14 @@ export const CourseEdit = ({ isCreating }) => {
                 center={false}
             />
             <div className="w-full flex flex-col md:flex-row mt-5 md:mt-10">
+                <div className="w-full md:w-[70%] grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-8">
+                    <InputDateRange />
+
+                </div>
+                <div className="w-full md:w-[70%] grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-8">
+                    {/* <InputDate /> */}
+
+                </div>
                 <div className="w-full md:w-[70%] grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-8">
                     {/* Grid 1 */}
                     <div className="overflow-hidden">
@@ -240,7 +249,7 @@ export const CourseEdit = ({ isCreating }) => {
                                 type='button'
                                 className='disabled:opacity-95 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition py-2.5 font-semibold text-md text-white bg-indigo-600 bg-cyan w-full'
                                 onClick={handleValidateData}
-                            >{isCreating ? 'Agregar nuevo curso' :  'Actulizar curso'}</button>
+                            >{isCreating ? 'Agregar nuevo curso' : 'Actulizar curso'}</button>
                             {/* <Button label={"Agregar nuevo curso"} onClick={handleCreateCourse} /> */}
                         </div>
                     </div>
