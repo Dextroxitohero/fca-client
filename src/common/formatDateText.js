@@ -1,4 +1,7 @@
 export const  formatDate = (inputDate) => {
+    if (!inputDate) {
+      return "";
+    }
     const options = {
       year: 'numeric',
       month: 'long',

@@ -5,11 +5,6 @@ import { Heading } from '../../components/Heading';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCourse, getCourseById, updateCourse } from '../../redux/actions/course';
 import { CardCourse } from './components/CardCourse';
-import { DateRange } from 'react-date-range';
-import 'react-date-range/dist/styles.css'; // main css file
-import 'react-date-range/dist/theme/default.css';
-import { es } from 'react-date-range/dist/locale';
-import { addDays } from 'date-fns';
 import { ComboBox } from '../../components/comboBox/ComboBox';
 import { optionsAllTeachers, optionsColors, optionsLanguages, optionsLevels } from '../../redux/actions/options';
 import { TimeInput } from '../../components/inputTime/InputTime';
@@ -21,6 +16,8 @@ import { InputLimit } from '../../components/inputLimit/InputLimit';
 import { ModalCreateCourse } from './components/ModalCreateCourse';
 import { InputDateRange } from '../../components/inputDateRange/InputDateRange';
 
+
+
 export const CourseEdit = ({ isCreating }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -31,9 +28,8 @@ export const CourseEdit = ({ isCreating }) => {
     const { teachers, levels, colors, languages } = useSelector((state) => state.options);
     const [selectedDates, setSelectedDates] = useState([
         {
-            startDate: new Date(),
-            endDate: new Date(),
-            key: 'selection'
+            from: '',
+            to: '',
         }
     ]);
 
@@ -61,15 +57,16 @@ export const CourseEdit = ({ isCreating }) => {
             days: course !== '' ? course.days : [],
             teacher: course.teacher !== undefined ? { _id: course?.teacher?._id, name: `${course?.teacher?.firstName} ${course?.teacher?.lastName}` } : ''
         })
-    }, [course])
+    }, [course]),
+
+    console.log(courseSelected)
 
     useEffect(() => {
-        if (course.startDate) {
+        if (course?.startDate) {
             setSelectedDates([
                 {
-                    startDate: new Date(course.startDate),
-                    endDate: new Date(course.endDate),
-                    key: 'selection'
+                    from: new Date(course.startDate),
+                    to: new Date(course.endDate),
                 }
             ])
         }
@@ -109,7 +106,7 @@ export const CourseEdit = ({ isCreating }) => {
     }
 
     const handleValidateData = () => {
-        setCourseSelected({ ...courseSelected, startDate: selectedDates[0].startDate, endDate: selectedDates[0].endDate })
+        setCourseSelected({ ...courseSelected, startDate: selectedDates.from, endDate: selectedDates.to })
         setModalOpenCreate(true)
     }
 
@@ -121,7 +118,12 @@ export const CourseEdit = ({ isCreating }) => {
             />
             <div className="w-full flex flex-col md:flex-row mt-5 md:mt-10">
                 <div className="w-full md:w-[70%] grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-8">
-                    <InputDateRange />
+                    <InputDateRange  
+                        id={'rangeCourse'}
+                        label={'Seleciona el inicio y el fin del curso'}
+                        selected={selectedDates}
+                        onChange={setSelectedDates}
+                    />
 
                 </div>
                 <div className="w-full md:w-[70%] grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-8">
@@ -135,7 +137,7 @@ export const CourseEdit = ({ isCreating }) => {
                             <h3 className="text-lg font-semibold text-gray-900">Seleciona la periodo</h3>
                         </div>
                         <div className='flex justify-center md:justify-start md:px-4 mt-2 md:my-4'>
-                            <DateRange
+                            {/* <DateRange
                                 editableDateInputs={true}
                                 onChange={item => setSelectedDates([item.selection])}
                                 moveRangeOnFirstSelection={false}
@@ -145,7 +147,7 @@ export const CourseEdit = ({ isCreating }) => {
                                 locale={es}
                                 rangeColors={['#4f46e5']}
                                 minDate={addDays(new Date(), 0)}
-                            />
+                            /> */}
                         </div>
 
                     </div>
@@ -265,8 +267,8 @@ export const CourseEdit = ({ isCreating }) => {
                             hours={courseSelected?.hours}
                             days={courseSelected?.days}
                             teacher={courseSelected?.teacher?.name}
-                            startDate={selectedDates[0].startDate}
-                            endDate={selectedDates[0].endDate}
+                            startDate={selectedDates.from}
+                            endDate={selectedDates.to}
                             studentLimit={courseSelected?.limitMembers}
                         />
                     )}
