@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ContainerFull } from '../../components/ContainerFull';
-import { Heading } from '../../components/Heading';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { optionsAllTeachers, optionsColors, optionsLanguages, optionsLevels } from '../../redux/actions/options';
 import { createCourse, getCourseById, updateCourse } from '../../redux/actions/course';
+
+import { ContainerFull } from '../../components/ContainerFull';
+import { Wrapper } from '../../components/Wrapper';
+import { Heading } from '../../components/Heading';
 import { CardCourse } from './components/CardCourse';
 import { ComboBox } from '../../components/comboBox/ComboBox';
-import { optionsAllTeachers, optionsColors, optionsLanguages, optionsLevels } from '../../redux/actions/options';
 import { TimeInput } from '../../components/inputTime/InputTime';
 import { InputDays } from '../../components/inputDays/InputDays';
 import { InputLeves } from '../../components/inputLeves/InputLeves';
@@ -18,14 +21,15 @@ import { InputDateRange } from '../../components/inputDateRange/InputDateRange';
 
 
 
+
 export const CourseEdit = ({ isCreating }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const params = useParams();
     const idCourse = params?.idCourse;
     const course = useSelector((state) => state.course.courseSelected);
-    const [courseSelected, setCourseSelected] = useState();
     const { teachers, levels, colors, languages } = useSelector((state) => state.options);
+    const [courseSelected, setCourseSelected] = useState();
     const [selectedDates, setSelectedDates] = useState([
         {
             from: '',
@@ -57,9 +61,7 @@ export const CourseEdit = ({ isCreating }) => {
             days: course !== '' ? course.days : [],
             teacher: course.teacher !== undefined ? { _id: course?.teacher?._id, name: `${course?.teacher?.firstName} ${course?.teacher?.lastName}` } : ''
         })
-    }, [course]),
-
-    console.log(courseSelected)
+    }, [course]);
 
     useEffect(() => {
         if (course?.startDate) {
@@ -116,165 +118,127 @@ export const CourseEdit = ({ isCreating }) => {
                 title={isCreating ? 'Modulo de creacion de curso' : 'Modulo de edcion de curso'}
                 center={false}
             />
-            <div className="w-full flex flex-col md:flex-row mt-5 md:mt-10">
-                <div className="w-full md:w-[70%] grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-8">
-                    <InputDateRange  
-                        id={'rangeCourse'}
-                        label={'Seleciona el inicio y el fin del curso'}
-                        selected={selectedDates}
-                        onChange={setSelectedDates}
-                    />
-
-                </div>
-                <div className="w-full md:w-[70%] grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-8">
-                    {/* <InputDate /> */}
-
-                </div>
-                <div className="w-full md:w-[70%] grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-8">
-                    {/* Grid 1 */}
-                    <div className="overflow-hidden">
-                        <div>
-                            <h3 className="text-lg font-semibold text-gray-900">Seleciona la periodo</h3>
-                        </div>
-                        <div className='flex justify-center md:justify-start md:px-4 mt-2 md:my-4'>
-                            {/* <DateRange
-                                editableDateInputs={true}
-                                onChange={item => setSelectedDates([item.selection])}
-                                moveRangeOnFirstSelection={false}
-                                ranges={selectedDates}
-                                months={2}
-                                direction='vertical'
-                                locale={es}
-                                rangeColors={['#4f46e5']}
-                                minDate={addDays(new Date(), 0)}
-                            /> */}
-                        </div>
-
-                    </div>
-                    {/* Grid 2 */}
-                    <div className='md:px-4'>
-                        <div>
-                            <div>
-                                <h3 className="text-lg font-semibold text-gray-900">Seleciona los dias</h3>
+            <Wrapper>
+                <div className="w-full flex flex-col lg:flex-row gap-4">
+                    <div className='w-full lg:w-[70%]'>
+                        <div className="w-full flex flex-col lg:flex-row gap-4">
+                            <div className='w-full lg:w-[50%]'>
+                                <div className='flex flex-col justify-start items-center px-8 pt-4 pb-8 border rounded-md mb-4'>
+                                    <h3 className="text-lg mb-4 font-semibold text-gray-900">Selecciona la duracion del curso</h3>
+                                    <InputDateRange
+                                        id={'rangeCourse'}
+                                        label={'Seleciona el inicio y el fin del curso'}
+                                        selected={selectedDates}
+                                        onChange={setSelectedDates}
+                                    />
+                                </div>
+                                <div className='flex flex-col justify-start items-center px-8 pt-4 pb-8 border rounded-md mb-4'>
+                                    <h3 className="text-lg mb-4 font-semibold text-gray-900">Seleciona el nivel</h3>
+                                    <div className='w-full'>
+                                        <InputLeves
+                                            levels={levels}
+                                            courseSelected={courseSelected}
+                                            setCourseSelected={setCourseSelected}
+                                        />
+                                    </div>
+                                </div>
+                                <div className='flex flex-col justify-start items-center px-8 pt-4 pb-8 border rounded-md mb-4'>
+                                    <h3 className="text-lg mb-4 font-semibold text-gray-900">Seleciona al idioma</h3>
+                                    <div className='w-full'>
+                                        <InputLanguage
+                                            languages={languages}
+                                            courseSelected={courseSelected}
+                                            setCourseSelected={setCourseSelected}
+                                        />
+                                    </div>
+                                </div>
+                                <div className='flex flex-col justify-start items-center px-8 pt-4 pb-8 border rounded-md mb-4'>
+                                    <h3 className="text-lg mb-4 font-semibold text-gray-900">Limite alumnos en el curso</h3>
+                                    <div className='w-full'>
+                                        <InputLimit
+                                            selected={courseSelected}
+                                            setSelected={setCourseSelected}
+                                        />
+                                    </div>
+                                </div>
                             </div>
-                            <div className='mt-4'>
-                                {courseSelected && (
-
-                                    <InputDays
+                            <div className='w-full lg:w-[50%]'>
+                                <div className='flex flex-col justify-start items-center px-8 pt-4 pb-8 border rounded-md mb-4'>
+                                    <h3 className="text-lg mb-4 font-semibold text-gray-900">Seleciona la etiqueta</h3>
+                                    <InputColor
+                                        colors={colors}
                                         courseSelected={courseSelected}
                                         setCourseSelected={setCourseSelected}
                                     />
-                                )}
+                                </div>
+                                <div className='flex flex-col justify-start items-center px-8 pt-4 pb-8 border rounded-md mb-4'>
+                                    <h3 className="text-lg mb-4 font-semibold text-gray-900">Seleciona al profesor</h3>
+                                    <div className='w-full'>
+                                        <ComboBox
+                                            filterData={filteredTeachers}
+                                            query={findTeacher}
+                                            setQuery={setFindTeacher}
+                                            selected={courseSelected}
+                                            setSelected={setCourseSelected}
+                                            placeholder='Seleciona un profesor'
+                                        />
+                                    </div>
+                                </div>
+                                <div className='flex flex-col justify-start items-center px-8 pt-4 pb-8 border rounded-md mb-4'>
+                                    <h3 className="text-lg mb-4 font-semibold text-gray-900">Seleciona los dias</h3>
+                                    {courseSelected && (
+                                        <InputDays
+                                            courseSelected={courseSelected}
+                                            setCourseSelected={setCourseSelected}
+                                        />
+                                    )}
+                                </div>
+                                <div className='flex flex-col justify-start items-center px-8 pt-4 pb-8 border rounded-md'>
+                                    <h3 className="text-lg mb-4 font-semibold text-gray-900">Seleciona el horario</h3>
+                                    {courseSelected && (
+                                        <TimeInput
+                                            courseSelected={courseSelected}
+                                            setCourseSelected={setCourseSelected}
+                                        />
+                                    )}
+                                </div>
+
                             </div>
 
                         </div>
-                        <div className='mt-8'>
-                            <div>
-                                <h3 className="text-lg font-semibold text-gray-900">Seleciona el horario</h3>
-                            </div>
-                            <div className='mt-4'>
+                    </div>
+                    <div className='w-full lg:w-[30%]'>
+                        <div className='flex flex-col justify-start items-center px-8 pt-4 pb-8 border rounded-md mb-4'>
+                            <div className='w-full mb-8'>
+
                                 {courseSelected && (
-                                    <TimeInput
-                                        courseSelected={courseSelected}
-                                        setCourseSelected={setCourseSelected}
+                                    <CardCourse
+                                        isCreating={true}
+                                        color={courseSelected.color?.clase}
+                                        language={courseSelected.language?.name}
+                                        path={courseSelected.language?.path}
+                                        nivel={courseSelected.level?.name}
+                                        hours={courseSelected?.hours}
+                                        days={courseSelected?.days}
+                                        teacher={courseSelected?.teacher?.name}
+                                        startDate={selectedDates.from}
+                                        endDate={selectedDates.to}
+                                        studentLimit={courseSelected?.limitMembers}
                                     />
                                 )}
                             </div>
+                            <div className='w-full'>
+                                <button
+                                    type='button'
+                                    className='disabled:opacity-95 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition py-2.5 font-semibold text-md text-white bg-indigo-600 bg-cyan w-full'
+                                    onClick={handleValidateData}
+                                >{isCreating ? 'Agregar nuevo curso' : 'Actulizar curso'}</button>
+                            </div>
                         </div>
                     </div>
-                    {/* Grid 3 */}
-                    <div className='md:px-4'>
-                        {/* colors */}
-                        <div>
-                            <div>
-                                <h3 className="text-lg font-semibold text-gray-900">Seleciona la etiqueta</h3>
-                            </div>
-                            <div className='py-4'>
-                                <InputColor
-                                    colors={colors}
-                                    courseSelected={courseSelected}
-                                    setCourseSelected={setCourseSelected}
-                                />
-                            </div>
-                        </div>
-                        {/* leves */}
-                        <div>
-                            <div>
-                                <h3 className="text-lg font-semibold text-gray-900">Seleciona el nivel</h3>
-                            </div>
-                            <div className='py-4'>
-                                <InputLeves
-                                    levels={levels}
-                                    courseSelected={courseSelected}
-                                    setCourseSelected={setCourseSelected}
-                                />
-                            </div>
-                        </div>
-                        {/* languages */}
-                        <div>
-                            <div>
-                                <h3 className="text-lg font-semibold text-gray-900">Seleciona al idioma</h3>
-                            </div>
-                            <div className='py-4'>
-                                <InputLanguage
-                                    languages={languages}
-                                    courseSelected={courseSelected}
-                                    setCourseSelected={setCourseSelected}
-                                />
-                            </div>
-                        </div>
-                        {/* teacher */}
-                        <div>
-                            <div>
-                                <h3 className="text-lg font-semibold text-gray-900">Seleciona al profesor</h3>
-                            </div>
-                            <div className='py-4'>
-                                <ComboBox
-                                    filterData={filteredTeachers}
-                                    query={findTeacher}
-                                    setQuery={setFindTeacher}
-                                    selected={courseSelected}
-                                    setSelected={setCourseSelected}
-                                    placeholder='Seleciona un profesor'
-                                />
-                            </div>
-                        </div>
-                        {/* limit */}
-                        <div className='pb-4'>
-                            <InputLimit
-                                selected={courseSelected}
-                                setSelected={setCourseSelected}
-                            />
-                        </div>
-                        <div className='w-full mt-4 md:mt-4 mb-4 md:mb-0'>
-                            <button
-                                type='button'
-                                className='disabled:opacity-95 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition py-2.5 font-semibold text-md text-white bg-indigo-600 bg-cyan w-full'
-                                onClick={handleValidateData}
-                            >{isCreating ? 'Agregar nuevo curso' : 'Actulizar curso'}</button>
-                            {/* <Button label={"Agregar nuevo curso"} onClick={handleCreateCourse} /> */}
-                        </div>
-                    </div>
-                </div>
-                <div className="w-full md:w-[30%] my-5 md:mt-0 md:px-4 ">
-                    {courseSelected && (
-                        <CardCourse
-                            isCreating={true}
-                            color={courseSelected.color?.clase}
-                            language={courseSelected.language?.name}
-                            path={courseSelected.language?.path}
-                            nivel={courseSelected.level?.name}
-                            hours={courseSelected?.hours}
-                            days={courseSelected?.days}
-                            teacher={courseSelected?.teacher?.name}
-                            startDate={selectedDates.from}
-                            endDate={selectedDates.to}
-                            studentLimit={courseSelected?.limitMembers}
-                        />
-                    )}
-                </div>
 
-            </div>
+                </div>
+            </Wrapper>
             <ModalCreateCourse
                 open={openModalCreate}
                 setOpen={setModalOpenCreate}

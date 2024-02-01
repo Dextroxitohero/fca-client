@@ -17,7 +17,7 @@ export const InputLeves = ({ levels, courseSelected, setCourseSelected  }) => {
             {levels && (
                 <RadioGroup value={courseSelected?.level?._id} onChange={(value) => handleLevel(value)}>
                     <RadioGroup.Label className="sr-only">Seleciona el nivel del curso</RadioGroup.Label>
-                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div className="grid grid-cols-2 gap-4 lg:grid-cols-2">
                         {levels.map(({ value, description }) => (
                             <RadioGroup.Option
                                 key={value}
@@ -25,7 +25,7 @@ export const InputLeves = ({ levels, courseSelected, setCourseSelected  }) => {
                                 className={({ active }) =>
                                     classNames(
                                         active ? 'ring-2 ring-indigo-500' : '',
-                                        'cursor-pointer bg-white text-gray-900 shadow-sm group relative flex items-center justify-center rounded-md border py-4 md:py-2 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1'
+                                        'cursor-pointer bg-white text-gray-900 shadow-sm group relative flex items-center justify-center rounded-md border py-2 md:py-2 px-3 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1'
                                     )
                                 }
                             >

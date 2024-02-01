@@ -24,7 +24,7 @@ export const InputDateRange = ({ id, label, selected, onChange }) => {
 
 
     let footer = (
-        <div className='flex w-full bg-white p-2 rounded-md shadow-sm mt-6'>
+        <div className='flex w-full bg-white p-2 border-indigo-600 rounded-md shadow-sm mt-6'>
             <p className='text-gray-600 text-center'>
                 {label}
             </p>
@@ -52,7 +52,7 @@ export const InputDateRange = ({ id, label, selected, onChange }) => {
     }
 
     return (
-        <div className='flex bg-white w-[320px] h-[350px] shadow-sm rounded-md'>
+        <div className='flex bg-white w-[320px] h-[350px] shadow-md border-2 border-indigo-600/10 rounded-md'>
             <style>{css}</style>
             <DayPicker
                 id={id}
@@ -61,7 +61,7 @@ export const InputDateRange = ({ id, label, selected, onChange }) => {
                 fixedWeeks
                 captionLayout="dropdown-buttons"
                 selected={selected}
-                footer={footer}
+                // footer={footer}
                 onSelect={onChange}
                 styles={{
                     container: { width: '100%', height: '100%'},
