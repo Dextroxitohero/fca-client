@@ -31,6 +31,10 @@ import { ValidateCandidate } from '../pages/candidates/ValidateCandidate';
 import { CoursesPage } from '../pages/courses/CoursesPage';
 import { CourseEdit } from '../pages/courses/CourseEdit';
 import { Navigation } from '../components/auth/Navigation';
+import { SettingImageHeader } from '../pages/setting/SettingImageHeader';
+import { SettingLanguages } from '../pages/setting/SettingLanguages';
+import { SettingColors } from '../pages/setting/SettingColors';
+import { SettingNivels } from '../pages/setting/SettingNivels';
 
 export const AppRouter = () => {
 
@@ -190,6 +194,38 @@ export const AppRouter = () => {
                             element={
                                 <PrivateRoute>
                                     <SettingPage />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/ajustes/languages"
+                            element={
+                                <PrivateRoute>
+                                    <SettingLanguages />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/ajustes/images-emcabezado"
+                            element={
+                                <PrivateRoute>
+                                    <SettingImageHeader />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/ajustes/colores"
+                            element={
+                                <PrivateRoute>
+                                    <SettingColors />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/ajustes/niveles"
+                            element={
+                                <PrivateRoute>
+                                    <SettingNivels />
                                 </PrivateRoute>
                             }
                         />
