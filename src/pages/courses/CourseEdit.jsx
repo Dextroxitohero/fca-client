@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { optionsAllTeachers, optionsColors, optionsLanguages, optionsLevels } from '../../redux/actions/options';
 import { createCourse, getCourseById, updateCourse } from '../../redux/actions/course';
+import { getAllHeadersImages } from '../../redux/actions/setting';
 
 import { ContainerFull } from '../../components/ContainerFull';
 import { Wrapper } from '../../components/Wrapper';
@@ -18,6 +19,7 @@ import { InputLanguage } from '../../components/inputLanguage/InputLanguage';
 import { InputLimit } from '../../components/inputLimit/InputLimit';
 import { ModalCreateCourse } from './components/ModalCreateCourse';
 import { InputDateRange } from '../../components/inputDateRange/InputDateRange';
+import { InputHeaderImage } from '../../components/inputHeaderImage/InputHeaderImage';
 
 
 
@@ -28,8 +30,10 @@ export const CourseEdit = ({ isCreating }) => {
     const params = useParams();
     const idCourse = params?.idCourse;
     const course = useSelector((state) => state.course.courseSelected);
+    const headersImage = useSelector((state) => state.setting.headersImage);
     const { teachers, levels, colors, languages } = useSelector((state) => state.options);
     const [courseSelected, setCourseSelected] = useState();
+    const [headerImageSelected, setHeaderImageSelected] = useState(null);
     const [selectedDates, setSelectedDates] = useState([
         {
             from: '',
@@ -48,6 +52,7 @@ export const CourseEdit = ({ isCreating }) => {
         dispatch(optionsLevels());
         dispatch(optionsColors());
         dispatch(optionsLanguages());
+        dispatch(getAllHeadersImages());
     }, [dispatch]);
 
     useEffect(function initialState() {
@@ -59,9 +64,16 @@ export const CourseEdit = ({ isCreating }) => {
             limitMembers: course.limitMembers !== undefined ? course.limitMembers : 0,
             hours: course !== '' ? course.hours : [],
             days: course !== '' ? course.days : [],
-            teacher: course.teacher !== undefined ? { _id: course?.teacher?._id, name: `${course?.teacher?.firstName} ${course?.teacher?.lastName}` } : ''
+            teacher: course.teacher !== undefined ? { _id: course?.teacher?._id, name: `${course?.teacher?.firstName} ${course?.teacher?.lastName}` } : '',
+            headerImage: course.headerImage !== undefined ? course.headerImage : '',
         })
     }, [course]);
+
+    useEffect(() => {
+        setCourseSelected({ ...courseSelected, headerImage: headerImageSelected })
+    }, [headerImageSelected]);
+
+    console.log(courseSelected)
 
     useEffect(() => {
         if (course?.startDate) {
@@ -153,6 +165,14 @@ export const CourseEdit = ({ isCreating }) => {
                                     </div>
                                 </div>
                                 <div className='flex flex-col justify-start items-center px-8 pt-4 pb-8 border rounded-md mb-4'>
+                                    <h3 className="text-lg mb-4 font-semibold text-gray-900">Seleciona la etiqueta</h3>
+                                    <InputColor
+                                        colors={colors}
+                                        courseSelected={courseSelected}
+                                        setCourseSelected={setCourseSelected}
+                                    />
+                                </div>
+                                <div className='flex flex-col justify-start items-center px-8 pt-4 pb-8 border rounded-md mb-4'>
                                     <h3 className="text-lg mb-4 font-semibold text-gray-900">Limite alumnos en el curso</h3>
                                     <div className='w-full'>
                                         <InputLimit
@@ -163,13 +183,13 @@ export const CourseEdit = ({ isCreating }) => {
                                 </div>
                             </div>
                             <div className='w-full lg:w-[50%]'>
-                                <div className='flex flex-col justify-start items-center px-8 pt-4 pb-8 border rounded-md mb-4'>
-                                    <h3 className="text-lg mb-4 font-semibold text-gray-900">Seleciona la etiqueta</h3>
-                                    <InputColor
-                                        colors={colors}
-                                        courseSelected={courseSelected}
-                                        setCourseSelected={setCourseSelected}
+                                <div className='flex flex-col justify-start overflow-auto px-8 max-h-[200px] pt-4 pb-8 border rounded-md mb-4'>
+                                    <InputHeaderImage
+                                        headersImage={headersImage}
+                                        headerImageSelected={headerImageSelected}
+                                        setHeaderImageSelected={setHeaderImageSelected}
                                     />
+
                                 </div>
                                 <div className='flex flex-col justify-start items-center px-8 pt-4 pb-8 border rounded-md mb-4'>
                                     <h3 className="text-lg mb-4 font-semibold text-gray-900">Seleciona al profesor</h3>
@@ -208,7 +228,7 @@ export const CourseEdit = ({ isCreating }) => {
                         </div>
                     </div>
                     <div className='w-full lg:w-[30%]'>
-                        <div className='flex flex-col justify-start items-center px-8 pt-4 pb-8 border rounded-md mb-4'>
+                        <div className='flex flex-col justify-start items-center pt-4 mb-4'>
                             <div className='w-full mb-8'>
 
                                 {courseSelected && (
@@ -224,6 +244,7 @@ export const CourseEdit = ({ isCreating }) => {
                                         startDate={selectedDates.from}
                                         endDate={selectedDates.to}
                                         studentLimit={courseSelected?.limitMembers}
+                                        headerImage={courseSelected?.headerImage?.fileName}
                                     />
                                 )}
                             </div>

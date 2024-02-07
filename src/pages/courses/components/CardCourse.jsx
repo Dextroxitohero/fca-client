@@ -8,6 +8,8 @@ function classNames(...classes) {
 
 // const urlFlag = `http://localhost:8000/uploads/flags/`;
 const urlFlag = `https://fca-server-production.up.railway.app/uploads/flags/`;
+const baseURLImage = 'http://localhost:8000/uploads/images/';
+
 
 export const CardCourse = ({
     idCourse,
@@ -22,7 +24,8 @@ export const CardCourse = ({
     days,
     teacher,
     startDate,
-    endDate
+    endDate,
+    headerImage
 }) => {
     const navigate = useNavigate();
 
@@ -32,11 +35,14 @@ export const CardCourse = ({
 
     return (
         <>
-            <div className='border border-gray-200 border-l rounded-md p-4'>
+            <div className='shadow-md shadow-indigo-950/20 rounded-md'>
+                <div>
+                    <img className="w-full shrink-0 rounded-t-md object-cover" src={`${baseURLImage}${headerImage}`} alt="header" />
+                </div>
                 <div className='w-full flex flex-col px-2 md:px-4'>
                     <div className="flex justify-between">
                         <div>
-                            <p className='text-[22px] text-gray-900 font-bold tracking-wide uppercase'>{language ? `Curso de ${language}` : 'No hay idioma selecionado' }</p>
+                            <p className='text-[22px] text-gray-900 font-bold tracking-wide uppercase'>{language ? `Curso de ${language}` : 'No hay idioma selecionado'}</p>
                             <div className="flex items-center">
                                 <span className={classNames(
                                     color,
@@ -50,6 +56,14 @@ export const CardCourse = ({
                                 <img className="w-[32px]" src={`${urlFlag}${path}`} alt="flag" />
                             )}
                         </div>
+                    </div>
+                    <div className="w-full flex flex-col lg:flex-row gap-4">
+                        <div className='w-full lg:w-[50%]'>
+                            <p className="font-normal text-sm text-gray-600 leading-6">Profesor del curso</p>
+                            <p className="block text-slate-800 font-semibold text-md tracking-wide">{teacher !== '' ? teacher : '-'}</p>
+                        </div>
+                        <div className='w-full lg:w-[50%]'></div>
+
                     </div>
                     <div className="w-full flex flex-1 mt-10 justify-between">
                         <div>

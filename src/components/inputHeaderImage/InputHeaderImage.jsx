@@ -1,36 +1,42 @@
 import { RadioGroup } from '@headlessui/react';
+import { he } from 'react-date-range/dist/locale';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export const InputCourse = ({ coursesList, courseSelected, setCourseSelected }) => {
+const baseURLImage = 'http://localhost:8000/uploads/images/';
+
+export const InputHeaderImage = ({ headersImage, headerImageSelected, setHeaderImageSelected }) => {
 
     const handleCourse = (value) => {
-        const course = coursesList.find(course => course._id === value);
-        setCourseSelected(course);
+        const header = headersImage.find(header => header._id === value);
+        setHeaderImageSelected(header);
     }
 
     return (
         <div>
-            {coursesList && (
-                <RadioGroup value={courseSelected?._id} onChange={(value) => handleCourse(value)}>
-                    <RadioGroup.Label className="sr-only">Seleciona un curso</RadioGroup.Label>
+            {headersImage && (
+                <RadioGroup value={headerImageSelected?._id} onChange={(value) => handleCourse(value)}>
+                    <RadioGroup.Label className="sr-only">Seleciona un imagen de encabezado</RadioGroup.Label>
                     <div className="grid grid-cols-1 gap-4">
-                        {coursesList.map(({ _id, language }) => (
+                        {headersImage.map(({ _id, name, fileName }) => (
                             <RadioGroup.Option
                                 key={_id}
                                 value={_id}
                                 className={({ active }) =>
                                     classNames(
                                         active ? 'ring-2 ring-indigo-500' : '',
-                                        'cursor-pointer bg-white text-gray-900 shadow-sm group relative flex items-center justify-center rounded-md border py-4 md:py-2 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1'
+                                        'cursor-pointer bg-white text-gray-900 shadow-sm group relative flex justify-center rounded-md border p-4'
                                     )
                                 }
                             >
                                 {({ active, checked }) => (
                                     <>
-                                        <RadioGroup.Label as="span">{language}</RadioGroup.Label>
+                                        <img src={`${baseURLImage}${fileName}`} alt={name} className="w-full flex-shrink-0 rounded-md" />
+                                        {/* <RadioGroup.Label as="span">
+                                            {name}
+                                        </RadioGroup.Label> */}
                                         <span
                                             className={classNames(
                                                 active ? 'border' : 'border-2',

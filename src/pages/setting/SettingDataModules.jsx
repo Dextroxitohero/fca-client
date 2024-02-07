@@ -12,9 +12,9 @@ export const SettingDataModules = () => {
             >Lenguajes</Link>
             <Link
                 type='button'
-                to='/ajustes/images-emcabezado'
+                to='/ajustes/imagenes-encabezado'
                 className='w-[90%] text-center py-2 font-semibold text-md text-gray-900 border-2 hover:border-2 hover:shadow-md hover:shadow-indigo-900/30 hover:border-indigo-600 ho rounded-md'
-            >Imagenes de emcabezado</Link>
+            >Imagenes de encabezado</Link>
             <Link
                 type='button'
                 to='/ajustes/colores'

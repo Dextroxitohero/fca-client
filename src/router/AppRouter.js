@@ -206,7 +206,7 @@ export const AppRouter = () => {
                             }
                         />
                         <Route
-                            path="/ajustes/images-emcabezado"
+                            path="/ajustes/imagenes-encabezado"
                             element={
                                 <PrivateRoute>
                                     <SettingImageHeader />

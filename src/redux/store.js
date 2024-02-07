@@ -4,6 +4,7 @@ import userReducer from "./reducers/user";
 import usersReducer from "./reducers/users";
 import optionsReducer from './reducers/options';
 import courseReducer from './reducers/course';
+import settingsReducer from './reducers/setting';
 
 // Middleware personalizado para manejar valores no serializables
 const nonSerializableMiddleware = getDefaultMiddleware => getDefaultMiddleware({
@@ -17,6 +18,7 @@ export const Store = configureStore({
     options: optionsReducer,
     preRegistration: userPreRegistrationReducer,
     course: courseReducer,
+    setting: settingsReducer,
   },
   middleware: nonSerializableMiddleware
 });
