@@ -20,7 +20,7 @@ import axios from '../../api/axios';
 import { toast } from 'react-hot-toast';
 
 
-export const createCourse = ({ language, level, color, limitMembers, startDate, endDate, hours, days, teacher }) => async (dispatch) => {
+export const createCourse = ({ language, level, color, limitMembers, fromDate, toDate, hours, days, teacher, headerImage, createdBy, updatedBy }) => async (dispatch) => {
     try {
         dispatch(createCourseStart());
         const response = await axios.post(`/course`,
@@ -28,12 +28,15 @@ export const createCourse = ({ language, level, color, limitMembers, startDate, 
                 language,
                 level,
                 limitMembers,
-                startDate,
+                fromDate,
                 hours,
                 days,
                 teacher,
-                endDate,
-                color
+                toDate,
+                color,
+                headerImage,
+                createdBy,
+                updatedBy
             });
 
         if (response.status === 201) {
@@ -49,7 +52,7 @@ export const createCourse = ({ language, level, color, limitMembers, startDate, 
     }
 };
 
-export const updateCourse = ({ id, language, level, color, limitMembers, startDate, endDate, hours, days, teacher }) => async (dispatch) => {
+export const updateCourse = ({ id, language, level, color, limitMembers, fromDate, toDate, hours, days, teacher, headerImage, updatedBy }) => async (dispatch) => {
     try {
         dispatch(updateCourseStart());
         const response = await axios.put(`/course/${id}`,
@@ -57,12 +60,14 @@ export const updateCourse = ({ id, language, level, color, limitMembers, startDa
                 language,
                 level,
                 limitMembers,
-                startDate,
+                fromDate,
                 hours,
                 days,
                 teacher,
-                endDate,
-                color
+                toDate,
+                color,
+                headerImage,
+                updatedBy
             });
 
         if (response.status === 200) {

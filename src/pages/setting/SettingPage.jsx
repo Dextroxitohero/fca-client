@@ -11,7 +11,7 @@ export const SettingPage = () => {
 				center={false}
 			/>
 			<div className="w-full flex flex-col lg:flex-row gap-4">
-				<div className='w-full lg:w-[25%]'>
+				<div className='w-full lg:w-[40%]'>
 					<Wrapper>
 						<SettingDataModules />
 					</Wrapper>

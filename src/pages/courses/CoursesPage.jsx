@@ -14,18 +14,17 @@ export const CoursesPage = () => {
 
     useEffect(() => {
         dispatch(cleanActionSelectedCourse())
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(getAllCourses())
-    }, []);
+    }, [dispatch]);
 
     const courses = useSelector((state) => state.course.courses);
 
     const handleCreateNewCourse = () => {
         navigate('/nuevo-curso');
     }
-
     return (
         <ContainerFull>
             <Heading
@@ -42,14 +41,14 @@ export const CoursesPage = () => {
                     type="text"
                     placeholder="Buscar un curso"
                     value={''}
-                    onChange={()=>{}}
+                    onChange={() => { }}
                     className='block w-full rounded-md border-0 py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ' />
             </Wrapper>
 
             <Wrapper>
                 <div className="w-full md:w-6/6">
                     <div className='grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-8'>
-                        {courses && courses.map(course => (
+                        {courses.length ? (courses && courses.map(course => (
                             <CardCourse
                                 key={course._id}
                                 isCreating={false}
@@ -63,10 +62,12 @@ export const CoursesPage = () => {
                                 hours={course?.hours}
                                 days={course?.days}
                                 teacher={course?.teacher}
-                                startDate={course?.startDate}
-                                endDate={course?.endDate}
+                                fromDate={course?.fromDate}
+                                toDate={course?.toDate}
+                                headerImage={course?.headerImage?.fileName}
                             />
-                        ))}
+                        ))) : <h1>No hay ningun curso</h1>
+                        }
                     </div>
                 </div>
             </Wrapper>

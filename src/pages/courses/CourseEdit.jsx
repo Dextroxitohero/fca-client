@@ -22,30 +22,29 @@ import { InputDateRange } from '../../components/inputDateRange/InputDateRange';
 import { InputHeaderImage } from '../../components/inputHeaderImage/InputHeaderImage';
 
 
-
-
 export const CourseEdit = ({ isCreating }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const params = useParams();
     const idCourse = params?.idCourse;
+    const { user } = useSelector((state) => state.user);
     const course = useSelector((state) => state.course.courseSelected);
     const headersImage = useSelector((state) => state.setting.headersImage);
     const { teachers, levels, colors, languages } = useSelector((state) => state.options);
     const [courseSelected, setCourseSelected] = useState();
     const [headerImageSelected, setHeaderImageSelected] = useState(null);
-    const [selectedDates, setSelectedDates] = useState([
+    const [selectedDates, setSelectedDates] = useState(
         {
             from: '',
             to: '',
         }
-    ]);
+    );
 
     useEffect(() => {
         if (idCourse) {
             dispatch(getCourseById(idCourse));
         }
-    }, [dispatch]);
+    }, [idCourse, dispatch]);
 
     useEffect(() => {
         dispatch(optionsAllTeachers());
@@ -64,27 +63,34 @@ export const CourseEdit = ({ isCreating }) => {
             limitMembers: course.limitMembers !== undefined ? course.limitMembers : 0,
             hours: course !== '' ? course.hours : [],
             days: course !== '' ? course.days : [],
+            fromDate: course.fromDate !== undefined ? course.fromDate : '',
+            toDate: course.toDate !== undefined ? course.toDate : '',
             teacher: course.teacher !== undefined ? { _id: course?.teacher?._id, name: `${course?.teacher?.firstName} ${course?.teacher?.lastName}` } : '',
             headerImage: course.headerImage !== undefined ? course.headerImage : '',
         })
+    }, [idCourse, course]);
+
+    useEffect(() => {
+        if (course?.fromDate) {
+            setSelectedDates(
+                {
+                    from: new Date(course.fromDate),
+                    to: new Date(course.toDate),
+                }
+            )
+        }
+        setHeaderImageSelected(course?.headerImage);
     }, [course]);
 
     useEffect(() => {
-        setCourseSelected({ ...courseSelected, headerImage: headerImageSelected })
-    }, [headerImageSelected]);
+        setCourseSelected({
+            ...courseSelected,
+            fromDate: selectedDates.from,
+            toDate: selectedDates.to,
+            headerImage: headerImageSelected?._id
+        });
+    }, [selectedDates, headerImageSelected]);
 
-    console.log(courseSelected)
-
-    useEffect(() => {
-        if (course?.startDate) {
-            setSelectedDates([
-                {
-                    from: new Date(course.startDate),
-                    to: new Date(course.endDate),
-                }
-            ])
-        }
-    }, [course])
 
     const [openModalCreate, setModalOpenCreate] = useState(false);
     const cancelCreateCourseRef = useRef(null);
@@ -120,7 +126,9 @@ export const CourseEdit = ({ isCreating }) => {
     }
 
     const handleValidateData = () => {
-        setCourseSelected({ ...courseSelected, startDate: selectedDates.from, endDate: selectedDates.to })
+        isCreating
+            ? setCourseSelected({ ...courseSelected, createdBy: user?._id, updatedBy: user?._id })
+            : setCourseSelected({ ...courseSelected, updatedBy: user?._id })
         setModalOpenCreate(true)
     }
 
@@ -241,10 +249,10 @@ export const CourseEdit = ({ isCreating }) => {
                                         hours={courseSelected?.hours}
                                         days={courseSelected?.days}
                                         teacher={courseSelected?.teacher?.name}
-                                        startDate={selectedDates.from}
-                                        endDate={selectedDates.to}
+                                        fromDate={selectedDates?.from}
+                                        toDate={selectedDates?.to}
                                         studentLimit={courseSelected?.limitMembers}
-                                        headerImage={courseSelected?.headerImage?.fileName}
+                                        headerImage={headerImageSelected?.fileName}
                                     />
                                 )}
                             </div>
