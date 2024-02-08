@@ -16,7 +16,6 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-
 export const CreateCourse = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();

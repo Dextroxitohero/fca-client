@@ -5,7 +5,8 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-const baseURLImage = 'http://localhost:8000/uploads/images/';
+// const baseURLImage = 'http://localhost:8000/uploads/images/';
+const baseURLImage = 'https://fca-server-production.up.railway.app/uploads/images/';
 
 export const InputHeaderImage = ({ headersImage, headerImageSelected, setHeaderImageSelected }) => {
 

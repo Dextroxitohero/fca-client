@@ -23,6 +23,9 @@ import { InputDate } from '../../components/inputs/InputDate';
 import { InputCourse } from '../../components/inputCourse/InputCourse';
 
 
+    // const baseURLImage = 'http://localhost:8000/uploads/images/';
+    const baseURLImage = 'https://fca-server-production.up.railway.app/uploads/images/';
+
 export const ValidateCandidate = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
@@ -35,8 +38,6 @@ export const ValidateCandidate = () => {
     const { preRegisterSelected } = useSelector((state) => state.preRegistration);
     const { coordinadors, accountsBank, coursesList } = useSelector((state) => state.options);
 
-    // const baseURLImage = 'http://localhost:8000/uploads/images/';
-    const baseURLImage = 'https://fca-server-production.up.railway.app/uploads/images/';
 
     useEffect(() => {
         dispatch(getSelectedPreRegister(id))
