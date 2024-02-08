@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
 
 import { es } from 'date-fns/locale';
-// import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
-
 import 'react-day-picker/dist/style.css';
 import { formatDate } from '../../common/formatDateText';
 import { capitalizarPalabras } from '../../common/upperCaseWord';

@@ -19,17 +19,16 @@ import { formatDate } from '../../common/formatDateText';
 import { capitalizarPalabras, firstCapitalLetter } from '../../common/upperCaseWord';
 import { ConformationValidationModal } from './ConformationValidationModal';
 import { DividerCenter } from '../../components/DividerCenter';
-import { InputDate } from '../../components/inputs/InputDate';
+import { InputDate } from '../../components/inputDate/InputDate';
 import { InputCourse } from '../../components/inputCourse/InputCourse';
 
-
-    // const baseURLImage = 'http://localhost:8000/uploads/images/';
-    const baseURLImage = 'https://fca-server-production.up.railway.app/uploads/images/';
+import { baseURLImage } from '../../common/urlBase';
 
 export const ValidateCandidate = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [selectExpireDate, setSelectExpireDate] = useState(null);
 
     const [loading, setLoading] = useState(false);
     const [openConfirmationValidationModal, setOpenConfirmationValidationModal] = useState(false)
@@ -38,7 +37,7 @@ export const ValidateCandidate = () => {
     const { preRegisterSelected } = useSelector((state) => state.preRegistration);
     const { coordinadors, accountsBank, coursesList } = useSelector((state) => state.options);
 
-
+    console.log(coursesList)
     useEffect(() => {
         dispatch(getSelectedPreRegister(id))
     }, [])
@@ -134,46 +133,39 @@ export const ValidateCandidate = () => {
 
                         <DividerCenter title={''} />
 
-                        <div className='w-11/12 mx-auto grid grid-col-1 md:grid-cols-2 gap-6'>
+                        <div className='w-full'>
+                            <Title title='Lista de cursos' />
+                            <div className='w-[95%] mx-auto mb-6'>
 
-                            <div>
-                                <Title title='Lista de cursos' />
-                                <div className='max-h-[400px] overflow-auto p-4'>
-                                    <div className='py-4'>
-                                        <InputCourse
-                                            coursesList={coursesList}
-                                            courseSelected={courseSelected}
-                                            setCourseSelected={setCourseSelected}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='py-8'>
-                                <Title title='' />
-                                <div>
-                                    <InputDate
-                                        name={'dateExpired'}
-                                        label={'Ingresa la fecha de vencimiento del pago'}
-                                        onChange={(date) => handleDate(date)}
-                                        value={formData.dateExpired}
-                                        placeholder={'Ingresa la fecha de vencimiento del pago'}
-                                        disabled={false}
+                                <div className='max-h-[500px] overflow-auto p-8 bg-gray-100 py-6 shadow-sm'>
+                                    <InputCourse
+                                        coursesList={coursesList}
+                                        courseSelected={courseSelected}
+                                        setCourseSelected={setCourseSelected}
                                     />
                                 </div>
-                                <div className='mt-6'>
+                            </div>
+                            <Title title='Fecha de vencimiento' />
+                            <div className='w-[95%] flex justify-center items-center'>
+                                <InputDate
+                                    id={'dateExpired'}
+                                    selected={selectExpireDate}
+                                    onChange={setSelectExpireDate}
+                                />
+                            </div>
+                            <div className='mt-6'>
 
-                                    <button
-                                        type='button'
-                                        disabled={loading}
-                                        className='disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold text-md text-white text-center bg-indigo-600 w-full'
-                                        onClick={() => setOpenConfirmationValidationModal(true)}
-                                    >
-                                        {loading
-                                            ? <ButtonLoader />
-                                            : 'Confirmacion de validacion'
-                                        }
-                                    </button>
-                                </div>
+                                <button
+                                    type='button'
+                                    disabled={loading}
+                                    className='disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold text-md text-white text-center bg-indigo-600 w-full'
+                                    onClick={() => setOpenConfirmationValidationModal(true)}
+                                >
+                                    {loading
+                                        ? <ButtonLoader />
+                                        : 'Confirmacion de validacion'
+                                    }
+                                </button>
                             </div>
                         </div>
 

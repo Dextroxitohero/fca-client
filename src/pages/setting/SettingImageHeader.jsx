@@ -12,8 +12,7 @@ import { firstCapitalLetter } from '../../common/upperCaseWord';
 import { getAllHeadersImages, removeHeaderImage } from '../../redux/actions/setting';
 import { ConfirmirRemoverHeaderImage } from './ConfirmirRemoverHeaderImage';
 
-
-const baseURLImage = 'http://localhost:8000/uploads/images/';
+import { baseURLImage } from '../../common/urlBase';
 
 export const SettingImageHeader = () => {
 	const dispatch = useDispatch();

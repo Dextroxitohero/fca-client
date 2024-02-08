@@ -2,16 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { formatDate } from "../../../common/formatDateText";
 import { capitalizarPalabras } from "../../../common/upperCaseWord";
 
+import { baseURLImage, urlFlag } from '../../../common/urlBase';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
-
-// const urlFlag = `http://localhost:8000/uploads/flags/`;
-const baseURLImage = 'https://fca-server-production.up.railway.app/uploads/images/';
-const urlFlag = `https://fca-server-production.up.railway.app/uploads/flags/`;
-// const baseURLImage = 'http://localhost:8000/uploads/images/';
-
 
 export const CardCourse = ({
     idCourse,
@@ -34,12 +29,16 @@ export const CardCourse = ({
     const handleEdit = () => {
         navigate(`/edit-curso/${idCourse}`);
     }
-
     return (
         <>
             <div className='shadow-md shadow-indigo-950/20 rounded-md'>
                 <div>
-                    <img className="w-full shrink-0 rounded-t-md object-cover" src={`${baseURLImage}${headerImage}`} alt="header" />
+                    {
+                        headerImage !== undefined 
+                        ? (<img className="w-full shrink-0 rounded-t-md object-cover" src={`${baseURLImage}${headerImage}`} alt="header" />) 
+                        : null
+                    }
+
                 </div>
                 <div className='w-full flex flex-col p-6'>
                     <div className="flex justify-between mb-4">
@@ -83,11 +82,11 @@ export const CardCourse = ({
                         </div>
                         <div className='w-full'>
                             <p className="font-normal text-sm text-gray-600 leading-6">Fecha de inicio de curso</p>
-                            <p className="text-slate-800 font-semibold text-md tracking-wide">{fromDate !== '' ? formatDate(fromDate) : '-'}</p>
+                            <p className="text-slate-800 font-semibold text-md tracking-wide">{fromDate !== '' ? capitalizarPalabras(formatDate(fromDate)) : '-'}</p>
                         </div>
                         <div className='w-full'>
                             <p className="font-normal text-sm text-gray-600 leading-6">Fecha de fin de curso</p>
-                            <p className="text-slate-800 font-semibold text-md tracking-wide">{toDate !== '' ? formatDate(toDate) : '-'}</p>
+                            <p className="text-slate-800 font-semibold text-md tracking-wide">{toDate !== '' ? capitalizarPalabras(formatDate(toDate)) : '-'}</p>
                         </div>
                         <div className="w-full min-h-[130px]">
                             <p className="font-normal text-sm text-gray-600 leading-6 mb-4">Dias de clase</p>

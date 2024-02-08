@@ -1,12 +1,9 @@
 import { RadioGroup } from '@headlessui/react';
-import { he } from 'react-date-range/dist/locale';
+import { baseURLImage } from '../../common/urlBase';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
-
-// const baseURLImage = 'http://localhost:8000/uploads/images/';
-const baseURLImage = 'https://fca-server-production.up.railway.app/uploads/images/';
 
 export const InputHeaderImage = ({ headersImage, headerImageSelected, setHeaderImageSelected }) => {
 
@@ -35,9 +32,6 @@ export const InputHeaderImage = ({ headersImage, headerImageSelected, setHeaderI
                                 {({ active, checked }) => (
                                     <>
                                         <img src={`${baseURLImage}${fileName}`} alt={name} className="w-full flex-shrink-0 rounded-md" />
-                                        {/* <RadioGroup.Label as="span">
-                                            {name}
-                                        </RadioGroup.Label> */}
                                         <span
                                             className={classNames(
                                                 active ? 'border' : 'border-2',
