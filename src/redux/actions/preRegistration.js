@@ -50,9 +50,7 @@ export const registerPreRegitration = ({
 	language
 }) => async (dispatch) => {
 	try {
-		
 		dispatch(preRegistrationStart());
-
 		const response = await axios.post(`/preRegister`,
 			{
 				firstName,
@@ -64,13 +62,18 @@ export const registerPreRegitration = ({
 				education,
 				language
 			});
-		// Verifica si la respuesta es exitosa
 		dispatch(preRegistrationSuccess(response));
-		toast.success(response.data.message);
+		return {
+			status: response.status,
+			message: response.data.message
+		};
 
 	} catch (error) {
 		dispatch(preRegistrationFailure(error.response));
-		toast.error(error.response.data.message)
+		return {
+			status: error.response.data.status,
+			message: error.response.data.message
+		};
 	}
 };
 
@@ -132,7 +135,6 @@ export const getAllPreRegister = () => async (dispatch) => {
 	}
 };
 
-// Get selected pre register
 export const getSelectedPreRegister = (preRegisterId) => async (dispatch) => {
 	dispatch(getSelectedPreRegisterStart());
 	try {
@@ -147,6 +149,27 @@ export const getSelectedPreRegister = (preRegisterId) => async (dispatch) => {
 	} catch (error) {
 		console.log(error.response.data.message)
 		dispatch(getSelectedPreRegisterFailure());
+	}
+};
+
+
+export const validateCandidate = (payload) => async (dispatch) => {
+	const { coordinador, createdBy, paymentDeadlineDate, idCourse, idPreregister } = payload;
+	try {
+
+		const response = await axios.post(`/preRegister/validateCandidate`, {
+			coordinador, createdBy, paymentDeadlineDate, idCourse, idPreregister
+		}, {
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+		return {
+			status: response.status,
+			message: response.data.message
+		};
+	} catch (error) {
+		console.log(error)
 	}
 };
 

@@ -6,8 +6,7 @@ import { toast } from 'react-hot-toast';
 import { InputText } from '../../components/inputs/InputText';
 import { ButtonLoader } from '../../components/buttons/ButtonLoader';
 import { Button } from '../../components/buttons/Button';
-import { InputSelect } from '../../components/inputs/InputSelect';
-import { InputDate } from '../../components/inputs/InputDate';
+
 
 import { createNewUser } from '../../redux/actions/users';
 
@@ -185,7 +184,7 @@ export const AddFormNewUser = ({ email, typeUser }) => {
                             disabled={true}
                         />
                     </div>
-                    <div>
+                    {/* <div>
                         <InputSelect
                             id="location"
                             name="location"
@@ -209,7 +208,7 @@ export const AddFormNewUser = ({ email, typeUser }) => {
                             onChange={(e) => onChange(e)}
                             disabled={true}
                         />
-                    </div>
+                    </div> */}
                     <div>
                         <InputText
                             id={'phone'}
@@ -222,7 +221,7 @@ export const AddFormNewUser = ({ email, typeUser }) => {
                             disabled={false}
                         />
                     </div>
-                    <div>
+                    {/* <div>
                         <InputDate
                             name={'dateBirth'}
                             label={'Fecha de nacimiento'}
@@ -231,7 +230,7 @@ export const AddFormNewUser = ({ email, typeUser }) => {
                             placeholder={'Ingresa tu fecha de nacimiento'}
                             disabled={false}
                         />
-                    </div>
+                    </div> */}
                     <div>
                         <InputText
                             id={'password'}

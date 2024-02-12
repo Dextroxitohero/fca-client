@@ -60,6 +60,19 @@ export const CandidatesPage = () => {
 			flex: 1,
 			sortable: false,
 			disableColumnMenu: true,
+			// renderCell: (params) => {
+			// 	// console.log(params.row.status)
+			// 	params.row.status !== 'completado' ? (
+			// 		<div style={{ textAlign: 'center' }}>
+			// 			<Link
+			// 				to={`/candidatos/${params.id}`}
+			// 				className="px-2 py-1 bg-indigo-600 text-white rounded"
+			// 			>
+			// 				Validar
+			// 			</Link>
+			// 		</div>
+			// 	) : (<div>HOLA</div>)
+			// }
 			renderCell: (params) => (
 				<div style={{ textAlign: 'center' }}>
 					<Link

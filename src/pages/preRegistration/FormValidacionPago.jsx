@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
-import { InputSelect } from '../../components/inputs/InputSelect';
 import { Button } from '../../components/buttons/Button';
 import { Wrapper } from '../../components/Wrapper';
 
@@ -203,7 +202,7 @@ export const FormValidacionPago = () => {
 											</div>
 										</div>
 									)}
-									<InputSelect
+									{/* <InputSelect
 										id="coordinador"
 										name="coordinador"
 										label="Coordinador"
@@ -222,7 +221,7 @@ export const FormValidacionPago = () => {
 										optionDefault="Selecione el numero de cuenta"
 										value={formData.account}
 										onChange={(e) => onChange(e)}
-									/>
+									/> */}
 								</div>
 							</div>
 							<div className="flex w-full md:w-11/12 justify-end mt-8">

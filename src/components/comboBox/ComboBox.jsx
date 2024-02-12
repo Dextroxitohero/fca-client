@@ -3,20 +3,20 @@ import { Combobox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
 
-export const ComboBox = ({ filterData, query, setQuery, selected, setSelected, placeholder='' }) => {
+export const ComboBox = ({ filterData, query, setQuery, selected, setSelected, placeholder='', property }) => {
 
     const handleChange = (value)=>{
-        setSelected({...selected, teacher: value});
+        setSelected({...selected, [property]: value});
     }
 
     return (
         <div className="">
-            <Combobox value={selected?.teacher} onChange={(value)=>handleChange(value)}>
+            <Combobox value={selected?.[property]} onChange={(value)=>handleChange(value)}>
                 <div className="relative mt-1">
                     <div>
                         <Combobox.Input
                             className="w-full rounded-md border-none py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 uppercase"
-                            displayValue={(item) => item.name}
+                            displayValue={(item) => item.description}
                             onChange={(event) => setQuery(event.target.value)}
                             placeholder={placeholder}
                         />
@@ -34,15 +34,15 @@ export const ComboBox = ({ filterData, query, setQuery, selected, setSelected, p
                         leaveTo="opacity-0"
                         afterLeave={() => setQuery('')}
                     >
-                        <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg sm:text-sm">
+                        <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg sm:text-sm z-40">
                             {filterData.length === 0 && query !== '' ? (
                                 <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                                     No se encontro.
                                 </div>
                             ) : (
-                                filterData.map((item) => (
+                                filterData.map((item, index) => (
                                     <Combobox.Option
-                                        key={item._id}
+                                        key={`${item.description}-${index}`}
                                         className={({ active }) =>
                                             `relative cursor-default select-none py-2 pl-10 pr-4 uppercase ${active ? 'bg-indigo-600 text-white' : 'text-gray-900'
                                             }`
@@ -55,7 +55,7 @@ export const ComboBox = ({ filterData, query, setQuery, selected, setSelected, p
                                                     className={`block truncate uppercase  ${selected ? 'font-medium' : 'font-normal'
                                                         }`}
                                                 >
-                                                    {item.name}
+                                                    {item.description}
                                                 </span>
                                                 {selected ? (
                                                     <span

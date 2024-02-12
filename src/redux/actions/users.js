@@ -5,7 +5,6 @@ import {
 } from '../reducers/users';
 
 import axios from "../../api/axios";
-import { toast } from 'react-hot-toast';
 
 
 

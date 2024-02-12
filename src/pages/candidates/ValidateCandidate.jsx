@@ -1,24 +1,22 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { PropertyListItem } from '../../components/PropertyListItem';
-import { PropertyItem } from '../../components/PropertyItem';
+import { toast } from 'react-hot-toast';
 
-import { getSelectedPreRegister } from '../../redux/actions/preRegistration';
+import { getSelectedPreRegister, validateCandidate } from '../../redux/actions/preRegistration';
 import { optionsCoordinadors, optionsAllAccountsBank, optionsAllCourseList } from '../../redux/actions/options';
 
 
+import { PropertyListItem } from '../../components/PropertyListItem';
+import { PropertyItem } from '../../components/PropertyItem';
 import { ContainerFull } from '../../components/ContainerFull';
 import { Heading } from '../../components/Heading';
 import { Title } from '../../components/Title';
-import { InputSelect } from '../../components/inputs/InputSelect'
-import { Button } from '../../components/buttons/Button';
 import { Wrapper } from '../../components/Wrapper';
 import { ButtonLoader } from '../../components/buttons/ButtonLoader';
 import { formatDate } from '../../common/formatDateText';
 import { capitalizarPalabras, firstCapitalLetter } from '../../common/upperCaseWord';
 import { ConformationValidationModal } from './ConformationValidationModal';
-import { DividerCenter } from '../../components/DividerCenter';
 import { InputDate } from '../../components/inputDate/InputDate';
 import { InputCourse } from '../../components/inputCourse/InputCourse';
 
@@ -28,6 +26,7 @@ export const ValidateCandidate = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
     const [selectExpireDate, setSelectExpireDate] = useState(null);
 
     const [loading, setLoading] = useState(false);
@@ -37,7 +36,6 @@ export const ValidateCandidate = () => {
     const { preRegisterSelected } = useSelector((state) => state.preRegistration);
     const { coordinadors, accountsBank, coursesList } = useSelector((state) => state.options);
 
-    console.log(coursesList)
     useEffect(() => {
         dispatch(getSelectedPreRegister(id))
     }, [])
@@ -48,23 +46,37 @@ export const ValidateCandidate = () => {
         dispatch(optionsAllCourseList());
     }, []);
 
+    useEffect(() => {
+        setFormData((prevData) => ({
+            ...prevData,
+            paymentDeadlineDate: selectExpireDate,
+        }));
+    }, [selectExpireDate])
+
+    useEffect(() => {
+        setFormData((prevData) => ({
+            ...prevData,
+            idCourse: courseSelected?._id,
+        }));
+    }, [courseSelected])
+
     const {
-        firstName, lastName, email,
+        id:_id ,firstName, lastName, email,
         phone, dateBirth, location,
         education, language, status,
         createdAt, account, coordinador,
         fileName
     } = preRegisterSelected;
-
+    
     const [formData, setFormData] = useState({
+        idPreregister: id,
         coordinador: coordinador?._id,
+        createdBy: coordinador?._id,
         account: account,
-        dateExpired: '',
-        idCurso: '',
+        paymentDeadlineDate: '',
+        idCourse: '',
     });
-
-
-    console.log(courseSelected)
+    
     const onChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -73,11 +85,41 @@ export const ValidateCandidate = () => {
         }));
     }
 
-    const handleDate = (date) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            dateExpired: date,
-        }));
+    const validationData = () => {
+        if (!formData.coordinador) {
+            return false;
+        }
+        if (!formData.account) {
+            return false;
+        }
+        if (!formData.idCourse) {
+            toast.error('Selecciona el curso al que se inscribira el candidato');
+            return false;
+        }
+        if (!formData.paymentDeadlineDate) {
+            toast.error('Selecciona la fecha de vencimiento de pago');
+            return false;
+        }
+        return true;
+    }
+
+    const handleValidationCadidate = () => {
+        const validation = validationData();
+        if (validation) {
+            setOpenConfirmationValidationModal(true);
+            dispatch(validateCandidate(formData))
+            .then((result) => {
+                if (result.status === 201) {
+                    toast.success(result.message);
+                    navigate('/');
+                }else{
+                    toast.error(result.message);
+                
+                }
+                setOpenConfirmationValidationModal(false);
+                setLoading(false);
+            });
+        }
     }
 
     return (
@@ -87,10 +129,9 @@ export const ValidateCandidate = () => {
                 subtitle={`Examina y verifica la información proporcionada por el candidato. Si la información es correcta, procede a la validación.`}
                 center={false}
             />
-            {/* Property pre register user */}
-            <div className='flex flex-col md:flex-row md:gap-x-4'>
-                <div className='w-full md:w-7/12'>
-                    <Wrapper>
+            <Wrapper>
+                <div className='w-full flex flex-col lg:flex-row gap-4'>
+                    <div className='w-full lg:w-[50%]'>
                         <Title title='Informacion del cadidato' />
                         <PropertyListItem>
                             <PropertyItem
@@ -130,93 +171,80 @@ export const ValidateCandidate = () => {
                                 description={capitalizarPalabras(formatDate(createdAt))}
                             />
                         </PropertyListItem>
-
-                        <DividerCenter title={''} />
-
-                        <div className='w-full'>
-                            <Title title='Lista de cursos' />
-                            <div className='w-[95%] mx-auto mb-6'>
-
-                                <div className='max-h-[500px] overflow-auto p-8 bg-gray-100 py-6 shadow-sm'>
-                                    <InputCourse
-                                        coursesList={coursesList}
-                                        courseSelected={courseSelected}
-                                        setCourseSelected={setCourseSelected}
-                                    />
-                                </div>
-                            </div>
-                            <Title title='Fecha de vencimiento' />
-                            <div className='w-[95%] flex justify-center items-center'>
-                                <InputDate
-                                    id={'dateExpired'}
-                                    selected={selectExpireDate}
-                                    onChange={setSelectExpireDate}
-                                />
-                            </div>
-                            <div className='mt-6'>
-
-                                <button
-                                    type='button'
-                                    disabled={loading}
-                                    className='disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold text-md text-white text-center bg-indigo-600 w-full'
-                                    onClick={() => setOpenConfirmationValidationModal(true)}
-                                >
-                                    {loading
-                                        ? <ButtonLoader />
-                                        : 'Confirmacion de validacion'
-                                    }
-                                </button>
-                            </div>
-                        </div>
-
-
-                    </Wrapper>
-                </div>
-                <div className='w-full md:w-5/12'>
-                    <Wrapper>
-                        <Title title='Comprobante de pago' center />
+                    </div>
+                    <div className='w-full lg:w-[50%]'>
+                        <Title title='Comprobante de pago' />
                         {/* Container image */}
-                        <div className='mx-auto w-2/3'>
+                        <div className='mx-auto w-[40%]'>
                             <div>
                                 <img src={`${baseURLImage}${fileName}`} alt="" className="mx-auto w-11/12 flex-shrink-0 rounded-md shadow-md" />
                             </div>
                         </div>
                         {/* Property activation */}
-                        <div className='mx-auto border-gray-950 w-full md:w-5/6 mt-5 md:mt-10'>
-                            <ul role="list" className="divide-y divide-gray-100">
+                        <div className='w-[70%] mx-auto flex flex-col justify-center items-center pb-4'>
+                            <div className='w-full'>
 
-                                <li className="flex justify-between gap-x-6 py-5">
-                                    <div className="min-w-0 flex-auto">
-                                        <InputSelect
-                                            id="coordinador"
-                                            name="coordinador"
-                                            label="Coordinador"
-                                            placeholder="Selecciona el coordinador"
-                                            data={coordinadors}
-                                            optionDefault="Seleciona el coordinador"
-                                            value={formData.coordinador}
-                                            onChange={(e) => onChange(e)}
-                                            disabled={true}
-                                        />
-                                        <InputSelect
-                                            id="account"
-                                            name="account"
-                                            label="Numero de cuenta"
-                                            placeholder="Selecciona el numero de cuenta"
-                                            data={accountsBank}
-                                            optionDefault="Seleciona el numero de cuenta"
-                                            value={formData.account}
-                                            onChange={(e) => onChange(e)}
-                                            disabled={true}
-                                        />
-                                    </div>
-                                </li>
+                                {/* <InputSelect
+                                    id="coordinador"
+                                    name="coordinador"
+                                    label="Coordinador"
+                                    placeholder="Selecciona el coordinador"
+                                    data={coordinadors}
+                                    optionDefault="Seleciona el coordinador"
+                                    value={formData.coordinador}
+                                    onChange={(e) => onChange(e)}
+                                    disabled={true}
+                                /> */}
+                            </div>
+                            <div className='w-full'>
 
-                            </ul>
+                            </div>
                         </div>
-                    </Wrapper>
+                    </div>
                 </div>
-            </div>
+            </Wrapper>
+
+            <Wrapper>
+                <div className='w-full flex flex-col lg:flex-row gap-4'>
+                    <div className='w-full lg:w-[50%]'>
+                        <Title title='Lista de cursos' />
+                        <div className='w-[95%] mx-auto mb-6'>
+
+                            <div className='max-h-[500px] overflow-auto p-8 bg-gray-100 py-6 shadow-sm'>
+                                <InputCourse
+                                    coursesList={coursesList}
+                                    courseSelected={courseSelected}
+                                    setCourseSelected={setCourseSelected}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div className='w-full lg:w-[50%] flex flex-col justify-center items-center'>
+                        <Title title='Fecha de vencimiento' />
+                        <div className='w-full flex justify-center items-center'>
+                            <InputDate
+                                id={'dateExpired'}
+                                selected={selectExpireDate}
+                                onChange={setSelectExpireDate}
+                            />
+                        </div>
+                        <div className='w-[70%] flex justify-center items-center mt-6'>
+
+                            <button
+                                type='button'
+                                disabled={loading}
+                                className='disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold text-md text-white text-center bg-indigo-600 w-full'
+                                onClick={() => handleValidationCadidate()}
+                            >
+                                {loading
+                                    ? <ButtonLoader />
+                                    : 'Confirmacion de validacion'
+                                }
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </Wrapper>
             <ConformationValidationModal
                 open={openConfirmationValidationModal}
                 setOpen={setOpenConfirmationValidationModal}

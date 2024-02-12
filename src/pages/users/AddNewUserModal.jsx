@@ -7,7 +7,6 @@ import { toast } from 'react-hot-toast';
 import { validateEmail } from '../../common/validations';
 
 import { InputText } from '../../components/inputs/InputText';
-import { InputSelect } from '../../components/inputs/InputSelect';
 import { ButtonLoader } from '../../components/buttons/ButtonLoader';
 import { typeUserOptions } from '../../static/data';
 import { createNewUserByInvitation } from '../../redux/actions/users';
@@ -107,7 +106,7 @@ export const AddNewUserModal = ({ open, setOpen }) => {
 									/>
 								</div>
 								<div>
-									<InputSelect
+									{/* <InputSelect
 										id="typeUser"
 										name="typeUser"
 										label="Tipo de usuario"
@@ -116,7 +115,7 @@ export const AddNewUserModal = ({ open, setOpen }) => {
 										optionDefault="Selecione el tipo de usuario"
 										value={formData.typeUser}
 										onChange={(e) => onChange(e)}
-									/>
+									/> */}
 								</div>
 								<div className='mt-2'>
 									<button

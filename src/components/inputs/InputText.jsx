@@ -3,7 +3,7 @@ export const InputText = ({ id, name, type, label, onChange, value, placeholder,
         <div>
             <label
                 htmlFor={name}
-                className="block text-sm font-medium leading-6 text-gray-600 ml-1"
+                className="block text-md font-semibold text-gray-900  leading-6  ml-1"
             >{label}</label>
             <div className='mt-2'>
                 <input

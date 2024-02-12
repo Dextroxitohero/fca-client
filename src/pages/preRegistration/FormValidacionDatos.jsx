@@ -7,28 +7,38 @@ import { toast } from 'react-hot-toast';
 import { Wrapper } from '../../components/Wrapper';
 import { InputText } from '../../components/inputs/InputText';
 import { Button } from '../../components/buttons/Button';
-import { InputSelect } from '../../components/inputs/InputSelect';
-import { InputDate } from '../../components/inputs/InputDate';
+import { ButtonLoader } from '../../components/buttons/ButtonLoader';
+import { ComboBox } from '../../components/comboBox/ComboBox';
+import { InputDate } from '../../components/inputDate/InputDate';
 
 import { resetEmailVarification } from '../../redux/reducers/preRegistration';
 import { registerPreRegitration } from '../../redux/actions/preRegistration';
+import { optionsLanguages } from '../../redux/actions/options';
 
-import { levelEducation, locationState, languages } from '../../static/data';
+import { levelEducation, locationState } from '../../static/data';
 import logo from '../../static/image/logo.png';
-import { ButtonLoader } from '../../components/buttons/ButtonLoader';
 
 export const FormValidacionDatos = () => {
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const { languages } = useSelector((state) => state.options);
+	const [findLevelEducation, setFindLevelEducation] = useState('');
+	const [findLanguage, setFindLanguage] = useState('');
+	const [findLocation, setFindLocation] = useState('');
+	const [selectDate, setSelectDate] = useState(null);
 
 	const {
 		email,
 		success,
 		loading
 	} = useSelector((state) => state.preRegistration);
-	
+
 	const [loadingForm, setLoadingForm] = useState(false);
+
+	useEffect(() => {
+		dispatch(optionsLanguages());
+	}, [dispatch]);
 
 	useEffect(() => {
 		if (!email) {
@@ -56,6 +66,12 @@ export const FormValidacionDatos = () => {
 		education: ''
 	});
 
+	useEffect(() => {
+		setFormData((prevData) => ({
+			...prevData,
+			dateBirth: selectDate,
+		}));
+	}, [selectDate]);
 
 	const handleContinue = () => {
 		dispatch(resetEmailVarification())
@@ -84,32 +100,85 @@ export const FormValidacionDatos = () => {
 
 	const handleFinish = () => {
 		setLoadingForm(true);
-		const valid = validarCampos();
+		const updateState = { ...formData };
+		updateState.education = formData.education.description;
+		updateState.language = formData.language.description;
+		updateState.location = formData.location.description;
+		const valid = validarCampos(updateState);
 		if (valid) {
-			dispatch(registerPreRegitration(formData));
+			dispatch(registerPreRegitration(updateState))
+				.then((result) => {
+					if (result?.status === 201) {
+						toast.success(result.message);
+					} else {
+						toast.error(result.message);
+					}
+					setLoadingForm(false);
+				});
 		} else {
-			toast.error('Todos los campos son requeridos');
 			setLoadingForm(false);
 		}
 	};
 
-	const validarCampos = () => {
-		for (const key in formData) {
-			if (formData.hasOwnProperty(key)) {
-				if (formData[key] === '') {
-					return false;
-				}
-			}
+
+	const validarCampos = (updateState) => {
+		if (updateState.firstName.trim() === '') {
+			toast.error('El nombre es requerido');
+			return false;
+		}
+		if (updateState.lastName.trim() === '') {
+			toast.error('El apellido paterno es requerido');
+			return false;
+		}
+		if (updateState.phone.trim() === '') {
+			toast.error('El telefono es requerido');
+			return false;
+		}
+		if (updateState.dateBirth === null) {
+			toast.error('La fecha de nacimiento es requerida');
+			return false;
+		}
+		if (updateState.language === undefined) {
+			toast.error('El idioma de interes es requerido');
+			return false;
+		}
+		if (updateState.location === undefined) {
+			toast.error('Tu ubicacion es requerida');
+			return false;
+		}
+		if (updateState.education === undefined) {
+			toast.error('Tu nivel educativo es requerido');
+			return false;
 		}
 		return true;
 	};
 
-	const handleDate = (date) => {
-		setFormData((prevData) => ({
-			...prevData,
-			dateBirth: date,
-		}));
-	}
+	const filteredLocations = findLocation === ''
+		? locationState
+		: locationState.filter((location) =>
+			location.description
+				.toLowerCase()
+				.replace(/\s+/g, '')
+				.includes(findLocation.toLowerCase().replace(/\s+/g, ''))
+		);
+
+	const filteredLevelEducations = findLevelEducation === ''
+		? levelEducation
+		: levelEducation.filter((levelEducation) =>
+			levelEducation.description
+				.toLowerCase()
+				.replace(/\s+/g, '')
+				.includes(findLevelEducation.toLowerCase().replace(/\s+/g, ''))
+		);
+
+	const filteredLanguages = findLanguage === ''
+		? languages
+		: languages.filter((language) =>
+			language.description
+				.toLowerCase()
+				.replace(/\s+/g, '')
+				.includes(findLanguage.toLowerCase().replace(/\s+/g, ''))
+		);
 
 	const renderStep = () => {
 		switch (step) {
@@ -169,14 +238,15 @@ export const FormValidacionDatos = () => {
 									placeholder={'Ingresa tu telefono'}
 									disabled={false}
 								/>
-								<InputDate
-									name={'dateBirth'}
-									label={'Fecha de nacimiento'}
-									onChange={(date) => handleDate(date)}
-									value={formData.dateBirth}
-									placeholder={'Ingresa tu fecha de nacimiento'}
-									disabled={false}
-								/>
+								<div className='flex flex-col justify-start items-center my-4'>
+									<h3 className="text-md font-semibold text-gray-900 mb-4">Fecha de nacimiento</h3>
+									<InputDate
+										id={'dateBirth'}
+										selected={selectDate}
+										onChange={setSelectDate}
+									/>
+								</div>
+
 							</div>
 						</div>
 						<div className="flex w-full md:w-11/12 justify-end mt-8">
@@ -214,35 +284,35 @@ export const FormValidacionDatos = () => {
 						{/* Body form */}
 						<div className='flex items-center mt-8'>
 							<div className='w-full md:w-10/12 mx-auto grid grid-cols-1 gap-y-4'>
-								<InputSelect
-									id="location"
-									name="location"
-									label="Lugar de residencia"
-									placeholder="Selecione el estado donde vives"
-									data={locationState}
-									optionDefault="Selecione su estado"
-									value={formData.location}
-									onChange={(e) => onChange(e)}
+								<h3 className="text-md font-semibold text-gray-900">Lugar de residencia</h3>
+								<ComboBox
+									filterData={filteredLocations}
+									query={findLocation}
+									setQuery={setFindLocation}
+									selected={formData}
+									setSelected={setFormData}
+									placeholder='Selecione el estado donde vives'
+									property='location'
 								/>
-								<InputSelect
-									id="language"
-									name="language"
-									label="Idioma de interes"
-									placeholder="Selecione tu idioma de interes"
-									data={languages}
-									optionDefault="Selecione un idioma"
-									value={formData.language}
-									onChange={(e) => onChange(e)}
+								<h3 className="text-md font-semibold text-gray-900">Idioma de interes</h3>
+								<ComboBox
+									filterData={filteredLanguages}
+									query={findLanguage}
+									setQuery={setFindLanguage}
+									selected={formData}
+									setSelected={setFormData}
+									placeholder='Selecione tu idioma de interes'
+									property='language'
 								/>
-								<InputSelect
-									id="education"
-									name="education"
-									label="Nivel Educativo"
-									placeholder="Selecione un genero"
-									data={levelEducation}
-									optionDefault="Selecione su nievel educativo"
-									value={formData.education}
-									onChange={(e) => onChange(e)}
+								<h3 className="text-md font-semibold text-gray-900">Nivel educativo</h3>
+								<ComboBox
+									filterData={filteredLevelEducations}
+									query={findLevelEducation}
+									setQuery={setFindLevelEducation}
+									selected={formData}
+									setSelected={setFormData}
+									placeholder='Seleciona tu nivel educativo'
+									property='education'
 								/>
 							</div>
 						</div>

@@ -2,10 +2,8 @@ import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Dialog } from '@headlessui/react';
 import { Modal } from '../../components/modal/Modal';
-import { toast } from 'react-hot-toast';
 
 import { ButtonLoader } from '../../components/buttons/ButtonLoader'
-import { InputDate } from '../../components/inputs/InputDate';
 
 export const ConformationValidationModal = ({ open, setOpen }) => {
 

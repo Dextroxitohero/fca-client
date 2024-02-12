@@ -3,7 +3,6 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { PrivateLayout } from '../layout/private/PrivateLayout';
 import { refreshToken } from '../redux/actions/user';
-import { Navbar } from '../components/navbar/Navbar';
 
 export const PrivateRoute = ({ children }) => {
     const dispatch = useDispatch();

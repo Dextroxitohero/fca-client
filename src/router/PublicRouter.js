@@ -4,7 +4,6 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { PublicLayout } from '../layout/public/PublicLayout';
 import { refreshToken } from '../redux/actions/user';
-import { Navbar } from '../components/navbar/Navbar';
 
 export const PublicRoute = ({ children }) => {
     const dispatch = useDispatch();

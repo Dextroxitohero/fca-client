@@ -12,7 +12,7 @@ export const Navbar = () => {
 
     return (
         <>
-            <Disclosure as="nav" className="bg-white fixed w-full z-10 shadow-md shadow-indigo-50">
+            <Disclosure as="nav" className="bg-white fixed w-full z-10 shadow-sm shadow-indigo-950/10">
                 {({ open }) => (
                     <>
                         <div className="mx-auto  max-w-[90%] px-4 sm:px-6 lg:px-0">

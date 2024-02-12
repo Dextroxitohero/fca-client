@@ -95,10 +95,11 @@ export const CourseEdit = ({ isCreating }) => {
     const [openModalCreate, setModalOpenCreate] = useState(false);
     const cancelCreateCourseRef = useRef(null);
     const [findTeacher, setFindTeacher] = useState('');
+
     const filteredTeachers = findTeacher === ''
         ? teachers
         : teachers.filter((teacher) =>
-            teacher.description
+            teacher.name
                 .toLowerCase()
                 .replace(/\s+/g, '')
                 .includes(findTeacher.toLowerCase().replace(/\s+/g, ''))
@@ -124,7 +125,8 @@ export const CourseEdit = ({ isCreating }) => {
         }
         setModalOpenCreate(false);
     }
-
+    
+    console.log(courseSelected)
     const handleValidateData = () => {
         isCreating
             ? setCourseSelected({ ...courseSelected, createdBy: user?._id, updatedBy: user?._id })
@@ -209,6 +211,7 @@ export const CourseEdit = ({ isCreating }) => {
                                             selected={courseSelected}
                                             setSelected={setCourseSelected}
                                             placeholder='Seleciona un profesor'
+                                            property='teacher'
                                         />
                                     </div>
                                 </div>

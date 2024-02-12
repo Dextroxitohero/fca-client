@@ -74,7 +74,7 @@ export const logoutUser = () => async (dispatch) => {
 
 	try {
 		// Realiza la llamada al servidor para hacer el logout
-		const response = await axios.get(`/auth/logout`,
+		await axios.get(`/auth/logout`,
 			{
 				withCredentials: true,
 			});
