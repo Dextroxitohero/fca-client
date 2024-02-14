@@ -13,12 +13,15 @@ import { optionsAllAccountsBank, optionsCoordinadors } from '../../redux/actions
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import logo from '../../static/image/logo.png';
 import { ButtonLoader } from '../../components/buttons/ButtonLoader';
+import { ComboBox } from '../../components/comboBox/ComboBox';
+import { InputAccountBank } from '../../components/inputAccountBank/InputAccountBank';
 
 
 export const FormValidacionPago = () => {
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const [findCoordinador, setFindCoordinador] = useState('');
 	const { coordinadors, accountsBank } = useSelector((state) => state.options);
 
 	const [step, setStep] = useState(1);
@@ -128,6 +131,16 @@ export const FormValidacionPago = () => {
 		navigate(`/pre-registro`);
 	}
 
+	const filteredCoordinadors = findCoordinador === ''
+		? coordinadors
+		: coordinadors.filter((coordinador) =>
+			coordinadors.description
+				.toLowerCase()
+				.replace(/\s+/g, '')
+				.includes(findCoordinador.toLowerCase().replace(/\s+/g, ''))
+		);
+
+
 	const renderStep = () => {
 		switch (step) {
 			case 1:
@@ -157,12 +170,7 @@ export const FormValidacionPago = () => {
 							{/* Body form */}
 							<div className='flex items-center mt-8'>
 								<div className='w-full md:w-10/12 mx-auto grid grid-cols-1 gap-y-4'>
-									<label
-										htmlFor="cover-photo"
-										className='block text-sm font-medium leading-6 text-gray-600 ml-1'
-									>
-										Comprobante de pago
-									</label>
+									<h3 className="text-md font-semibold text-gray-900">Comprobante de pago</h3>
 									{!previewImage && (
 										<div className='flex justify-center rounded-lg border border-dashed px-6 py-10 mt-2'>
 											<div className="text-center">
@@ -211,8 +219,29 @@ export const FormValidacionPago = () => {
 										optionDefault="Selecione a tu coordinador"
 										value={formData.coordinador}
 										onChange={(e) => onChange(e)}
+									/> */}
+
+									<h3 className="text-md font-semibold text-gray-900">Lugar de residencia</h3>
+									<ComboBox
+										filterData={filteredCoordinadors}
+										query={findCoordinador}
+										setQuery={setFindCoordinador}
+										selected={formData}
+										setSelected={setFormData}
+										placeholder='Selecione a tu coordinador'
+										property='coordinador'
 									/>
-									<InputSelect
+
+									<InputAccountBank
+										accountsBank={accountsBank}
+										accountSelected={formData}
+										setAccountSelected={setFormData}
+									/>
+
+
+
+
+									{/* <InputSelect
 										id="account"
 										name="account"
 										label="Numero de cuenta bancaria"
