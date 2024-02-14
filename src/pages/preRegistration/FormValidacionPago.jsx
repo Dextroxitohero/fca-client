@@ -36,7 +36,6 @@ export const FormValidacionPago = () => {
 		userPreRegister
 	} = useSelector((state) => state.preRegistration)
 
-
 	useEffect(() => {
 		if (email === '') {
 			navigate(`/pre-registro`);
@@ -72,10 +71,12 @@ export const FormValidacionPago = () => {
 
 	const handeleSubmitValidationPayment = () => {
 		setLoadingForm(true);
-
-		const isValid = validForm();
+		const updateState = { ...formData }
+		updateState.coordinador = formData.coordinador.value || '';
+		updateState.account = formData.account._id || '';
+		const isValid = validForm(updateState);
 		if (isValid) {
-			dispatch(validatePaymentVoucher(formData))
+			dispatch(validatePaymentVoucher(updateState))
 				.then((result) => {
 					if (result.status === 200) {
 						toast.success(result.message);
@@ -83,26 +84,25 @@ export const FormValidacionPago = () => {
 					setLoadingForm(false);
 				});
 		} else {
-			toast.error('Por favor, completa todos los campos.');
 			setLoadingForm(false);
 		}
 	}
 
-	const validForm = () => {
-		const { coordinador, account, file, email, id } = formData;
-		if (coordinador.trim() === '' || account.trim() === '' || file === null || email.trim() === '' || id === null) {
+	const validForm = (updateState) => {
+		if (updateState.coordinador.trim() === '') {
+			toast.error('Seleccione a su coordinador.');
+			return false;
+		}
+		if (updateState.account.trim() === '') {
+			toast.error('Seleccione la cuenta de pago.');
+			return false;
+		}
+		if (updateState.file === null) {
+			toast.error('Seleccione su comprobante de pago.');
 			return false;
 		}
 		return true;
 	};
-
-	const onChange = (e) => {
-		const { name, value } = e.target;
-		setFormData((prevData) => ({
-			...prevData,
-			[name]: value,
-		}));
-	}
 
 	const handleFileChange = (event) => {
 
@@ -134,7 +134,7 @@ export const FormValidacionPago = () => {
 	const filteredCoordinadors = findCoordinador === ''
 		? coordinadors
 		: coordinadors.filter((coordinador) =>
-			coordinadors.description
+			coordinador.description
 				.toLowerCase()
 				.replace(/\s+/g, '')
 				.includes(findCoordinador.toLowerCase().replace(/\s+/g, ''))
@@ -210,18 +210,8 @@ export const FormValidacionPago = () => {
 											</div>
 										</div>
 									)}
-									{/* <InputSelect
-										id="coordinador"
-										name="coordinador"
-										label="Coordinador"
-										placeholder="Selecione a tu coordinador"
-										data={coordinadors}
-										optionDefault="Selecione a tu coordinador"
-										value={formData.coordinador}
-										onChange={(e) => onChange(e)}
-									/> */}
 
-									<h3 className="text-md font-semibold text-gray-900">Lugar de residencia</h3>
+									<h3 className="text-md font-semibold text-gray-900 mt-4">Seleciona a tu coordinador</h3>
 									<ComboBox
 										filterData={filteredCoordinadors}
 										query={findCoordinador}
@@ -231,26 +221,12 @@ export const FormValidacionPago = () => {
 										placeholder='Selecione a tu coordinador'
 										property='coordinador'
 									/>
-
+									<h3 className="text-md font-semibold text-gray-900 mt-4">Seleciona la cuenta de pago</h3>
 									<InputAccountBank
 										accountsBank={accountsBank}
 										accountSelected={formData}
 										setAccountSelected={setFormData}
 									/>
-
-
-
-
-									{/* <InputSelect
-										id="account"
-										name="account"
-										label="Numero de cuenta bancaria"
-										placeholder="Selecione a tu numero de cuenta"
-										data={accountsBank}
-										optionDefault="Selecione el numero de cuenta"
-										value={formData.account}
-										onChange={(e) => onChange(e)}
-									/> */}
 								</div>
 							</div>
 							<div className="flex w-full md:w-11/12 justify-end mt-8">

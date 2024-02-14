@@ -5,11 +5,10 @@ function classNames(...classes) {
 }
 
 export const InputAccountBank = ({ accountsBank, accountSelected, setAccountSelected  }) => {
-
+    console.log(accountsBank)
     const handleAccount = (value) => {
         const accout = accountsBank.find(account => account.value === value)
         setAccountSelected({...accountSelected, account: { '_id': accout.value, 'name': accout.description } });
-        // setSelectedLevels({ 'id': level.value, 'name': level.description })
     }
 
     return (
@@ -18,7 +17,7 @@ export const InputAccountBank = ({ accountsBank, accountSelected, setAccountSele
                 <RadioGroup value={accountSelected?.level?._id} onChange={(value) => handleAccount(value)}>
                     <RadioGroup.Label className="sr-only">Seleciona el nivel del curso</RadioGroup.Label>
                     <div className="grid grid-cols-2 gap-4 lg:grid-cols-2">
-                        {accountsBank.map(({ value, description }) => (
+                        {accountsBank.map(({ value, name, description }) => (
                             <RadioGroup.Option
                                 key={value}
                                 value={value}
@@ -31,7 +30,13 @@ export const InputAccountBank = ({ accountsBank, accountSelected, setAccountSele
                             >
                                 {({ active, checked }) => (
                                     <>
-                                        <RadioGroup.Label as="span">{description}</RadioGroup.Label>
+                                        <div className='w-full flex flex-col p-4 justify-center items-center'>
+                                            <p className='text-gray-600 tracking-wide uppercase mb-1'>Nombre de cuenta</p>
+                                            <p className='text-md text-gray-900 font-semibold tracking-wide uppercase mb-4'>{name}</p>
+                                            <p className='text-gray-600 tracking-wide uppercase mb-1'>Numero de cuenta</p>
+                                            <p className='text-md text-gray-900 font-semibold tracking-wide uppercase mb-4'>{description}</p>
+
+                                        </div>
                                         <span
                                             className={classNames(
                                                 active ? 'border' : 'border-2',
