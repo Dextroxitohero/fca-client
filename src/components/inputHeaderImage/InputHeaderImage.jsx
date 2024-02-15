@@ -32,7 +32,7 @@ export const InputHeaderImage = ({ headersImage, headerImageSelected, setHeaderI
                                 {({ active, checked }) => (
                                     <>
                                         {/* <img src={`${baseURLImage}${fileName}`} alt={name} className="w-full flex-shrink-0 rounded-md" /> */}
-                                        <img src={`${RAILWAY_VOLUME_MOUNT_PATH}/${fileName}`} alt={name} className="w-full flex-shrink-0 rounded-md" />
+                                        <img src={`${process.env.RAILWAY_VOLUME_MOUNT_PATH}/${fileName}`} alt={name} className="w-full flex-shrink-0 rounded-md" />
                                         <span
                                             className={classNames(
                                                 active ? 'border' : 'border-2',
