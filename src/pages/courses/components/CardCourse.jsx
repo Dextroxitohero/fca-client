@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { formatDate } from "../../../common/formatDateText";
 import { capitalizarPalabras } from "../../../common/upperCaseWord";
+import { useSelector } from 'react-redux';
 
 import { baseURLImage, urlFlag } from '../../../common/urlBase';
 
@@ -26,6 +27,8 @@ export const CardCourse = ({
 }) => {
     const navigate = useNavigate();
 
+    const user = useSelector((state) => state.user);
+
     const handleEdit = () => {
         navigate(`/edit-curso/${idCourse}`);
     }
@@ -34,9 +37,9 @@ export const CardCourse = ({
             <div className='shadow-md shadow-indigo-950/20 rounded-md'>
                 <div>
                     {
-                        headerImage !== undefined 
-                        ? (<img className="w-full shrink-0 rounded-t-md object-cover" src={`${baseURLImage}${headerImage}`} alt="header" />) 
-                        : null
+                        headerImage !== undefined
+                            ? (<img className="w-full shrink-0 rounded-t-md object-cover" src={`${baseURLImage}${headerImage}`} alt="header" />)
+                            : null
                     }
 
                 </div>
@@ -113,12 +116,22 @@ export const CardCourse = ({
 
                 </div>
                 {
-                    !isCreating && (
+                    (!isCreating && user.user.roles === 'admin') && (
                         <div className="w-full flex mt-8 mb-4 gap-x-4 px-4">
                             <button
                                 onClick={handleEdit}
                                 className="bg-indigo-600  flex-1 py-2 text-white font-semibold rounded-md focus:bg-indigo-700"
                             >Editar</button>
+                        </div>
+                    )
+                }
+                {
+                    user.user.roles === 'user' && (
+                        <div className="w-full flex mt-8 mb-4 gap-x-4 px-4">
+                            <button
+                                disabled={true}
+                                className="bg-indigo-600  flex-1 py-2 text-white font-semibold rounded-md focus:bg-indigo-700"
+                            >Entrar</button>
                         </div>
                     )
                 }

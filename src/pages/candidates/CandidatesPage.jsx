@@ -12,13 +12,15 @@ import { Wrapper } from '../../components/Wrapper';
 export const CandidatesPage = () => {
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		dispatch(getAllPreRegister())
-	}, [])
-
 	const {
 		allPreRegisters
-	} = useSelector((state) => state.preRegistration)
+	} = useSelector((state) => state.preRegistration);
+
+	const user = useSelector((state) => state.user);
+
+	useEffect(() => {
+		dispatch(getAllPreRegister({ id: user.user._id, roles: user.user.roles }))
+	}, [])
 
 	const [searchText, setSearchText] = useState('');
 

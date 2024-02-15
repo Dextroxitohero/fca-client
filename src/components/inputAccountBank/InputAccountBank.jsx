@@ -5,7 +5,6 @@ function classNames(...classes) {
 }
 
 export const InputAccountBank = ({ accountsBank, accountSelected, setAccountSelected  }) => {
-    console.log(accountsBank)
     const handleAccount = (value) => {
         const accout = accountsBank.find(account => account.value === value)
         setAccountSelected({...accountSelected, account: { '_id': accout.value, 'name': accout.description } });

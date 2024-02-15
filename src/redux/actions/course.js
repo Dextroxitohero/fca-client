@@ -83,11 +83,11 @@ export const updateCourse = ({ id, language, level, color, limitMembers, fromDat
     }
 };
 
-export const getAllCourses = () => async (dispatch) => {
+export const getAllCourses = ({ id, roles }) => async (dispatch) => {
     try {
         dispatch(getAllCoursesStart());
 
-        const response = await axios.get(`/course`);
+        const response = await axios.get(`/course/${id}/${roles}`);
 
         if (response.status === 200) {
             dispatch(getAllCoursesSuccess(response.data));

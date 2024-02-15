@@ -118,15 +118,16 @@ export const validatePaymentVoucher = ({
 	}
 };
 
-export const getAllPreRegister = () => async (dispatch) => {
+export const getAllPreRegister = ({ id, roles }) => async (dispatch) => {
 	dispatch(getAllPreRegisterStart());
 	try {
 
-		const response = await axios.get('/preRegister/allPreRegister', {
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
+		const response = await axios.get(`/preRegister/allPreRegister/${id}/${roles}`,
+			{
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
 
 		dispatch(getAllPreRegisterSuccess(response.data))
 

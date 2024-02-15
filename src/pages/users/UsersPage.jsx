@@ -26,8 +26,6 @@ export const UsersPage = () => {
 	const [openAddNewUserModal, setOpenAddNewUserModal] = useState(false)
 	const [searchText, setSearchText] = useState('');
 
-	// console.log(openModalAddNewUser)
-
 	const rows = users;
 
 	const columns = [
@@ -55,10 +53,6 @@ export const UsersPage = () => {
 		},
 	];
 
-	// const handleRowClick = (params) => {
-	// 	console.log(params.row)
-	// };
-
 	const handleSearchChange = (event) => {
 		const searchText = event.target.value;
 		setSearchText(searchText);
@@ -72,7 +66,6 @@ export const UsersPage = () => {
 			row.typeUser?.toLowerCase().includes(searchText.toLowerCase()) ||
 			row.createdAtFormatted?.toLowerCase().includes(searchText.toLowerCase())
 	);
-
 
 	return (
 		<ContainerFull>

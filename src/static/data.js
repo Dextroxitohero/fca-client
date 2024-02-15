@@ -5,12 +5,27 @@ export const user = {
         'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 
+
+const allAccess = ['estudiante', 'profesor', 'control escolar', 'administrativo', 'desarrollador' ,'director', 'subdirector', 'coordinador', 'ventas', 'cobranza','invitado'];
+
+const onlyCandidate = ['control escolar', 'administrativo', 'desarrollador' ,'director', 'subdirector', 'coordinador' ];
+
+const onlyCourse = ['estudiante', 'profesor', 'administrativo', 'desarrollador' ,'director', 'subdirector'];
+
+const onlyUsers = ['administrativo', 'desarrollador' ,'director', 'subdirector'];
+
+const onlyStudents = ['administrativo', 'desarrollador' ,'director', 'subdirector'];
+
+const onlyPayment = [];
+// const onlyPayment = ['estudiante', 'control escolar', 'administrativo', 'desarrollador' ,'director', 'subdirector', 'ventas', 'cobranza','invitado'];
+
 export const navigation = [
-    { name: 'Inicio', href: '/' },
-    { name: 'Candidatos', href: '/candidatos' },
-    { name: 'Cursos', href: '/cursos' },
-    { name: 'Usuarios', href: '/usuarios' },
-    { name: 'Pagos', href: '/pagos' },
+    { name: 'Inicio', href: '/', access: allAccess },
+    { name: 'Candidatos', href: '/candidatos', access: onlyCandidate },
+    { name: 'Cursos', href: '/cursos', access: onlyCourse },
+    { name: 'Usuarios', href: '/usuarios', access: onlyUsers },
+    { name: 'Alumnos', href: '/alumnos', access: onlyStudents },
+    { name: 'Pagos', href: '/pagos', access: onlyPayment },
 ];
 
 export const userNavigation = [

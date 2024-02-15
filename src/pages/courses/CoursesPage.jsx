@@ -12,12 +12,14 @@ export const CoursesPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const user = useSelector((state) => state.user);
+
     useEffect(() => {
         dispatch(cleanActionSelectedCourse())
     }, [dispatch]);
 
     useEffect(() => {
-        dispatch(getAllCourses())
+        dispatch(getAllCourses({ id: user.user._id, roles: user.user.roles }))
     }, [dispatch]);
 
     const courses = useSelector((state) => state.course.courses);
@@ -47,7 +49,7 @@ export const CoursesPage = () => {
 
             <Wrapper>
                 <div className="w-full md:w-6/6">
-                    <div className='grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-8'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
                         {courses.length ? (courses && courses.map(course => (
                             <CardCourse
                                 key={course._id}

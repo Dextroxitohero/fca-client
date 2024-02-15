@@ -126,7 +126,6 @@ export const CourseEdit = ({ isCreating }) => {
         setModalOpenCreate(false);
     }
     
-    console.log(courseSelected)
     const handleValidateData = () => {
         isCreating
             ? setCourseSelected({ ...courseSelected, createdBy: user?._id, updatedBy: user?._id })

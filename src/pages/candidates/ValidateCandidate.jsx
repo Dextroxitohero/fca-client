@@ -26,7 +26,7 @@ export const ValidateCandidate = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
     const [selectExpireDate, setSelectExpireDate] = useState(null);
 
     const [loading, setLoading] = useState(false);
@@ -61,13 +61,13 @@ export const ValidateCandidate = () => {
     }, [courseSelected])
 
     const {
-        id:_id ,firstName, lastName, email,
+        id: _id, firstName, lastName, email,
         phone, dateBirth, location,
         education, language, status,
         createdAt, account, coordinador,
         fileName
     } = preRegisterSelected;
-    
+
     const [formData, setFormData] = useState({
         idPreregister: id,
         coordinador: coordinador?._id,
@@ -76,14 +76,6 @@ export const ValidateCandidate = () => {
         paymentDeadlineDate: '',
         idCourse: '',
     });
-    
-    const onChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    }
 
     const validationData = () => {
         if (!formData.coordinador) {
@@ -108,17 +100,17 @@ export const ValidateCandidate = () => {
         if (validation) {
             setOpenConfirmationValidationModal(true);
             dispatch(validateCandidate(formData))
-            .then((result) => {
-                if (result.status === 201) {
-                    toast.success(result.message);
-                    navigate('/');
-                }else{
-                    toast.error(result.message);
-                
-                }
-                setOpenConfirmationValidationModal(false);
-                setLoading(false);
-            });
+                .then((result) => {
+                    if (result.status === 201) {
+                        toast.success(result.message);
+                        navigate('/');
+                    } else {
+                        toast.error(result.message);
+
+                    }
+                    setOpenConfirmationValidationModal(false);
+                    setLoading(false);
+                });
         }
     }
 
@@ -173,32 +165,16 @@ export const ValidateCandidate = () => {
                         </PropertyListItem>
                     </div>
                     <div className='w-full lg:w-[50%]'>
-                        <Title title='Comprobante de pago' />
                         {/* Container image */}
                         <div className='mx-auto w-[40%]'>
                             <div>
+                                <h3 className="text-md text-center font-semibold text-gray-900 my-8">Comprobante de pago</h3>
                                 <img src={`${baseURLImage}${fileName}`} alt="" className="mx-auto w-11/12 flex-shrink-0 rounded-md shadow-md" />
                             </div>
                         </div>
                         {/* Property activation */}
                         <div className='w-[70%] mx-auto flex flex-col justify-center items-center pb-4'>
-                            <div className='w-full'>
 
-                                {/* <InputSelect
-                                    id="coordinador"
-                                    name="coordinador"
-                                    label="Coordinador"
-                                    placeholder="Selecciona el coordinador"
-                                    data={coordinadors}
-                                    optionDefault="Seleciona el coordinador"
-                                    value={formData.coordinador}
-                                    onChange={(e) => onChange(e)}
-                                    disabled={true}
-                                /> */}
-                            </div>
-                            <div className='w-full'>
-
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -207,9 +183,9 @@ export const ValidateCandidate = () => {
             <Wrapper>
                 <div className='w-full flex flex-col lg:flex-row gap-4'>
                     <div className='w-full lg:w-[50%]'>
-                        <Title title='Lista de cursos' />
+                        <Title title='Confirmar validacion' />
                         <div className='w-[95%] mx-auto mb-6'>
-
+                            <h3 className="text-md font-semibold text-gray-900 my-8">Seleciona un curso para inscribir al candidato</h3>
                             <div className='max-h-[500px] overflow-auto p-8 bg-gray-100 py-6 shadow-sm'>
                                 <InputCourse
                                     coursesList={coursesList}
@@ -220,7 +196,7 @@ export const ValidateCandidate = () => {
                         </div>
                     </div>
                     <div className='w-full lg:w-[50%] flex flex-col justify-center items-center'>
-                        <Title title='Fecha de vencimiento' />
+                        <h3 className="text-md text-center font-semibold text-gray-900 my-8">Seleciona la fecha vencimiento</h3>
                         <div className='w-full flex justify-center items-center'>
                             <InputDate
                                 id={'dateExpired'}

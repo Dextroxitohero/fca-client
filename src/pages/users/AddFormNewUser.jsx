@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-hot-toast';
@@ -12,11 +12,15 @@ import { createNewUser } from '../../redux/actions/users';
 
 import { locationState, typeUserOptions } from '../../static/data';
 import logo from '../../static/image/logo.png';
+import { ComboBox } from '../../components/comboBox/ComboBox';
+import { InputDate } from '../../components/inputDate/InputDate';
+import { is } from 'date-fns/locale';
 
 export const AddFormNewUser = ({ email, typeUser }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [selectDateBirth, setSelectDateBirth] = useState(null);
 
     const [formData, setFormData] = useState({
         firstName: '',
@@ -40,41 +44,41 @@ export const AddFormNewUser = ({ email, typeUser }) => {
         }));
     }
 
-    const handleDate = (date) => {
+    useEffect(() => {
         setFormData((prevData) => ({
             ...prevData,
-            dateBirth: date,
+            dateBirth: selectDateBirth,
         }));
-    }
-
-    const validateForm = () => {
-        const { firstName, lastName, location, dateBirth, password, confirmPassword } = formData;
-        if(firstName.trim() === '') {
+    }, [selectDateBirth])
+    
+    const validateForm = (updateState) => {
+        const { firstName, lastName, location, dateBirth, password, confirmPassword } = updateState;
+        if (firstName.trim() === '') {
             toast.error('Ingresa tu nombre');
             return false;
         }
-        if(lastName.trim() === '') {
+        if (lastName.trim() === '') {
             toast.error('Ingresa tu apellido paterno');
             return false;
         }
-        if(location.trim() === '') {
+        if (location.trim() === '') {
             toast.error('Ingresa tu localidad');
             return false;
         }
-        if(dateBirth === '') {
+        if (dateBirth === null) {
             toast.error('Ingresa tu fecha de nacimiento');
             return false;
         }
-        if(password === '') {
+        if (password === '') {
             toast.error('Ingresa tu contraseña');
             return false;
         }
-        if(confirmPassword === '') {
+        if (confirmPassword === '') {
             toast.error('Confirma tu contraseña');
             return false;
         }
 
-        if(password !== confirmPassword) {
+        if (password !== confirmPassword) {
             toast.error('Las contraseñas no coinciden');
             return false;
         }
@@ -85,21 +89,47 @@ export const AddFormNewUser = ({ email, typeUser }) => {
 
     const handleSubmitAddNewUser = () => {
         setLoading(true);
-        const isValid = validateForm();
-        if(isValid) {
-            dispatch(createNewUser(formData))
+        const updateState = {...formData};
+        updateState.typeUser = formData.typeUser.description
+        updateState.location = formData.location.description
+        const isValid = validateForm(updateState);
+        if (isValid) {
+            dispatch(createNewUser(updateState))
                 .then((result) => {
                     if (result.status === 201) {
                         toast.success(result.message);
                         navigate('/');
-                    }
-                    if (result.status !== 201) {
-                        toast.error(result.message);                        
+                    }else{
+                        toast.error(result.message);
                     }
                     setLoading(false);
                 });
+        }else{
+            setLoading(false);
         }
     }
+
+    const [findUserType, setFindUserType] = useState('');
+    const filteredUserType = findUserType === ''
+        ? typeUserOptions
+        : typeUserOptions.filter((userType) =>
+            userType.description
+                .toLowerCase()
+                .replace(/\s+/g, '')
+                .includes(findUserType.toLowerCase().replace(/\s+/g, ''))
+        );
+
+    const [findLocation, setFindLocation] = useState('');
+    const filteredLocations = findLocation === ''
+        ? locationState
+        : locationState.filter((location) =>
+            location.description
+                .toLowerCase()
+                .replace(/\s+/g, '')
+                .includes(findLocation.toLowerCase().replace(/\s+/g, ''))
+        );
+
+
 
     return (
         <div>
@@ -122,8 +152,8 @@ export const AddFormNewUser = ({ email, typeUser }) => {
                     </h2>
                 </div>
             </div>
-            <div className='flex items-center mt-8'>
-                <div className='w-10/12 mx-auto grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8'>
+            <div className='flex flex-col lg:flex-row items-center mt-8'>
+                <div className='w-full lg:w-8/12 mx-auto grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-10 lg:p-4'>
                     <div>
                         <InputText
                             id={'firstName'}
@@ -184,31 +214,6 @@ export const AddFormNewUser = ({ email, typeUser }) => {
                             disabled={true}
                         />
                     </div>
-                    {/* <div>
-                        <InputSelect
-                            id="location"
-                            name="location"
-                            label="Seleciona tu ubicacion"
-                            placeholder="Seleciona tu ubicacion"
-                            data={locationState}
-                            optionDefault="Seleciona tu ubicacion"
-                            value={formData.location}
-                            onChange={(e) => onChange(e)}
-                        />
-                    </div>
-                    <div>
-                        <InputSelect
-                            id="typeUser"
-                            name="tyepUser"
-                            label="Puesto"
-                            placeholder="Seleciona el tipo de usuario"
-                            data={typeUserOptions}
-                            optionDefault="Seleciona el tipo de usuario"
-                            value={formData.typeUser}
-                            onChange={(e) => onChange(e)}
-                            disabled={true}
-                        />
-                    </div> */}
                     <div>
                         <InputText
                             id={'phone'}
@@ -221,16 +226,30 @@ export const AddFormNewUser = ({ email, typeUser }) => {
                             disabled={false}
                         />
                     </div>
-                    {/* <div>
-                        <InputDate
-                            name={'dateBirth'}
-                            label={'Fecha de nacimiento'}
-                            onChange={(date) => handleDate(date)}
-                            value={formData.dateBirth}
-                            placeholder={'Ingresa tu fecha de nacimiento'}
-                            disabled={false}
+                    <div>
+                        <h3 className="text-md font-semibold text-gray-900 mb-2">Seleciona a tu coordinador</h3>
+                        <ComboBox
+                            filterData={filteredUserType}
+                            query={findUserType}
+                            setQuery={setFindUserType}
+                            selected={formData}
+                            setSelected={setFormData}
+                            placeholder='Seleciona un tipo de usuario'
+                            property='typeUser'
                         />
-                    </div> */}
+                    </div>
+                    <div>
+                        <h3 className="text-md font-semibold text-gray-900 mb-2">Lugar de residencia</h3>
+                        <ComboBox
+                            filterData={filteredLocations}
+                            query={findLocation}
+                            setQuery={setFindLocation}
+                            selected={formData}
+                            setSelected={setFormData}
+                            placeholder='Selecione el estado donde vives'
+                            property='location'
+                        />
+                    </div>
                     <div>
                         <InputText
                             id={'password'}
@@ -254,6 +273,18 @@ export const AddFormNewUser = ({ email, typeUser }) => {
                             placeholder={'Confirma tu contraseña'}
                             disabled={false}
                         />
+                    </div>
+                </div>
+                <div className='w-full lg:w-4/12 mx-auto lg:p-4'>
+                    <div>
+                        <h3 className="text-md text-center font-semibold text-gray-900 my-8">Seleciona tu fecha naciemunto</h3>
+                        <div className='w-full flex justify-center items-center'>
+                            <InputDate
+                                id={'dateExpired'}
+                                selected={selectDateBirth}
+                                onChange={setSelectDateBirth}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

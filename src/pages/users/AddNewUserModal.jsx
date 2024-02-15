@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Dialog } from '@headlessui/react';
 import { Modal } from '../../components/modal/Modal';
@@ -10,15 +10,25 @@ import { InputText } from '../../components/inputs/InputText';
 import { ButtonLoader } from '../../components/buttons/ButtonLoader';
 import { typeUserOptions } from '../../static/data';
 import { createNewUserByInvitation } from '../../redux/actions/users';
+import { ComboBox } from '../../components/comboBox/ComboBox';
 
 export const AddNewUserModal = ({ open, setOpen }) => {
 	const dispatch = useDispatch();
 	const cancelButtonRef = useRef(null);
+	const [findUserType, setFindUserType] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [formData, setFormData] = useState({
 		email: '',
 		typeUser: '',
 	});
+
+	useEffect(() => {
+		setFormData({
+			email: '',
+			typeUser: ''
+		});	
+	},[open]);
+
 
 	const onChange = (e) => {
 		const { name, value } = e.target;
@@ -76,6 +86,15 @@ export const AddNewUserModal = ({ open, setOpen }) => {
 		}
 	}
 
+	const filteredUserType = findUserType === ''
+		? typeUserOptions
+		: typeUserOptions.filter((userType) =>
+			userType.description
+				.toLowerCase()
+				.replace(/\s+/g, '')
+				.includes(findUserType.toLowerCase().replace(/\s+/g, ''))
+		);
+
 	return (
 		<Modal open={open} setOpen={setOpen} cancelButtonRef={cancelButtonRef}>
 			<div className="bg-white px-4 py-4">
@@ -91,8 +110,20 @@ export const AddNewUserModal = ({ open, setOpen }) => {
 							</p>
 
 						</div>
-						<div className='flex items-center mt-4'>
-							<div className='w-11/12 mx-auto grid grid-cols-1 gap-6'>
+						<div className='flex items-start mt-4 min-h-[300px]'>
+							<div className='w-11/12 mx-auto grid grid-cols-1 gap-6 m-10'>
+								<div>
+									<h3 className="text-md font-semibold text-gray-900 mb-2">Seleciona a tu coordinador</h3>
+									<ComboBox
+										filterData={filteredUserType}
+										query={findUserType}
+										setQuery={setFindUserType}
+										selected={formData}
+										setSelected={setFormData}
+										placeholder='Seleciona un tipo de usuario'
+										property='typeUser'
+									/>
+								</div>
 								<div>
 									<InputText
 										id={'email'}
@@ -105,19 +136,7 @@ export const AddNewUserModal = ({ open, setOpen }) => {
 										disabled={false}
 									/>
 								</div>
-								<div>
-									{/* <InputSelect
-										id="typeUser"
-										name="typeUser"
-										label="Tipo de usuario"
-										placeholder="Selecione el tipo de usuario"
-										data={typeUserOptions}
-										optionDefault="Selecione el tipo de usuario"
-										value={formData.typeUser}
-										onChange={(e) => onChange(e)}
-									/> */}
-								</div>
-								<div className='mt-2'>
+								<div className='mt-[20px]'>
 									<button
 										type='button'
 										disabled={loading}
