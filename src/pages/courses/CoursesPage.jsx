@@ -66,7 +66,7 @@ export const CoursesPage = () => {
                                 teacher={course?.teacher}
                                 fromDate={course?.fromDate}
                                 toDate={course?.toDate}
-                                headerImage={course?.headerImage?.fileName}
+                                headerImage={course?.headerImage?.urlName}
                             />
                         ))) : <h1>No hay ningun curso</h1>
                         }

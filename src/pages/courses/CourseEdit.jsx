@@ -44,7 +44,7 @@ export const CourseEdit = ({ isCreating }) => {
         if (idCourse) {
             dispatch(getCourseById(idCourse));
         }
-    }, [idCourse, dispatch]);
+    }, [idCourse]);
 
     useEffect(() => {
         dispatch(optionsAllTeachers());
@@ -254,7 +254,7 @@ export const CourseEdit = ({ isCreating }) => {
                                         fromDate={selectedDates?.from}
                                         toDate={selectedDates?.to}
                                         studentLimit={courseSelected?.limitMembers}
-                                        headerImage={headerImageSelected?.fileName}
+                                        headerImage={headerImageSelected?.urlName}
                                     />
                                 )}
                             </div>

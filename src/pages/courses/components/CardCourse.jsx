@@ -38,7 +38,7 @@ export const CardCourse = ({
                 <div>
                     {
                         headerImage !== undefined
-                            ? (<img className="w-full shrink-0 rounded-t-md object-cover" src={`${baseURLImage}${headerImage}`} alt="header" />)
+                            ? (<img className="w-full shrink-0 rounded-t-md object-cover" src={headerImage} alt="header" />)
                             : null
                     }
 

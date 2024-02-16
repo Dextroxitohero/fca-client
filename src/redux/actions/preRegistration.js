@@ -89,23 +89,21 @@ export const validatePaymentVoucher = ({
 	try {
 
 		const formData = new FormData();
-		formData.append('account', account);
-		formData.append('coordinador', coordinador);
-		formData.append('email', email);
-		formData.append('id', id);
 		formData.append('file', file);
+		formData.append('upload_preset', 'fca-intranet');
 
-		const response = await axios.post('/preRegister/validatePaymentVoucher', formData,
-			{
-				headers: {
-					'Content-Type': 'multipart/form-data',
-				},
-			}
-		);
+		const res = await axios.post('https://api.cloudinary.com/v1_1/dax0v05jz/image/upload', formData);
 
-		dispatch(validatePaymentSuccess(response));
 
-		if (response.status === 200) {
+		if(res.status === 200){
+			const response = await axios.post('/preRegister/validatePaymentVoucher', {
+				account,
+				coordinador,
+				urlName: res.data.secure_url,
+				email,
+				id
+			});
+			dispatch(validatePaymentSuccess(response));
 			return {
 				status: response.status,
 				message: response.data.message

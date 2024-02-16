@@ -18,7 +18,7 @@ export const InputHeaderImage = ({ headersImage, headerImageSelected, setHeaderI
                 <RadioGroup value={headerImageSelected?._id} onChange={(value) => handleCourse(value)}>
                     <RadioGroup.Label className="sr-only">Seleciona un imagen de encabezado</RadioGroup.Label>
                     <div className="grid grid-cols-1 gap-4">
-                        {headersImage.map(({ _id, name, fileName }) => (
+                        {headersImage.map(({ _id, name, urlName }) => (
                             <RadioGroup.Option
                                 key={_id}
                                 value={_id}
@@ -32,7 +32,7 @@ export const InputHeaderImage = ({ headersImage, headerImageSelected, setHeaderI
                                 {({ active, checked }) => (
                                     <>
                                         {/* <img src={`${baseURLImage}${fileName}`} alt={name} className="w-full flex-shrink-0 rounded-md" /> */}
-                                        <img src={`${process.env.RAILWAY_VOLUME_MOUNT_PATH}/${fileName}`} alt={name} className="w-full flex-shrink-0 rounded-md" />
+                                        <img src={urlName} alt={name} className="w-full flex-shrink-0 rounded-md" />
                                         <span
                                             className={classNames(
                                                 active ? 'border' : 'border-2',

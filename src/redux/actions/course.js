@@ -18,6 +18,7 @@ import {
 // import axios from "axios";
 import axios from '../../api/axios';
 import { toast } from 'react-hot-toast';
+import { id } from 'date-fns/locale';
 
 
 export const createCourse = ({ language, level, color, limitMembers, fromDate, toDate, hours, days, teacher, headerImage, createdBy, updatedBy }) => async (dispatch) => {
@@ -87,7 +88,7 @@ export const getAllCourses = ({ id, roles }) => async (dispatch) => {
     try {
         dispatch(getAllCoursesStart());
 
-        const response = await axios.get(`/course/${id}/${roles}`);
+        const response = await axios.get(`/course/getAllCourse/${id}/${roles}`);
 
         if (response.status === 200) {
             dispatch(getAllCoursesSuccess(response.data));
@@ -104,12 +105,9 @@ export const getCourseById = (idCourse) => async (dispatch) => {
     try {
         dispatch(getCourseByStart());
 
-        const response = await axios.get(`/course/findById/${idCourse}`);
-
+        const response = await axios.get(`/course/findCourseById/${idCourse}`);
         if (response.status === 200) {
             dispatch(getCourseBySuccess(response.data));
-        } else {
-            dispatch(getCourseByFailure());
         }
     } catch (error) {
         dispatch(getCourseByFailure());

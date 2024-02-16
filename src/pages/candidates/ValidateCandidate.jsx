@@ -20,8 +20,6 @@ import { ConformationValidationModal } from './ConformationValidationModal';
 import { InputDate } from '../../components/inputDate/InputDate';
 import { InputCourse } from '../../components/inputCourse/InputCourse';
 
-import { baseURLImage } from '../../common/urlBase';
-
 export const ValidateCandidate = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
@@ -65,7 +63,7 @@ export const ValidateCandidate = () => {
         phone, dateBirth, location,
         education, language, status,
         createdAt, account, coordinador,
-        fileName
+        urlName
     } = preRegisterSelected;
 
     const [formData, setFormData] = useState({
@@ -169,7 +167,7 @@ export const ValidateCandidate = () => {
                         <div className='mx-auto w-[40%]'>
                             <div>
                                 <h3 className="text-md text-center font-semibold text-gray-900 my-8">Comprobante de pago</h3>
-                                <img src={`${baseURLImage}${fileName}`} alt="" className="mx-auto w-11/12 flex-shrink-0 rounded-md shadow-md" />
+                                <img src={urlName} alt="" className="mx-auto w-11/12 flex-shrink-0 rounded-md shadow-md" />
                             </div>
                         </div>
                         {/* Property activation */}

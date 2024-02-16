@@ -6,7 +6,7 @@ import {
 	headerImageFailure,
 } from '../reducers/setting';
 import axios from '../../api/axios';
-// import axios from 'axios';
+
 import { toast } from 'react-hot-toast';
 
 export const getAllHeadersImages = () => async (dispatch) => {
