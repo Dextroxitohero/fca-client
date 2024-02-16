@@ -83,7 +83,7 @@ export const AddNewHeaderImagen = ({ open, setOpen }) => {
     };
 
 
-    const handleSendEmail = () => {
+    const handleImage = () => {
         setLoading(true);
         const { name, file } = formData;
         const formValidation = validForm();
@@ -188,7 +188,7 @@ export const AddNewHeaderImagen = ({ open, setOpen }) => {
                                         type='button'
                                         disabled={loading}
                                         className='disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold text-md text-white text-center bg-indigo-600 w-full'
-                                        onClick={handleSendEmail}
+                                        onClick={handleImage}
                                     >
                                         {loading
                                             ? <ButtonLoader />

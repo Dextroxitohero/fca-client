@@ -12,8 +12,6 @@ import { firstCapitalLetter } from '../../common/upperCaseWord';
 import { getAllHeadersImages, removeHeaderImage } from '../../redux/actions/setting';
 import { ConfirmirRemoverHeaderImage } from './ConfirmirRemoverHeaderImage';
 
-import { baseURLImage } from '../../common/urlBase';
-
 export const SettingImageHeader = () => {
 	const dispatch = useDispatch();
 	const [openAddNewHeaderImage, setOpenAddNewHeaderImagen] = useState(false);
@@ -29,7 +27,6 @@ export const SettingImageHeader = () => {
 		setOpenconfirmRemoveHeaderImage(true);
 		setSelectedRemoveHeaderImage(id);
 	}
-
 
 	const handleRemoveHeaderImage = (id) => {
 		dispatch(removeHeaderImage(id))
@@ -68,7 +65,7 @@ export const SettingImageHeader = () => {
 								<div key={index}>
 									<div className='text-lg font-semibold text-gray-600 flex justify-center flex-col items-center border p-4 rounded-md'>
 										<h3 className='mb-4'>{firstCapitalLetter(header.name)}</h3>
-										<img src={`${baseURLImage}${header.fileName}`} alt={header.name} className="mx-auto mb-6 w-11/12 flex-shrink-0 rounded-md shadow-sm" />
+										<img src={header.urlName} alt={header.name} className="mx-auto mb-6 w-11/12 flex-shrink-0 rounded-md shadow-sm" />
 										<Button
 											label={'Eliminar'}
 											onClick={() => confirmRemoveHeaderImage(header._id)}
