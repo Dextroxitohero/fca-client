@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { ContainerFull } from '../../components/ContainerFull';
 import { Heading } from '../../components/Heading';
 import { Button } from '../../components/buttons/Button';
 import { Wrapper } from '../../components/Wrapper';
-import { useNavigate } from 'react-router-dom';
+import { CardCourse } from './components/CardCourse';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { cleanActionSelectedCourse, getAllCourses } from '../../redux/actions/course';
-import { CardCourse } from './components/CardCourse';
 
 export const CoursesPage = () => {
     const dispatch = useDispatch();
@@ -27,6 +29,7 @@ export const CoursesPage = () => {
     const handleCreateNewCourse = () => {
         navigate('/nuevo-curso');
     }
+
     return (
         <ContainerFull>
             <Heading
@@ -34,9 +37,13 @@ export const CoursesPage = () => {
                 center={false}
             />
 
-            <div className='w-full flex justify-end mt-4'>
-                <Button label={"Agregar nuevo curso"} onClick={handleCreateNewCourse} />
-            </div>
+            {
+                user.user?.roles === 'admin' && (
+                    <div className='w-full flex justify-end mt-4'>
+                        <Button label={"Agregar nuevo curso"} onClick={handleCreateNewCourse} />
+                    </div>
+                )
+            }
 
             <Wrapper>
                 <input

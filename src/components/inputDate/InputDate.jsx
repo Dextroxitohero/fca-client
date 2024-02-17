@@ -38,7 +38,7 @@ export const InputDate = ({ id, selected, onChange }) => {
                     selected: 'my-selected',
                     today: 'my-today'
                 }}
-                fromYear={1980}
+                fromYear={1950}
                 toYear={2025}
             />
         </div>

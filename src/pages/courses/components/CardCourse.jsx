@@ -3,7 +3,7 @@ import { formatDate } from "../../../common/formatDateText";
 import { capitalizarPalabras } from "../../../common/upperCaseWord";
 import { useSelector } from 'react-redux';
 
-import { baseURLImage, urlFlag } from '../../../common/urlBase';
+import { urlFlag } from '../../../common/urlBase';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -68,10 +68,13 @@ export const CardCourse = ({
                         <div className="flex justify-end">
                             <div
                                 className={classNames(
-                                    status === 'activo'
-                                        ? 'text-lime-600 ring-lime-600 shadow-lime-600'
-                                        : 'text-red-600 ring-red-600 shadow-red-600',
-                                    'border-none ring-2  shadow-md py-0 px-1 rounded-sm  uppercase font-bold'
+                                    status === 'abierto'
+                                        ? 'text-sky-700 ring-sky-700 shadow-sky-700'
+                                        : status === 'en curso' ? 'text-lime-600 ring-lime-600 shadow-lime-600'
+                                            : status === 'completado' ? 'text-indigo-600 ring-indigo-600 shadow-indigo-600'
+                                                : status === 'cancelado' ? 'text-gray-600 ring-gray-600 shadow-gray-600'
+                                                    : status === 'finalizado' ? 'text-red-500 ring-red-500 shadow-red-500' : null,
+                                    'border-none ring-2  shadow-sm py-0 px-1 rounded-sm uppercase font-bold'
                                 )}>
                                 <p className="text-[.8rem]">{status}</p>
                             </div>

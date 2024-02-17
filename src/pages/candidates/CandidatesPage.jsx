@@ -8,6 +8,12 @@ import { getAllPreRegister } from '../../redux/actions/preRegistration';
 import { ContainerFull } from '../../components/ContainerFull';
 import { Heading } from '../../components/Heading';
 import { Wrapper } from '../../components/Wrapper';
+import { capitalizarPalabras } from '../../common/upperCaseWord';
+
+
+function classNames(...classes) {
+	return classes.filter(Boolean).join(' ')
+}
 
 export const CandidatesPage = () => {
 	const dispatch = useDispatch();
@@ -40,57 +46,83 @@ export const CandidatesPage = () => {
 	};
 
 	const columns = [
-		{ field: 'firstName', headerName: 'Nombre', flex: 1 },
-		{ field: 'lastName', headerName: 'Apellido', flex: 1 },
+		{
+			field: 'firstName',
+			headerName: 'Nombre',
+			flex: 1,
+			renderCell: (params) => (
+				<p>{capitalizarPalabras(params.value)}</p>
+			),
+		},
+		{
+			field: 'lastName',
+			headerName: 'Apellido',
+			flex: 1,
+			renderCell: (params) => (
+				<p>{capitalizarPalabras(params.value)}</p>
+			),
+		},
 		{ field: 'email', headerName: 'Correo Electronico', flex: 1 },
 		{ field: 'location', headerName: 'Locacion', flex: 1 },
 		{ field: 'education', headerName: 'Nivel educativo', flex: 1 },
-		{ field: 'language', headerName: 'Idioma', flex: 1 },
-		{ field: 'coordinador', headerName: 'Coordinador', flex: 1 },
+		{
+			field: 'language',
+			headerName: 'Idioma',
+			flex: 1,
+			renderCell: (params) => (
+				<p>{capitalizarPalabras(params.value)}</p>
+			),
+		},
+		{
+			field: 'coordinador',
+			headerName: 'Coordinador',
+			flex: 1,
+			renderCell: (params) => (
+				<p>{capitalizarPalabras(params.value)}</p>
+			),
+		},
 		{ field: 'createdAtFormatted', headerName: 'Fecha de registro', flex: 1 },
 		{
 			field: 'status',
 			headerName: 'Estatus',
 			flex: 1,
 			renderCell: (params) => (
-				<span style={{ color: getStatusColor(params.value) }}>{params.value}</span>
+				<div className={classNames(
+					params.value === 'completado'
+						? 'text-lime-600 ring-lime-600 shadow-lime-600'
+						: params.value === 'prospecto' ? 'text-orange-500 ring-orange-500 shadow-orange-500'
+							: 'text-red-500 ring-red-500 shadow-red-500',
+					'border-none ring-2  shadow-sm py-0 px-1 rounded-sm uppercase font-bold'
+				)}>
+					<span className="text-[.8rem]">{params.value}</span>
+				</div>
 			),
 		},
 		{
 			field: 'action',
-			headerName: '',
+			headerName: 'Acciones',
 			flex: 1,
 			sortable: false,
 			disableColumnMenu: true,
-			// renderCell: (params) => {
-			// 	// console.log(params.row.status)
-			// 	params.row.status !== 'completado' ? (
-			// 		<div style={{ textAlign: 'center' }}>
-			// 			<Link
-			// 				to={`/candidatos/${params.id}`}
-			// 				className="px-2 py-1 bg-indigo-600 text-white rounded"
-			// 			>
-			// 				Validar
-			// 			</Link>
-			// 		</div>
-			// 	) : (<div>HOLA</div>)
-			// }
 			renderCell: (params) => (
 				<div style={{ textAlign: 'center' }}>
-					<Link
-						to={`/candidatos/${params.id}`}
-						className="px-2 py-1 bg-indigo-600 text-white rounded"
-					>
-						Validar
-					</Link>
+					{
+						params.row.status === 'validando' ?
+							(
+								<Link
+									to={`/candidatos/${params.id}`}
+									className="px-4 py-1.5 bg-indigo-600 text-slate-50 rounded hover:bg-indigo-700"
+								>
+									Validar
+								</Link>
+							)
+							: null
+					}
+
 				</div>
 			),
 		},
 	];
-
-	// const handleRowClick = (params) => {
-	// 	console.log(params.row)
-	// };
 
 	const handleSearchChange = (event) => {
 		const searchText = event.target.value;

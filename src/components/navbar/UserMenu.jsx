@@ -5,7 +5,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { userMenu } from '../../static/data';
 import { MenuItem } from './MenuItem';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from '../../redux/actions/user';
 
 // const solutions = [
@@ -19,12 +19,14 @@ import { logoutUser } from '../../redux/actions/user';
 
 export const UserMenu = () => {
 
-	const dispatch = useDispatch();
-    
-    const handleLogOut = ()=>{
+    const dispatch = useDispatch();
+
+    const { user } = useSelector((state) => state.user);
+
+    const handleLogOut = () => {
         dispatch(logoutUser())
     }
-    
+
     return (
         <div>
             <Transition
@@ -53,15 +55,19 @@ export const UserMenu = () => {
                     <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-whitetext-sm leading-6">
                         <div className="p-4">
                             {userMenu.map((item) => (
-                                <MenuItem
-                                    key={item.name}
-                                    name={item.name}
-                                    description={item.description}
-                                    href={item.href}
-                                    icon={item.icon}
-                                />
+                                (user.roles === 'user' && item.name === 'Configuracion')
+                                    ? null
+                                    : (
+                                        <MenuItem
+                                            key={item.name}
+                                            name={item.name}
+                                            description={item.description}
+                                            href={item.href}
+                                            icon={item.icon}
+                                        />
+                                    )
                             ))}
-                            <hr className='mt-4'/>
+                            <hr className='mt-4' />
 
                             <div
                                 onClick={handleLogOut}

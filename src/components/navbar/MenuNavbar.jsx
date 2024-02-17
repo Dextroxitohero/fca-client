@@ -6,7 +6,7 @@ import { navigation } from '../../static/data';
 
 export const MenuNavbar = () => {
   const location = useLocation();
-  const { roles, user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
 
   return (
     <div className="hidden md:block">

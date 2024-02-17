@@ -1,4 +1,4 @@
-export const user = {
+export const userData = {
     name: 'Tom Cook',
     email: 'tom@example.com',
     imageUrl:
@@ -29,8 +29,8 @@ export const navigation = [
 ];
 
 export const userNavigation = [
-    { name: 'Perfil', href: '#' },
-    { name: 'Configuracion', href: '#' },
+    { name: 'Perfil', href: '/perfil' },
+    { name: 'Configuracion', href: '/ajustes' },
 ]
 
 export const userMenu = [

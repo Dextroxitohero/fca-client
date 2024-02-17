@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
@@ -19,6 +19,8 @@ import { capitalizarPalabras, firstCapitalLetter } from '../../common/upperCaseW
 import { ConformationValidationModal } from './ConformationValidationModal';
 import { InputDate } from '../../components/inputDate/InputDate';
 import { InputCourse } from '../../components/inputCourse/InputCourse';
+import { InputText } from '../../components/inputs/InputText';
+import { set } from 'date-fns';
 
 export const ValidateCandidate = () => {
     const { id } = useParams();
@@ -26,13 +28,14 @@ export const ValidateCandidate = () => {
     const navigate = useNavigate();
 
     const [selectExpireDate, setSelectExpireDate] = useState(null);
+    const cancelCreateCourseRef = useRef(null);
 
     const [loading, setLoading] = useState(false);
     const [openConfirmationValidationModal, setOpenConfirmationValidationModal] = useState(false)
     const [courseSelected, setCourseSelected] = useState();
 
     const { preRegisterSelected } = useSelector((state) => state.preRegistration);
-    const { coordinadors, accountsBank, coursesList } = useSelector((state) => state.options);
+    const { accountsBank, coursesList } = useSelector((state) => state.options);
 
     useEffect(() => {
         dispatch(getSelectedPreRegister(id))
@@ -43,6 +46,12 @@ export const ValidateCandidate = () => {
         dispatch(optionsAllAccountsBank());
         dispatch(optionsAllCourseList());
     }, []);
+
+    useEffect(() => {
+        if(preRegisterSelected?.status === 'completado') {
+            navigate('/candidatos');
+        }
+    }, [preRegisterSelected])
 
     useEffect(() => {
         setFormData((prevData) => ({
@@ -66,27 +75,48 @@ export const ValidateCandidate = () => {
         urlName
     } = preRegisterSelected;
 
+
+    const getNumberAccount = () => {
+        const accountSelected = accountsBank.find((accountBank) => accountBank.value === account);
+        return accountSelected?.description;
+    }
+
+    useEffect(() => {
+        setFormData((prevData) => ({
+            ...prevData,
+            accountNumber: getNumberAccount(),
+        }));
+    }, [accountsBank])
+
+
+
+
     const [formData, setFormData] = useState({
         idPreregister: id,
-        coordinador: coordinador?._id,
-        createdBy: coordinador?._id,
-        account: account,
+        coordinador: coordinador?._id || '',
+        coordinadorName: coordinador ? `${coordinador?.firstName} ${coordinador?.lastName}` : '',
+        createdBy: coordinador?._id || '',
+        account: account || '',
+        accountNumber: '',
         paymentDeadlineDate: '',
         idCourse: '',
     });
 
+
     const validationData = () => {
-        if (!formData.coordinador) {
+        if (formData.coordinador.trim() === '') {
+            toast.error('Selecciona un coordinador para el candidato');
             return false;
         }
-        if (!formData.account) {
+        if (formData.account.trim() === '') {
+            toast.error('Selecciona la cuenta de deposito para el candidato');
             return false;
         }
-        if (!formData.idCourse) {
+        if (formData.idCourse === undefined) {
             toast.error('Selecciona el curso al que se inscribira el candidato');
             return false;
         }
-        if (!formData.paymentDeadlineDate) {
+        if (formData.paymentDeadlineDate === null) {
             toast.error('Selecciona la fecha de vencimiento de pago');
             return false;
         }
@@ -97,19 +127,23 @@ export const ValidateCandidate = () => {
         const validation = validationData();
         if (validation) {
             setOpenConfirmationValidationModal(true);
-            dispatch(validateCandidate(formData))
-                .then((result) => {
-                    if (result.status === 201) {
-                        toast.success(result.message);
-                        navigate('/');
-                    } else {
-                        toast.error(result.message);
-
-                    }
-                    setOpenConfirmationValidationModal(false);
-                    setLoading(false);
-                });
         }
+    }
+
+    const comfirmationValidation = () => {
+        setLoading(true);
+        dispatch(validateCandidate(formData))
+            .then((result) => {
+                if (result.status === 201) {
+                    toast.success(result.message);
+                    navigate('/candidatos');
+                } else {
+                    toast.error(result.message);
+
+                }
+                setOpenConfirmationValidationModal(false);
+                setLoading(false);
+            });
     }
 
     return (
@@ -171,8 +205,29 @@ export const ValidateCandidate = () => {
                             </div>
                         </div>
                         {/* Property activation */}
-                        <div className='w-[70%] mx-auto flex flex-col justify-center items-center pb-4'>
-
+                        <div className='w-[70%] mx-auto flex flex-col mt-8'>
+                            <div className='mb-4'>
+                                <InputText
+                                    id={'account'}
+                                    name={'account'}
+                                    type={'text'}
+                                    label={'Cuenta de deposito'}
+                                    value={formData.accountNumber}
+                                    placeholder={''}
+                                    disabled={true}
+                                />
+                            </div>
+                            <div className='mb-4'>
+                                <InputText
+                                    id={'account'}
+                                    name={'account'}
+                                    type={'text'}
+                                    label={'Coordinador asignado'}
+                                    value={capitalizarPalabras(formData.coordinadorName)}
+                                    placeholder={''}
+                                    disabled={true}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -210,10 +265,7 @@ export const ValidateCandidate = () => {
                                 className='disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold text-md text-white text-center bg-indigo-600 w-full'
                                 onClick={() => handleValidationCadidate()}
                             >
-                                {loading
-                                    ? <ButtonLoader />
-                                    : 'Confirmacion de validacion'
-                                }
+                                Validar candidato
                             </button>
                         </div>
                     </div>
@@ -222,6 +274,12 @@ export const ValidateCandidate = () => {
             <ConformationValidationModal
                 open={openConfirmationValidationModal}
                 setOpen={setOpenConfirmationValidationModal}
+                cancelButtonRef={cancelCreateCourseRef}
+                confirmAction={comfirmationValidation}
+                title={'Validar candidato'}
+                message={'Esatas seguro de validar la inscripcion del candidato?'}
+                labelButonConfirm={'Confirmar candidato'}
+                loading={loading}
             />
         </ContainerFull>
     )

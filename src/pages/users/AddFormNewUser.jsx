@@ -6,15 +6,13 @@ import { toast } from 'react-hot-toast';
 import { InputText } from '../../components/inputs/InputText';
 import { ButtonLoader } from '../../components/buttons/ButtonLoader';
 import { Button } from '../../components/buttons/Button';
-
+import { ComboBox } from '../../components/comboBox/ComboBox';
+import { InputDate } from '../../components/inputDate/InputDate';
 
 import { createNewUser } from '../../redux/actions/users';
 
-import { locationState, typeUserOptions } from '../../static/data';
+import { locationState } from '../../static/data';
 import logo from '../../static/image/logo.png';
-import { ComboBox } from '../../components/comboBox/ComboBox';
-import { InputDate } from '../../components/inputDate/InputDate';
-import { is } from 'date-fns/locale';
 
 export const AddFormNewUser = ({ email, typeUser }) => {
     const dispatch = useDispatch();
@@ -47,10 +45,10 @@ export const AddFormNewUser = ({ email, typeUser }) => {
     useEffect(() => {
         setFormData((prevData) => ({
             ...prevData,
-            dateBirth: selectDateBirth,
+            dateBirth: selectDateBirth || '',
         }));
     }, [selectDateBirth])
-    
+
     const validateForm = (updateState) => {
         const { firstName, lastName, location, dateBirth, password, confirmPassword } = updateState;
         if (firstName.trim() === '') {
@@ -65,7 +63,7 @@ export const AddFormNewUser = ({ email, typeUser }) => {
             toast.error('Ingresa tu localidad');
             return false;
         }
-        if (dateBirth === null) {
+        if (dateBirth === '') {
             toast.error('Ingresa tu fecha de nacimiento');
             return false;
         }
@@ -89,9 +87,10 @@ export const AddFormNewUser = ({ email, typeUser }) => {
 
     const handleSubmitAddNewUser = () => {
         setLoading(true);
-        const updateState = {...formData};
-        updateState.typeUser = formData.typeUser.description
-        updateState.location = formData.location.description
+        const updateState = { ...formData };
+        updateState.typeUser = formData.typeUser.description || ''
+        updateState.location = formData.location.description || ''
+        console.log(updateState)
         const isValid = validateForm(updateState);
         if (isValid) {
             dispatch(createNewUser(updateState))
@@ -99,25 +98,15 @@ export const AddFormNewUser = ({ email, typeUser }) => {
                     if (result.status === 201) {
                         toast.success(result.message);
                         navigate('/');
-                    }else{
+                    } else {
                         toast.error(result.message);
                     }
                     setLoading(false);
                 });
-        }else{
+        } else {
             setLoading(false);
         }
     }
-
-    const [findUserType, setFindUserType] = useState('');
-    const filteredUserType = findUserType === ''
-        ? typeUserOptions
-        : typeUserOptions.filter((userType) =>
-            userType.description
-                .toLowerCase()
-                .replace(/\s+/g, '')
-                .includes(findUserType.toLowerCase().replace(/\s+/g, ''))
-        );
 
     const [findLocation, setFindLocation] = useState('');
     const filteredLocations = findLocation === ''
@@ -227,15 +216,15 @@ export const AddFormNewUser = ({ email, typeUser }) => {
                         />
                     </div>
                     <div>
-                        <h3 className="text-md font-semibold text-gray-900 mb-2">Seleciona a tu coordinador</h3>
-                        <ComboBox
-                            filterData={filteredUserType}
-                            query={findUserType}
-                            setQuery={setFindUserType}
-                            selected={formData}
-                            setSelected={setFormData}
-                            placeholder='Seleciona un tipo de usuario'
-                            property='typeUser'
+                        <InputText
+                            id={'typeUser'}
+                            name={'typeUser'}
+                            type={'text'}
+                            label={'Tipo de usuario'}
+                            onChange={(e) => onChange(e)}
+                            value={formData.typeUser.description.toUpperCase()}
+                            placeholder={''}
+                            disabled={true}
                         />
                     </div>
                     <div>
@@ -277,7 +266,7 @@ export const AddFormNewUser = ({ email, typeUser }) => {
                 </div>
                 <div className='w-full lg:w-4/12 mx-auto lg:p-4'>
                     <div>
-                        <h3 className="text-md text-center font-semibold text-gray-900 my-8">Seleciona tu fecha naciemunto</h3>
+                        <h3 className="text-md text-center font-semibold text-gray-900 my-8">Seleciona tu fecha nacimiento</h3>
                         <div className='w-full flex justify-center items-center'>
                             <InputDate
                                 id={'dateExpired'}

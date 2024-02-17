@@ -110,10 +110,10 @@ export const FormLogin = () => {
                                 id={2}
                                 name={'password'}
                                 type={'password'}
-                                label={'Ingresa tu contraseñas'}
+                                label={'Ingresa tu contraseña'}
                                 onChange={(e) => onChange(e)}
                                 value={formData.password}
-                                placeholder={'Ingresa tu contraseñas'}
+                                placeholder={'Ingresa tu contraseña'}
                                 disabled={false}
                             />
                         </div>

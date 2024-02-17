@@ -9,14 +9,13 @@ export const InputAccountBank = ({ accountsBank, accountSelected, setAccountSele
         const accout = accountsBank.find(account => account.value === value)
         setAccountSelected({...accountSelected, account: { '_id': accout.value, 'name': accout.description } });
     }
-
     return (
         <div>
             {accountsBank && (
                 <RadioGroup value={accountSelected?.level?._id} onChange={(value) => handleAccount(value)}>
                     <RadioGroup.Label className="sr-only">Seleciona el nivel del curso</RadioGroup.Label>
-                    <div className="grid grid-cols-2 gap-4 lg:grid-cols-2">
-                        {accountsBank.map(({ value, name, description }) => (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        {accountsBank.map(({ value, name, description, cable }) => (
                             <RadioGroup.Option
                                 key={value}
                                 value={value}
@@ -34,6 +33,9 @@ export const InputAccountBank = ({ accountsBank, accountSelected, setAccountSele
                                             <p className='text-md text-gray-900 font-semibold tracking-wide uppercase mb-4'>{name}</p>
                                             <p className='text-gray-600 tracking-wide uppercase mb-1'>Numero de cuenta</p>
                                             <p className='text-md text-gray-900 font-semibold tracking-wide uppercase mb-4'>{description}</p>
+                                            <p className='text-gray-600 tracking-wide uppercase mb-1'>Cable</p>
+                                            <p className='text-md text-gray-900 font-semibold tracking-wide uppercase mb-4'>{cable ? cable : '-'}</p>
+                                            {}
 
                                         </div>
                                         <span
