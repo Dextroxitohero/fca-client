@@ -6,6 +6,12 @@ import {
 	headerImageFailure,
 } from '../reducers/setting';
 import axios from '../../api/axios';
+// import cloudinary from "cloudinary/lib/cloudinary";
+// cloudinary.config({
+// 	cloud_name: process.env.REACT_APP_CLOUD_NAME,
+// 	api_key: process.env.REACT_APP_API_KEY,
+// 	api_secret: process.env.REACT_APP_API_SECRET
+// });
 
 import { toast } from 'react-hot-toast';
 
@@ -31,13 +37,15 @@ export const addNewHeaderImage = ({
 	try {
 		const formData = new FormData();
 		formData.append('file', file);
+		formData.append("upload_preset", process.env.REACT_APP_PRESET_NAME);
+		formData.append("cloud_name", process.env.REACT_APP_CLOUD_NAME);
 		formData.append('upload_preset', 'fca-intranet');
-		const res = await axios.post('https://api.cloudinary.com/v1_1/dax0v05jz/image/upload', formData);
-
-		if(res.status === 200){
+		const res = await axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`, formData);
+		if (res.status === 200) {
 			const response = await axios.post('/headerImage', {
 				name,
-				urlName: res.data.secure_url
+				urlName: res.data.secure_url,
+				publicId: res.data.public_id
 			});
 			if (response.status === 201) {
 				dispatch(uploadHeaderImageSuccess());
@@ -54,6 +62,7 @@ export const addNewHeaderImage = ({
 		dispatch(headerImageFailure());
 	}
 };
+
 
 export const removeHeaderImage = (headerImageId) => async (dispatch) => {
 	dispatch(headerImageStart());

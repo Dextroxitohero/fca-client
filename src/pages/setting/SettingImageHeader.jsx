@@ -19,6 +19,8 @@ export const SettingImageHeader = () => {
 	const [selectedRemoveHeaderImage, setSelectedRemoveHeaderImage] = useState(null);
 	const headersImage = useSelector((state) => state.setting.headersImage);
 
+	console.log(headersImage)
+
 	useEffect(() => {
 		dispatch(getAllHeadersImages())
 	}, []);
