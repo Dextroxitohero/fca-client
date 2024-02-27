@@ -1,38 +1,53 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dialog } from '@headlessui/react';
-import { Modal } from '../../components/modal/Modal';
 import { toast } from 'react-hot-toast';
 
-
+import { Modal } from '../../components/modal/Modal';
 import { InputText } from '../../components/inputs/InputText';
 import { ButtonLoader } from '../../components/buttons/ButtonLoader';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import { Button } from '../../components/buttons/Button';
-import { addNewHeaderImage, getAllHeadersImages } from '../../redux/actions/setting';
 
-export const AddNewHeaderImagen = ({ open, setOpen }) => {
+import { editHeaderImage, getAllHeadersImages } from '../../redux/actions/setting';
+
+export const EditHeaderImagen = ({ open, setOpen, state }) => {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.user);
     const cancelButtonRef = useRef(null);
     const [loading, setLoading] = useState(false);
-
-    const [previewImage, setPreviewImage] = useState(null);
+    const [previewImage, setPreviewImage] = useState(state?.urlName);
     const [formData, setFormData] = useState({
+        id: '',
         name: '',
         file: null,
+        publicId: ''
     });
 
     useEffect(() => {
         if (!open) {
             setFormData({
+                id: '',
                 name: '',
                 file: null,
+                publicId: ''
+
             });
             setPreviewImage(null);
         }
     }, [open])
 
+    useEffect(() => {
+        if (state) {
+            setFormData({
+                id: state._id,
+                name: state.name,
+                file: null,
+                publicId: state.publicId
+            });
+            setPreviewImage(state.urlName);
+        }
+    }, [state])
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -43,7 +58,7 @@ export const AddNewHeaderImagen = ({ open, setOpen }) => {
     }
 
 
-    const handleRemoveImage = () => {
+    const handleEditImage = () => {
         setFormData((prevData) => ({
             ...prevData,
             file: null,
@@ -77,7 +92,10 @@ export const AddNewHeaderImagen = ({ open, setOpen }) => {
 
     const validForm = () => {
         const { name, file } = formData;
-        if (name.trim() === '' || file === null) {
+        if (name.trim() === '') {
+            return false;
+        }
+        if (previewImage === null) {
             return false;
         }
         return true;
@@ -86,29 +104,28 @@ export const AddNewHeaderImagen = ({ open, setOpen }) => {
 
     const handleImage = () => {
         setLoading(true);
-        const { name, file } = formData;
+        const { id, name, file, publicId } = formData;
         const formValidation = validForm();
         if (formValidation) {
-            dispatch(addNewHeaderImage({
-                name,
-                file,
-                createdBy: user?._id,
+            dispatch(editHeaderImage({ 
+                id, 
+                name, 
+                file, 
+                publicId,
                 updatedBy: user?._id
             }))
                 .then((result) => {
-                    if (result.status === 201) {
+                    if (result.status === 200) {
                         toast.success(result.message);
                         setOpen(false);
                         setFormData({
+                            id: '',
                             name: '',
-                            file: ''
+                            file: null,
+                            publicId: ''
                         });
                         dispatch(getAllHeadersImages());
-                    }
-                    if (result.status === 400) {
-                        toast.error(result.message);
-                    }
-                    if (result.status === 500) {
+                    } else {
                         toast.error(result.message);
                     }
                     setLoading(false);
@@ -171,7 +188,7 @@ export const AddNewHeaderImagen = ({ open, setOpen }) => {
                                             <Button
                                                 label='Selecionar otra imagen'
                                                 disabled={loading}
-                                                onClick={handleRemoveImage}
+                                                onClick={handleEditImage}
                                             />
                                         </div>
                                     </div>
@@ -198,7 +215,7 @@ export const AddNewHeaderImagen = ({ open, setOpen }) => {
                                     >
                                         {loading
                                             ? <ButtonLoader />
-                                            : 'Agregar imagen'
+                                            : 'Editar encabezado'
                                         }
                                     </button>
                                 </div>

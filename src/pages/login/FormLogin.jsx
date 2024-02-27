@@ -31,7 +31,7 @@ export const FormLogin = () => {
         const { email, password } = formData;
         const emailValid = validateEmail(email);
 
-        if(!emailValid){
+        if (!emailValid) {
             toast.error('Ingresa un correo electronico valido');
             setLoading(false);
             return false;
@@ -93,47 +93,48 @@ export const FormLogin = () => {
                 </div>
                 <div className='flex items-start py-16 h-[80%]'>
                     <div className='w-[80%] mx-auto grid grid-cols-1 gap-4'>
-                        <div>
-                            <InputText
-                                id={1}
-                                name={'email'}
-                                type={'email'}
-                                label={'Correo electronico'}
-                                onChange={(e) => onChange(e)}
-                                value={formData.email}
-                                placeholder={'Correo electronico'}
-                                disabled={false}
-                            />
-                        </div>
-                        <div className='mt-4'>
-                            <InputText
-                                id={2}
-                                name={'password'}
-                                type={'password'}
-                                label={'Ingresa tu contraseña'}
-                                onChange={(e) => onChange(e)}
-                                value={formData.password}
-                                placeholder={'Ingresa tu contraseña'}
-                                disabled={false}
-                            />
-                        </div>
-                        <div className='mt-8'>
-                            <button
-                                disabled={loading}
-                                type='button'
-                                className='disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold text-md text-white bg-indigo-600 w-full'
-                                onClick={handleLogin}
-                            >Iniciar sesion</button>
-                        </div>
-                        <div className='flex justify-center '>
-                            <Link to={'/forget-password'} className='font-semibold text-gray-950 text-sm'>Tienes problemas para iniciar sesion?</Link>
-                        </div>
-                        <div className='mt-2 border-t-2 pt-6'>
-                            <Link
-                                to={'/pre-registro'}
-                                className='block disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold bg-white ring-inset ring-4 ring-indigo-600 text-md text-gray-950 w-full hover:bg-indigo-600 hover:text-white text-center '>Crear una cuenta</Link>
-                        </div>
-
+                        <form onSubmit={handleLogin}>
+                            <div>
+                                <InputText
+                                    id={1}
+                                    name={'email'}
+                                    type={'email'}
+                                    label={'Correo electronico'}
+                                    onChange={(e) => onChange(e)}
+                                    value={formData.email}
+                                    placeholder={'Correo electronico'}
+                                    disabled={false}
+                                />
+                            </div>
+                            <div className='mt-4'>
+                                <InputText
+                                    id={2}
+                                    name={'password'}
+                                    type={'password'}
+                                    label={'Ingresa tu contraseña'}
+                                    onChange={(e) => onChange(e)}
+                                    value={formData.password}
+                                    placeholder={'Ingresa tu contraseña'}
+                                    disabled={false}
+                                />
+                            </div>
+                            <div className='mt-8'>
+                                <button
+                                    disabled={loading}
+                                    type='submit'
+                                    className='disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold text-md text-white bg-indigo-600 w-full'
+                                    // onClick={handleLogin}
+                                >Iniciar sesion</button>
+                            </div>
+                            <div className='flex justify-center my-6'>
+                                <Link to={'/forget-password'} className='font-semibold text-gray-950 text-sm'>Tienes problemas para iniciar sesion?</Link>
+                            </div>
+                            <div className='mt-2 border-t-2 pt-6'>
+                                <Link
+                                    to={'/pre-registro'}
+                                    className='block disabled:cursor-not-allowed rounded-lg transition py-2.5 font-semibold bg-white ring-inset ring-4 ring-indigo-600 text-md text-gray-950 w-full hover:bg-indigo-600 hover:text-white text-center '>Crear una cuenta</Link>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

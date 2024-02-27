@@ -18,6 +18,7 @@ import { NotFoundPage } from '../pages/notFound/NotFoundPage';
 import { ToasterProvider } from '../providers/ToasterProvider';
 import { PreRegistrationPage } from '../pages/preRegistration/PreRegistrationPage';
 import { CandidatesPage } from '../pages/candidates/CandidatesPage';
+import { StudentsPage } from '../pages/students/StudentsPage';
 import { UsersPage } from '../pages/users/UsersPage';
 import { PaymentsPage } from '../pages/payments/PaymentsPage';
 import { SettingPage } from '../pages/setting/SettingPage';
@@ -35,6 +36,7 @@ import { SettingImageHeader } from '../pages/setting/SettingImageHeader';
 import { SettingLanguages } from '../pages/setting/SettingLanguages';
 import { SettingColors } from '../pages/setting/SettingColors';
 import { SettingNivels } from '../pages/setting/SettingNivels';
+import { ProfileUser } from '../pages/profile/ProfileUser';
 
 export const AppRouter = () => {
 
@@ -132,7 +134,6 @@ export const AppRouter = () => {
                             }
                         />
 
-
                         <Route
                             path="/candidatos"
                             element={
@@ -141,6 +142,8 @@ export const AppRouter = () => {
                                 </PrivateRoute>
                             }
                         />
+
+
                         <Route
                             path="/candidatos/:id"
                             element={
@@ -149,6 +152,16 @@ export const AppRouter = () => {
                                 </PrivateRoute>
                             }
                         />
+
+                        <Route
+                            path="/alumnos"
+                            element={
+                                <PrivateRoute>
+                                    <StudentsPage />
+                                </PrivateRoute>
+                            }
+                        />
+                        
                         <Route
                             path="/cursos"
                             element={
@@ -230,10 +243,18 @@ export const AppRouter = () => {
                             }
                         />
                         <Route
-                            path="/perfil"
+                            path="/mi-perfil"
                             element={
                                 <PrivateRoute>
                                     <ProfilePage />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/perfil/:id"
+                            element={
+                                <PrivateRoute>
+                                    <ProfileUser />
                                 </PrivateRoute>
                             }
                         />

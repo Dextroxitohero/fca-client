@@ -12,15 +12,12 @@ import { Title } from "../../components/Title";
 import { capitalizarPalabras } from "../../common/upperCaseWord";
 import { formatDate } from "../../common/formatDateText";
 
-export const ProfilePage = () => {
+export const ProfileUser = () => {
     const dispatch = useDispatch();
+    const { id } = useParams();
     const { userSelected } = useSelector((state) => state.users);
-    const { user } = useSelector((state) => state.user);
-
-
-
     useEffect(() => {
-        dispatch(getUserById(user._id))
+        dispatch(getUserById(id))
     }, [])
 
     const {
@@ -77,6 +74,7 @@ export const ProfilePage = () => {
                                     />
                                 )
                             }
+
                         </PropertyListItem>
 
 
@@ -94,6 +92,7 @@ export const ProfilePage = () => {
                         </div>
                     )
                 }
+
             </div>
             {
                 (typeUser === 'estudiante' || typeUser === 'profesor') && (
@@ -109,6 +108,7 @@ export const ProfilePage = () => {
                     </div>
                 )
             }
+
         </ContainerFull>
     )
 }

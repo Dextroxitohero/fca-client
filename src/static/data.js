@@ -29,12 +29,12 @@ export const navigation = [
 ];
 
 export const userNavigation = [
-    { name: 'Perfil', href: '/perfil' },
+    { name: 'Perfil', href: '/mi-perfil' },
     { name: 'Configuracion', href: '/ajustes' },
 ]
 
 export const userMenu = [
-    { name: 'Perfil', description: 'Edita y actuliza tu perfil de usuario.', href: 'perfil', icon: "UserIcon" },
+    { name: 'Perfil', description: 'Edita y actuliza tu perfil de usuario.', href: 'mi-perfil', icon: "UserIcon" },
     { name: 'Configuracion', description: 'Personalizar la configuración de la aplicación', href: 'ajustes', icon: "Cog8ToothIcon" },
     { name: 'Notificaciones', description: "Administrar las notificaciones de la aplicación", href: 'notificaciones', icon: "BellIcon" },
     { name: 'Cursos', description: 'Ver y gestionar tus cursos.', href: 'cursos', icon: "BookOpenIcon" },

@@ -2,6 +2,12 @@ import {
 	getAllUsersStart,
 	getAllUsersSucSuccess,
 	getAllUsersFailure,
+	getAllStudentsStart,
+	getAllStudentsSucSuccess,
+	getAllStudentsFailure,
+	getAllUserByIdStart,
+	getAllUserByIdSucSuccess,
+	getAllUserByIdFailure,
 } from '../reducers/users';
 
 import axios from "../../api/axios";
@@ -19,6 +25,36 @@ export const getAllUsers = () => async (dispatch) => {
 		return response.status;
 	} catch (error) {
 		dispatch(getAllUsersFailure());
+	}
+};
+
+export const getAllStudents = () => async (dispatch) => {
+	dispatch(getAllStudentsStart());
+	try {
+		const response = await axios.get(`/users/getAllStudents`,
+			{
+				withCredentials: true,
+			});
+		dispatch(getAllStudentsSucSuccess(response.data));
+		return response.status;
+	} catch (error) {
+		dispatch(getAllStudentsFailure());
+	}
+};
+
+export const getUserById = (idUser) => async (dispatch) => {
+	dispatch(getAllUserByIdStart());
+	try {
+
+		const response = await axios.get(`/users/getUserById/${idUser}`,
+			{
+				withCredentials: true,
+			});
+		dispatch(getAllUserByIdSucSuccess(response.data))
+
+	} catch (error) {
+		console.log(error.response.data.message)
+		dispatch(getAllUserByIdFailure());
 	}
 };
 

@@ -11,27 +11,37 @@ import { AddNewHeaderImagen } from './AddNewHeaderImagen';
 import { firstCapitalLetter } from '../../common/upperCaseWord';
 import { getAllHeadersImages, removeHeaderImage } from '../../redux/actions/setting';
 import { ConfirmirRemoverHeaderImage } from './ConfirmirRemoverHeaderImage';
+import { EditHeaderImagen } from './EditHeaderImage';
 
 export const SettingImageHeader = () => {
 	const dispatch = useDispatch();
 	const [openAddNewHeaderImage, setOpenAddNewHeaderImagen] = useState(false);
+	const [openEditHeaderImage, setOpenEditHeaderImagen] = useState(false);
 	const [openconfirmRemoveHeaderImage, setOpenconfirmRemoveHeaderImage] = useState(false);
+	const [selectedEditHeaderImage, setSelectedEditImage] = useState(null);
 	const [selectedRemoveHeaderImage, setSelectedRemoveHeaderImage] = useState(null);
 	const headersImage = useSelector((state) => state.setting.headersImage);
-
-	console.log(headersImage)
 
 	useEffect(() => {
 		dispatch(getAllHeadersImages())
 	}, []);
 
-	const confirmRemoveHeaderImage = (id) => {
+	useEffect(() => {
+		setSelectedEditImage(null);
+	}, [openEditHeaderImage]);
+
+	const confirmRemoveHeaderImage = (header) => {
 		setOpenconfirmRemoveHeaderImage(true);
-		setSelectedRemoveHeaderImage(id);
+		setSelectedRemoveHeaderImage(header);
 	}
 
-	const handleRemoveHeaderImage = (id) => {
-		dispatch(removeHeaderImage(id))
+	const editHeaderImage = (header) => {
+		setSelectedEditImage(header);
+		setOpenEditHeaderImagen(true);
+	}
+
+	const handleRemoveHeaderImage = (header) => {
+		dispatch(removeHeaderImage(header))
 			.then((result) => {
 				if (result.status === 200) {
 					toast.success(result.message);
@@ -68,10 +78,16 @@ export const SettingImageHeader = () => {
 									<div className='text-lg font-semibold text-gray-600 flex justify-center flex-col items-center border p-4 rounded-md'>
 										<h3 className='mb-4'>{firstCapitalLetter(header.name)}</h3>
 										<img src={header.urlName} alt={header.name} className="mx-auto mb-6 w-11/12 flex-shrink-0 rounded-md shadow-sm" />
-										<Button
-											label={'Eliminar'}
-											onClick={() => confirmRemoveHeaderImage(header._id)}
-										/>
+										<div className='w-full flex justify-around'>
+											<Button
+												label={'Editar'}
+												onClick={() => editHeaderImage(header)}
+												/>
+											<Button
+												label={'Eliminar'}
+												onClick={() => confirmRemoveHeaderImage(header)}
+											/>
+										</div>
 									</div>
 								</div>
 							))) : <h1>No hay encabezados de imagenes</h1>
@@ -82,6 +98,11 @@ export const SettingImageHeader = () => {
 			<AddNewHeaderImagen
 				open={openAddNewHeaderImage}
 				setOpen={setOpenAddNewHeaderImagen}
+			/>
+			<EditHeaderImagen
+				open={openEditHeaderImage}
+				setOpen={setOpenEditHeaderImagen}
+				state={selectedEditHeaderImage}
 			/>
 			<ConfirmirRemoverHeaderImage
 				open={openconfirmRemoveHeaderImage}
