@@ -9,6 +9,7 @@ import { CardCourse } from './components/CardCourse';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { cleanActionSelectedCourse, getAllCourses } from '../../redux/actions/course';
+import { CardCourseUser } from './components/CardCourseUser';
 
 export const CoursesPage = () => {
     const dispatch = useDispatch();
@@ -55,9 +56,59 @@ export const CoursesPage = () => {
             </Wrapper>
 
             <Wrapper>
-                <div className="w-full md:w-6/6">
-                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
-                        {courses.length ? (courses && courses.map(course => (
+                <div className="w-full">
+
+                    {
+                        user.user?.roles === 'admin' ? (
+                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+                                {courses.length ?
+                                    (courses && courses.map(course => (
+                                        <CardCourse
+                                            key={course._id}
+                                            isCreating={false}
+                                            idCourse={course?._id}
+                                            color={course?.color}
+                                            language={course?.language}
+                                            path={course?.path}
+                                            nivel={course?.level}
+                                            studentLimit={course.limitMembers}
+                                            status={course?.status}
+                                            hours={course?.hours}
+                                            days={course?.days}
+                                            teacher={course?.teacher}
+                                            fromDate={course?.fromDate}
+                                            toDate={course?.toDate}
+                                            headerImage={course?.headerImage?.urlName}
+                                        />
+                                    ))) : <h1>No hay ningun curso</h1>
+                                }
+                            </div>
+                        ) : (
+                            <div className='grid grid-cols-1 lg:grid-cols-1 gap-6'>
+                                {courses.length ?
+                                    (courses && courses.map(course => (
+                                        <CardCourseUser
+                                            key={course._id}
+                                            idCourse={course?._id}
+                                            color={course?.color}
+                                            language={course?.language}
+                                            path={course?.path}
+                                            nivel={course?.level}
+                                            status={course?.status}
+                                            hours={course?.hours}
+                                            days={course?.days}
+                                            teacher={course?.teacher}
+                                            fromDate={course?.fromDate}
+                                            toDate={course?.toDate}
+                                        />
+                                    ))) : <h1>No hay ningun curso</h1>
+                                }
+                            </div>
+                        )
+                    }
+                    {/* <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+                        {courses.length ? 
+                        (courses && courses.map(course => (
                             <CardCourse
                                 key={course._id}
                                 isCreating={false}
@@ -77,7 +128,7 @@ export const CoursesPage = () => {
                             />
                         ))) : <h1>No hay ningun curso</h1>
                         }
-                    </div>
+                    </div> */}
                 </div>
             </Wrapper>
         </ContainerFull>

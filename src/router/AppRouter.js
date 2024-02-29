@@ -37,6 +37,7 @@ import { SettingLanguages } from '../pages/setting/SettingLanguages';
 import { SettingColors } from '../pages/setting/SettingColors';
 import { SettingNivels } from '../pages/setting/SettingNivels';
 import { ProfileUser } from '../pages/profile/ProfileUser';
+import { CourseEditListStudents } from '../pages/courses/CourseEditListStudents';
 
 export const AppRouter = () => {
 
@@ -179,10 +180,18 @@ export const AppRouter = () => {
                             }
                         />
                         <Route
-                            path="/edit-curso/:idCourse"
+                            path="/editar-curso/:idCourse"
                             element={
                                 <PrivateRoute>
                                     <CourseEdit isCreating={false} />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/editar-curso-lista/:idCourse"
+                            element={
+                                <PrivateRoute>
+                                    <CourseEditListStudents/>
                                 </PrivateRoute>
                             }
                         />

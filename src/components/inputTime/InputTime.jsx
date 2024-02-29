@@ -29,6 +29,10 @@ const hours = [
     { id: 26, time: '20:30' },
     { id: 27, time: '21:00' },
     { id: 28, time: '21:30' },
+    { id: 29, time: '22:00' },
+    { id: 30, time: '22:30' },
+    { id: 31, time: '23:00' },
+    { id: 32, time: '23:30' },
 ];
 
 export const TimeInput = ({ courseSelected, setCourseSelected }) => {

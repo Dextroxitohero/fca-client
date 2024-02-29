@@ -65,7 +65,7 @@ export const CourseEdit = ({ isCreating }) => {
             days: course !== '' ? course.days : [],
             fromDate: course.fromDate !== undefined ? course.fromDate : '',
             toDate: course.toDate !== undefined ? course.toDate : '',
-            teacher: course.teacher !== undefined ? { _id: course?.teacher?._id, name: `${course?.teacher?.firstName} ${course?.teacher?.lastName}` } : '',
+            teacher: course.teacher !== undefined ? { _id: course?.teacher?._id, name: `${course?.teacher?.firstName} ${course?.teacher?.lastName}`, description: `${course?.teacher?.firstName} ${course?.teacher?.lastName}` } : '',
             headerImage: course.headerImage !== undefined ? course.headerImage : '',
         })
     }, [idCourse, course]);

@@ -29,9 +29,14 @@ export const CardCourse = ({
 
     const user = useSelector((state) => state.user);
 
-    const handleEdit = () => {
-        navigate(`/edit-curso/${idCourse}`);
+    const handleEditCourse = () => {
+        navigate(`/editar-curso/${idCourse}`);
     }
+
+    const handleEditListStudents = () => {
+        navigate(`/editar-curso-lista/${idCourse}`);
+    }
+
     return (
         <>
             <div className='shadow-md shadow-indigo-950/20 rounded-md'>
@@ -120,21 +125,19 @@ export const CardCourse = ({
                 </div>
                 {
                     (!isCreating && user.user.roles === 'admin') && (
-                        <div className="w-full flex mt-8 mb-4 gap-x-4 px-4">
-                            <button
-                                onClick={handleEdit}
-                                className="bg-indigo-600  flex-1 py-2 text-white font-semibold rounded-md focus:bg-indigo-700"
-                            >Editar</button>
-                        </div>
-                    )
-                }
-                {
-                    user.user.roles === 'user' && (
-                        <div className="w-full flex mt-8 mb-4 gap-x-4 px-4">
-                            <button
-                                disabled={true}
-                                className="bg-indigo-600  flex-1 py-2 text-white font-semibold rounded-md focus:bg-indigo-700"
-                            >Entrar</button>
+                        <div className="flex flex-wrap gap-4 px-4 py-6">
+                            <div className="w-full flex">
+                                <button
+                                    onClick={handleEditCourse}
+                                    className="bg-indigo-600  flex-1 py-2 text-white font-semibold rounded-md focus:bg-indigo-700"
+                                >Editar curso</button>
+                            </div>
+                            <div className="w-full flex">
+                                <button
+                                    onClick={handleEditListStudents}
+                                    className="bg-indigo-600  flex-1 py-2 text-white font-semibold rounded-md focus:bg-indigo-700"
+                                >Editar lista de alumnos</button>
+                            </div>
                         </div>
                     )
                 }
