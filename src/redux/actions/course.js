@@ -4,7 +4,7 @@ import {
     createCourseSuccess,
     createCourseFailure,
     updateCourseStart,
-	updateCourseSuccess,
+    updateCourseSuccess,
     updateCourseFailure,
     getAllCoursesStart,
     getAllCoursesSuccess,
@@ -12,14 +12,19 @@ import {
     getCourseByStart,
     getCourseBySuccess,
     getCourseByFailure,
-    cleanSelectedCourse
+    cleanSelectedCourse,
+    getListStudentByIdCourseStart,
+    getListStudentByIdCourseSuccess,
+    getListStudentByIdCourseFailure,
+    cleanSelectedCourseListStudent,
+    deleteStudentFromCourseSuccess,
+    getListStudentsNotCourseSuccess,
+    addStudentToCourseSuccess
 } from '../reducers/course';
 
 // import axios from "axios";
 import axios from '../../api/axios';
 import { toast } from 'react-hot-toast';
-import { id } from 'date-fns/locale';
-
 
 export const createCourse = ({ language, level, color, limitMembers, fromDate, toDate, hours, days, teacher, headerImage, createdBy, updatedBy }) => async (dispatch) => {
     try {
@@ -117,4 +122,73 @@ export const getCourseById = (idCourse) => async (dispatch) => {
 
 export const cleanActionSelectedCourse = () => async (dispatch) => {
     dispatch(cleanSelectedCourse());
+};
+
+export const getListStudentsByIdCourse = (courseId) => async (dispatch) => {
+    try {
+        dispatch(getListStudentByIdCourseStart());
+
+        const response = await axios.get(`/course/getListStudentsCourseById/${courseId}`);
+        if (response.status === 200) {
+            dispatch(getListStudentByIdCourseSuccess(response.data));
+        }
+    } catch (error) {
+        dispatch(getListStudentByIdCourseFailure());
+        toast.error('Ocurrio un error.')
+    }
+};
+
+export const getListStudentsNotInCourse = (courseId) => async (dispatch) => {
+    try {
+        dispatch(getListStudentByIdCourseStart());
+
+        const response = await axios.get(`/course/getListStudentsNotInCourse/${courseId}`);
+        if (response.status === 200) {
+            dispatch(getListStudentsNotCourseSuccess(response.data));
+        }
+    } catch (error) {
+        dispatch(getListStudentByIdCourseFailure());
+        toast.error('Ocurrio un error.')
+    }
+}
+
+export const addNewStudentToCourse = (courseId, userId) => async (dispatch) => {
+    try {
+        dispatch(getListStudentByIdCourseStart());
+
+        const response = await axios.put(`/course/addStudentToCourse/${courseId}`, { userId });
+        dispatch(addStudentToCourseSuccess(response.data));
+        if (response?.status === 200) {
+            return {
+                status: response?.status || null,
+                message: response?.data.message
+            };
+        }
+    } catch (error) {
+        dispatch(getListStudentByIdCourseFailure());
+        return {
+            status: error.response.status || null,
+            message: error.response.data.message
+        };
+    }
+
+}
+
+
+export const deleteStudentFromCourse = (courseId, userId) => async (dispatch) => {
+    try {
+        dispatch(getListStudentByIdCourseStart());
+
+        const response = await axios.delete(`/course/removeStudentFromCourse/${courseId}/${userId}`);
+        dispatch(deleteStudentFromCourseSuccess(response.data));
+        if (response?.status === 200) {
+            return {
+                status: response?.status || null,
+                message: response?.data.message
+            };
+        }
+    } catch (error) {
+        dispatch(getListStudentByIdCourseFailure());
+        toast.error('Ocurrio un error.')
+    }
 };

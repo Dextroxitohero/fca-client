@@ -5,7 +5,9 @@ const courseSlice = createSlice({
 	initialState: {
 		loading: false,
 		courses: [],
-		courseSelected: []
+		courseSelected: [],
+		courseListSelected: [],
+		studentsNotInCourse: []
 	},
 	reducers: {
 		createCourseStart: (state) => {
@@ -49,6 +51,29 @@ const courseSlice = createSlice({
 		cleanSelectedCourse: (state, action) => {
 			state.courseSelected = [];
 		},
+		//List students by course
+		getListStudentByIdCourseStart: (state) => {
+			state.loading = true;
+		},
+		getListStudentByIdCourseSuccess: (state, { payload: { students } }) => {
+			state.loading = false;
+			state.courseListSelected = students;
+		},
+		getListStudentsNotCourseSuccess: (state, { payload: { students } }) => {
+			state.loading = false;
+			state.studentsNotInCourse = students;
+		},
+		addStudentToCourseSuccess: (state, { payload: { students } }) => {
+			state.loading = false;
+			state.courseListSelected = students;
+		},
+		deleteStudentFromCourseSuccess: (state, { payload: { updatedStudents } }) => {
+			state.loading = false;
+			state.courseListSelected = updatedStudents;
+		},
+		getListStudentByIdCourseFailure: (state, action) => {
+			state.loading = false;
+		},
 	},
 });
 
@@ -65,6 +90,12 @@ export const {
 	getCourseByStart,
 	getCourseBySuccess,
 	getCourseByFailure,
-	cleanSelectedCourse
+	cleanSelectedCourse,
+	getListStudentByIdCourseStart,
+	getListStudentByIdCourseSuccess,
+	getListStudentsNotCourseSuccess,
+	addStudentToCourseSuccess,
+	deleteStudentFromCourseSuccess,
+	getListStudentByIdCourseFailure,
 } = courseSlice.actions;
 export default courseSlice.reducer;
