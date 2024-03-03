@@ -37,6 +37,10 @@ export const CardCourse = ({
         navigate(`/editar-curso-lista/${idCourse}`);
     }
 
+    const handleEnterCourse = () => {
+        navigate(`/curso/${idCourse}`);
+    }
+
     return (
         <>
             <div className='shadow-md shadow-indigo-950/20 rounded-md'>
@@ -137,6 +141,12 @@ export const CardCourse = ({
                                     onClick={handleEditListStudents}
                                     className="bg-indigo-600  flex-1 py-2 text-white font-semibold rounded-md focus:bg-indigo-700"
                                 >Editar lista de alumnos</button>
+                            </div>
+                            <div className="w-full flex">
+                                <button
+                                    onClick={handleEnterCourse}
+                                    className="bg-indigo-600  flex-1 py-2 text-white font-semibold rounded-md focus:bg-indigo-700"
+                                >Entrar</button>
                             </div>
                         </div>
                     )

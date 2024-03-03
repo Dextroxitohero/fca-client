@@ -38,6 +38,7 @@ import { SettingColors } from '../pages/setting/SettingColors';
 import { SettingNivels } from '../pages/setting/SettingNivels';
 import { ProfileUser } from '../pages/profile/ProfileUser';
 import { CourseEditListStudents } from '../pages/courses/CourseEditListStudents';
+import { CourseDisplay } from '../pages/courses/CourseDisplay';
 
 export const AppRouter = () => {
 
@@ -153,7 +154,6 @@ export const AppRouter = () => {
                                 </PrivateRoute>
                             }
                         />
-
                         <Route
                             path="/alumnos"
                             element={
@@ -161,13 +161,20 @@ export const AppRouter = () => {
                                     <StudentsPage />
                                 </PrivateRoute>
                             }
-                        />
-                        
+                        />                        
                         <Route
                             path="/cursos"
                             element={
                                 <PrivateRoute>
                                     <CoursesPage />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/curso/:idCourse"
+                            element={
+                                <PrivateRoute>
+                                    <CourseDisplay />
                                 </PrivateRoute>
                             }
                         />

@@ -9,9 +9,9 @@ import { Heading } from '../../components/Heading';
 import { Button } from '../../components/buttons/Button';
 import { capitalizarPalabras } from '../../common/upperCaseWord';
 import { ModalDeleteStudentList } from './components/ModalDeleteStudentList';
+import { ModalAddStudentToCourse } from './components/ModalAddStudentToCourse';
 
 import { deleteStudentFromCourse, getListStudentsByIdCourse, getListStudentsNotInCourse } from '../../redux/actions/course';
-import { ModalAddStudentToCourse } from './components/ModalAddStudentToCourse';
 
 
 export const CourseEditListStudents = () => {

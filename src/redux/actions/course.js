@@ -1,4 +1,3 @@
-// import { useNavigate } from 'react-router-dom';
 import {
     createCourseStart,
     createCourseSuccess,
@@ -16,10 +15,18 @@ import {
     getListStudentByIdCourseStart,
     getListStudentByIdCourseSuccess,
     getListStudentByIdCourseFailure,
-    cleanSelectedCourseListStudent,
     deleteStudentFromCourseSuccess,
     getListStudentsNotCourseSuccess,
-    addStudentToCourseSuccess
+    addStudentToCourseSuccess,
+    getChatMessagesCourseStart,
+    getChatMessagesCourseSuccess,
+    getChatMessagesCourseFailure,
+    addChatMessagesCourseStart,
+    addChatMessagesCourseSuccess,
+    addChatMessagesCourseFailure,
+    removeChatMessagesCourseStart,
+    removeChatMessagesCourseSuccess,
+    removeChatMessagesCourseFailure
 } from '../reducers/course';
 
 // import axios from "axios";
@@ -192,3 +199,110 @@ export const deleteStudentFromCourse = (courseId, userId) => async (dispatch) =>
         toast.error('Ocurrio un error.')
     }
 };
+
+// chat course part
+export const getChatByIdCourse = (courseId) => async (dispatch) => {
+    try {
+        dispatch(getChatMessagesCourseStart());
+
+        const response = await axios.get(`/chat/getAllMessagesFromChatByIdCourse/${courseId}`);
+        if (response.status === 200) {
+            dispatch(getChatMessagesCourseSuccess(response.data));
+        }
+    } catch (error) {
+        dispatch(getChatMessagesCourseFailure());
+        toast.error('Ocurrio un error.')
+    }
+}
+
+export const addChatMessageToCourse = (courseId, senderId, content, publicId, url, messageType) => async (dispatch) => {
+    try {
+        dispatch(addChatMessagesCourseStart());
+
+        const response = await axios.post(`/chat/addMessageToChat/${courseId}`, {
+            courseId,
+            senderId,
+            content,
+            publicId,
+            url,
+            messageType
+        });
+        if (response?.status === 201) {
+            dispatch(addChatMessagesCourseSuccess(response.data));
+            return {
+                status: response?.status || null,
+                message: response?.data.message
+            };
+        }
+    } catch (error) {
+        dispatch(addChatMessagesCourseFailure());
+        return {
+            status: error.response.status || null,
+            message: error.response.data.message
+        };
+    }
+}
+
+export const addChatMessageFileToCourse = (file, courseId, senderId, content, publicId, url, messageType) => async (dispatch) => {
+    try {
+        dispatch(addChatMessagesCourseStart());
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append("upload_preset", process.env.REACT_APP_PRESET_NAME);
+        formData.append("cloud_name", process.env.REACT_APP_CLOUD_NAME);
+        formData.append('upload_preset', 'fca-intranet');
+        const res = await axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`, formData);
+
+        if (res.status === 200) {
+            const response = await axios.post(`/chat/addMessageToChat/${courseId}`, {
+                courseId,
+                senderId,
+                content,
+                publicId: res.data.public_id,
+                url: res.data.secure_url,
+                messageType
+            });
+            if (response?.status === 201) {
+                dispatch(addChatMessagesCourseSuccess(response.data));
+                return {
+                    status: response?.status || null,
+                    message: response?.data.message
+                };
+            }
+        }
+    } catch (error) {
+        dispatch(addChatMessagesCourseFailure());
+        return {
+            status: error.response.status || null,
+            message: error.response.data.message
+        };
+    }
+}
+
+export const removeChatMessageToCourse = (courseId, chatId, userId, messageId, typeMessage, publicId ) => async (dispatch) => {
+    try {
+        dispatch(removeChatMessagesCourseStart());
+        const response = await axios.post(`/chat/deleteMessageToChat/${courseId}`,{
+            chatId, 
+            userId, 
+            messageId, 
+            typeMessage,
+            publicId
+        });
+
+        if (response?.status === 200) {
+            dispatch(removeChatMessagesCourseSuccess(response.data));
+            return {
+                status: response?.status || null,
+                message: response?.data.message
+            };
+        }
+    } catch (error) {
+        dispatch(removeChatMessagesCourseFailure());
+        return {
+            status: error.response.status || null,
+            message: error.response.data.message
+        };
+    }
+}

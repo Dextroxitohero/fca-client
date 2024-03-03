@@ -87,7 +87,7 @@ export const editHeaderImage = ({
 					if (responseReplaceDataImage.status === 200) {
 						dispatch(uploadHeaderImageSuccess());
 						return {
-							status: responseReplaceDataImage.status,
+							status: responseReplaceDataImage.status || null,
 							message: responseReplaceDataImage.data.message
 						};
 					}

@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { Dialog } from '@headlessui/react';
 import { toast } from 'react-hot-toast';
+
 import { ButtonLoader } from '../../../components/buttons/ButtonLoader';
 import { ComboBox } from '../../../components/comboBox/ComboBox';
 import { Modal } from '../../../components/modal/Modal';
+
 import { addNewStudentToCourse, getListStudentsNotInCourse } from '../../../redux/actions/course';
-
-
 
 export const ModalAddStudentToCourse = ({ open, setOpen, idCourse }) => {
     const dispatch = useDispatch();

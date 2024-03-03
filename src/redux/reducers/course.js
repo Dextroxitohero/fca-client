@@ -7,7 +7,8 @@ const courseSlice = createSlice({
 		courses: [],
 		courseSelected: [],
 		courseListSelected: [],
-		studentsNotInCourse: []
+		studentsNotInCourse: [],
+		messagesCourse: [],
 	},
 	reducers: {
 		createCourseStart: (state) => {
@@ -50,6 +51,9 @@ const courseSlice = createSlice({
 		},
 		cleanSelectedCourse: (state, action) => {
 			state.courseSelected = [];
+			state.courseListSelected = [];
+			state.messagesCourse = [];
+			state.studentsNotInCourse = [];
 		},
 		//List students by course
 		getListStudentByIdCourseStart: (state) => {
@@ -74,6 +78,38 @@ const courseSlice = createSlice({
 		getListStudentByIdCourseFailure: (state, action) => {
 			state.loading = false;
 		},
+		// Chat course
+		getChatMessagesCourseStart: (state) => {
+			state.loading = true;
+		},
+		getChatMessagesCourseSuccess: (state, { payload: { messages } }) => {
+			state.loading = false;
+			state.messagesCourse = messages;
+		},
+		getChatMessagesCourseFailure: (state) => {
+			state.loading = false;
+		},
+		addChatMessagesCourseStart: (state) => {
+			state.loading = true;
+		},
+		addChatMessagesCourseSuccess: (state, { payload: { messages } }) => {
+			state.loading = false;
+			state.messagesCourse = messages;
+		},
+		addChatMessagesCourseFailure: (state) => {
+			state.loading = false;
+		},
+		removeChatMessagesCourseStart: (state) => {
+			state.loading = true;
+		},
+		removeChatMessagesCourseSuccess: (state, { payload: { messages } }) => {
+			state.loading = false;
+			state.messagesCourse = messages;
+		},
+		removeChatMessagesCourseFailure: (state) => {
+			state.loading = false;
+		},
+
 	},
 });
 
@@ -97,5 +133,14 @@ export const {
 	addStudentToCourseSuccess,
 	deleteStudentFromCourseSuccess,
 	getListStudentByIdCourseFailure,
+	getChatMessagesCourseStart,
+	getChatMessagesCourseSuccess,
+	getChatMessagesCourseFailure,
+	addChatMessagesCourseStart,
+	addChatMessagesCourseSuccess,
+	addChatMessagesCourseFailure,
+	removeChatMessagesCourseStart,
+	removeChatMessagesCourseSuccess,
+	removeChatMessagesCourseFailure
 } = courseSlice.actions;
 export default courseSlice.reducer;
