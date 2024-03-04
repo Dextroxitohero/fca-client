@@ -81,15 +81,14 @@ export const CourseDisplay = () => {
             });
     }
 
-
     return (
         <ContainerFull>
             <Wrapper>
                 <div className='w-full flex flex-row gap-4'>
                     <div className='hidden lg:flex flex-col lg:w-[25%] h-[80vh] gap-4'>
-                        <div className=' border border-gray-200 rounded-lg p-4 h-[10%]'>
+                        <div className=' border border-gray-200 rounded-lg px-4 py-2 h-[10%]'>
                             <p className='text-[.9rem] text-gray-600'>Profesor</p>
-                            <p className='text-[1rem] text-gray-950 font-semibold mt-2'>Felipe Martinez Ramirez</p>
+                            <p className='text-[1rem] text-gray-950 font-semibold capitalize'>{courseSelected.teacher ? `${courseSelected.teacher?.firstName} ${courseSelected.teacher.lastName}` : '-'}</p>
                         </div>
 
                         <div className='border border-gray-200 rounded-lg p-4 h-[90%]'>
