@@ -96,20 +96,22 @@ export const updateCourse = ({ id, language, level, color, limitMembers, fromDat
     }
 };
 
-export const getAllCourses = ({ id, roles }) => async (dispatch) => {
+export const getAllCourses = (userId, roles) => async (dispatch) => {
+    console.log(userId, roles)
     try {
         dispatch(getAllCoursesStart());
 
-        const response = await axios.get(`/course/getAllCourse/${id}/${roles}`);
-
+        const response = await axios.get(`/course/getAllCourse/${userId}/${roles}`);
+        console.log(response)
         if (response.status === 200) {
             dispatch(getAllCoursesSuccess(response.data));
-        } else {
-            dispatch(getAllCoursesFailure());
         }
     } catch (error) {
         dispatch(getAllCoursesFailure());
-        toast.error('Ocurrio un error.')
+        return {
+            status: error.response.status || null,
+            message: error.response.data.message
+        };
     }
 };
 
@@ -280,13 +282,13 @@ export const addChatMessageFileToCourse = (file, courseId, senderId, content, pu
     }
 }
 
-export const removeChatMessageToCourse = (courseId, chatId, userId, messageId, typeMessage, publicId ) => async (dispatch) => {
+export const removeChatMessageToCourse = (courseId, chatId, userId, messageId, typeMessage, publicId) => async (dispatch) => {
     try {
         dispatch(removeChatMessagesCourseStart());
-        const response = await axios.post(`/chat/deleteMessageToChat/${courseId}`,{
-            chatId, 
-            userId, 
-            messageId, 
+        const response = await axios.post(`/chat/deleteMessageToChat/${courseId}`, {
+            chatId,
+            userId,
+            messageId,
             typeMessage,
             publicId
         });

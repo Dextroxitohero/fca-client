@@ -22,7 +22,7 @@ export const CoursesPage = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        dispatch(getAllCourses({ id: user.user._id, roles: user.user.roles }))
+        dispatch(getAllCourses(user.user._id, user.user.roles))
     }, [dispatch]);
 
     const courses = useSelector((state) => state.course.courses);
@@ -60,7 +60,7 @@ export const CoursesPage = () => {
 
                     {
                         user.user?.roles === 'admin' ? (
-                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lx:grid-cols-4 gap-6'>
                                 {courses.length ?
                                     (courses && courses.map(course => (
                                         <CardCourse
